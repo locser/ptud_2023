@@ -68,7 +68,7 @@ public class KhachHang_JPanel extends javax.swing.JPanel {
         tableModel = (DefaultTableModel) table_KhachHang.getModel();
         table_KhachHang.setModel(tableModel);
         
-        loadData();
+//        loadData();
         
         table_KhachHang.setDefaultEditor(Object.class, null);
     }

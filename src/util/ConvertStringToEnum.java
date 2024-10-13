@@ -9,7 +9,7 @@ import entity.*;
 
 /**
  *
- * @author Nguyen Huy Hoang
+ * @author Locser
  */
 public class ConvertStringToEnum {
     public ConvertStringToEnum() {

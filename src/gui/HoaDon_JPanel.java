@@ -65,16 +65,17 @@ public class HoaDon_JPanel extends javax.swing.JPanel {
 //                return false;
 //                }
 //            };
-         DocDuLieuTuSQLvaoTable();
+    //TODO: ĐỌc dữ liệu panel hóa đơn
+//         DocDuLieuTuSQLvaoTable();
     }
     
 
     private void DocDuLieuTuSQLvaoTable() {
-        ArrayList<HoaDonEntity> listHD = hdbus.getallHoaDon();
-        for (HoaDonEntity hd : listHD) {
-
-            addRows(new Object[]{hd.getMaHD(), hd.getKhachHang().getMaKH(), hd.getNhanVien().getMaNV(), hd.getChuongTrinhKM().getMaCTKM(), hd.getNgayLapHD(), hd.getTienKhuyenMai(), hd.getTongTien(), hd.getTienThanhToan(), hd.getTinhTrang().toString()});
-        }
+//        ArrayList<HoaDonEntity> listHD = hdbus.getallHoaDon();
+//        for (HoaDonEntity hd : listHD) {
+//
+//            addRows(new Object[]{hd.getMaHD(), hd.getKhachHang().getMaKH(), hd.getNhanVien().getMaNV(), hd.getChuongTrinhKM().getMaCTKM(), hd.getNgayLapHD(), hd.getTienKhuyenMai(), hd.getTongTien(), hd.getTienThanhToan(), hd.getTinhTrang().toString()});
+//        }
     }
 
     public void addRows(Object[] row) {

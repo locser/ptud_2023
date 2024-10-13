@@ -14,6 +14,8 @@ import java.sql.ResultSet;
 public class EntityMapper {
     public static <T> T mapRowToEntity(ResultSet rs, Class<T> clazz) throws Exception {
         T instance = clazz.getDeclaredConstructor().newInstance();
+                System.out.println("aaaaaaaaaaaaaa");
+
         System.out.println(rs.toString());
         for (Field field : clazz.getDeclaredFields()) {
             field.setAccessible(true);

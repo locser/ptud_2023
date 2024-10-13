@@ -29,6 +29,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.Timer;
+
+import entity.EntityEnum;
 import org.jdesktop.layout.GroupLayout;
 import util.ToanCuc;
 
@@ -37,33 +39,31 @@ public class TrangChu_GUI extends javax.swing.JFrame {
     public TrangChu_GUI() {
 
         initComponents();
-        ToanCuc tc = new ToanCuc();
-        System.out.println(tc);
-//        jlb_name.setText(tc.getName());
-//        lbl_ChucVu.setText(tc.getChucvu());
+        jlb_name.setText(ToanCuc.getTen());
+        lbl_ChucVu.setText(EntityEnum.ConvertEnumChucVuToString(ToanCuc.getLoai()));
         
-//        if (tc.getGioitnh().equals("Nữ")) {
-//            URL image_User_nu = TrangChu_GUI.class.getResource("/pic/icon/user_nu.png");
-//            ImageIcon img_User_nu = new ImageIcon(image_User_nu);
-//            Image scaled_Users_nu = img_User_nu.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-//            img_User_nu = new ImageIcon(scaled_Users_nu);
-//
-//            lbl_Users.setIcon(img_User_nu);
-//        } else {
-//            URL image_User_nam = TrangChu_GUI.class.getResource("/pic/icon/user_nam.png");
-//            ImageIcon img_User = new ImageIcon("image_User_nam");
-//            Image scaled_Users = img_User.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-//            img_User = new ImageIcon(scaled_Users);
-//            lbl_Users.setIcon(img_User);
-//        }
-//
-//        if (tc.getChucvu().equals("Nhân viên")) {
-//            Jpanel_NhanVien.setVisible(false);
-//            Jpanel_NhaCungCap.setVisible(false);
-//            Jpanel_KhuyenMai.setVisible(false);
-//            Jpanel_TaiKhoan.setVisible(false);
-//            Jpanel_PhieuNhap.setVisible(false);
-//        }
+        if (ToanCuc.getGioiTinh().equals("Nữ")) {
+            URL image_User_nu = TrangChu_GUI.class.getResource("/pic/icon/user_nu.png");
+            ImageIcon img_User_nu = new ImageIcon(image_User_nu);
+            Image scaled_Users_nu = img_User_nu.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+            img_User_nu = new ImageIcon(scaled_Users_nu);
+
+            lbl_Users.setIcon(img_User_nu);
+        } else {
+            URL image_User_nam = TrangChu_GUI.class.getResource("/pic/icon/user_nam.png");
+            ImageIcon img_User = new ImageIcon(image_User_nam);
+            Image scaled_Users = img_User.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+            img_User = new ImageIcon(scaled_Users);
+            lbl_Users.setIcon(img_User);
+        }
+
+        if (ToanCuc.getLoai() == 0) {
+            Jpanel_NhanVien.setVisible(false);
+            Jpanel_NhaCungCap.setVisible(false);
+            Jpanel_KhuyenMai.setVisible(false);
+            Jpanel_TaiKhoan.setVisible(false);
+            Jpanel_PhieuNhap.setVisible(false);
+        }
         setSize(1366, 768);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -71,19 +71,34 @@ public class TrangChu_GUI extends javax.swing.JFrame {
 
         getContentPane().setLayout(null);
 
-//        TrangChu_Panel = new TrangChu_JPanel();
-        BanHang_Panel = new BanHang_JPanel();
-        SanPham_Panel = new SanPham_JPanel();
+        TrangChu_Panel = new TrangChu_JPanel();
+        BanHang_Panel = new BanVe_JPanel();
+//        SanPham_Panel = new SanPham_JPanel();
+        QuanLyTau_Panel = new QuanLyTau_JPanel();
+
         HoaDon_Panel = new HoaDon_JPanel();
-        DoiTra_Panel = new DoiTra_JPanel();
-        ThongKe_Panel = new ThongKe_JPanel();
+        DoiTra_Panel = new TrangChu_JPanel();
+        ThongKe_Panel = new TrangChu_JPanel();
         KhachHang_Panel = new KhachHang_JPanel();
         NhanVien_Panel = new NhanVien_JPanel();
-        KhuyenMai_Panel = new KhuyenMai_JPanel();
-        PhieuNhap_Panel = new PhieuNhap_JPanel();
-        TaiKhoan_Panel = new TaiKhoan_JPanel();
-        NhaCungCap_Panel = new NhaCungCap_JPanel();
-        
+        KhuyenMai_Panel = new TrangChu_JPanel();
+        PhieuNhap_Panel = new TrangChu_JPanel();
+        TaiKhoan_Panel = new TrangChu_JPanel();
+        NhaCungCap_Panel = new TrangChu_JPanel();
+        NhaSanXuat_Panel = new NhaSanXuat_JPanel();
+
+//        BanHang_Panel = new BanHang_JPanel(); 
+//        SanPham_Panel = new SanPham_JPanel();
+//        HoaDon_Panel = new HoaDon_JPanel();
+//        DoiTra_Panel = new DoiTra_JPanel();
+//        ThongKe_Panel = new ThongKe_JPanel();
+//        KhachHang_Panel = new KhachHang_JPanel();
+//        NhanVien_Panel = new NhanVien_JPanel();
+//        KhuyenMai_Panel = new KhuyenMai_JPanel();
+//        PhieuNhap_Panel = new PhieuNhap_JPanel();
+//        TaiKhoan_Panel = new TaiKhoan_JPanel();
+//        NhaCungCap_Panel = new NhaCungCap_JPanel();
+
         URL image_home = TrangChu_GUI.class.getResource("/pic/icon/home.png");   
         ImageIcon img_home = new ImageIcon(image_home);
         Image scaled_home = img_home.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
@@ -94,13 +109,13 @@ public class TrangChu_GUI extends javax.swing.JFrame {
         ImageIcon img_SanPham = new ImageIcon(image_SanPham);
         Image scaled_SanPham = img_SanPham.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
         img_SanPham = new ImageIcon(scaled_SanPham);
-        lbl_IconSanPham.setIcon(img_SanPham);
+        lbl_IconQuanLyTau.setIcon(img_SanPham);
         
-        URL image_BanHang = TrangChu_GUI.class.getResource("/pic/icon/clothers.png");
+        URL image_BanHang = TrangChu_GUI.class.getResource("/pic/icon/buttonTimKiem.png");
         ImageIcon img_BanHang = new ImageIcon(image_BanHang);
         Image scaled_BanHang = img_BanHang.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
         img_BanHang = new ImageIcon(scaled_BanHang);
-        lbl_IconBanHang.setIcon(img_BanHang);
+        lbl_IconTimTau.setIcon(img_BanHang);
 
         URL image_User = TrangChu_GUI.class.getResource("/pic/icon/user_nam.png");
         ImageIcon img_User = new ImageIcon(image_User);
@@ -187,9 +202,9 @@ public class TrangChu_GUI extends javax.swing.JFrame {
         JMenu_TroGiup.setIcon(img_TroGiup);
 
         // Thêm Panel và Main
-//        Jpanel_Main.add(TrangChu_Panel);
+        Jpanel_Main.add(TrangChu_Panel);
         Jpanel_Main.add(BanHang_Panel);
-        Jpanel_Main.add(SanPham_Panel);
+        Jpanel_Main.add(QuanLyTau_Panel);
         Jpanel_Main.add(HoaDon_Panel);
         Jpanel_Main.add(DoiTra_Panel);
         Jpanel_Main.add(ThongKe_Panel);
@@ -199,226 +214,124 @@ public class TrangChu_GUI extends javax.swing.JFrame {
         Jpanel_Main.add(PhieuNhap_Panel);
         Jpanel_Main.add(KhuyenMai_Panel);
         Jpanel_Main.add(TaiKhoan_Panel);
+        Jpanel_Main.add(NhaSanXuat_Panel);
+
         // Gán panleTrangChu background
         Jpanel_TrangChu.setBackground(new Color(112, 128, 144));
         // Gán sự kiện click Jpanel
         Jpanel_TrangChu.addMouseListener(new PanelButtonMouseAdapter(Jpanel_TrangChu) {
             @Override
             public void mouseClicked(MouseEvent e) {
-                Jpanel_BanHang.setBackground(new Color(0, 51, 51));
-                Jpanel_DoiTra.setBackground(new Color(0, 51, 51));
-                Jpanel_KhachHang.setBackground(new Color(0, 51, 51));
-                Jpanel_KhuyenMai.setBackground(new Color(0, 51, 51));
-                Jpanel_NhaCungCap.setBackground(new Color(0, 51, 51));
-                Jpanel_NhanVien.setBackground(new Color(0, 51, 51));
-                Jpanel_PhieuNhap.setBackground(new Color(0, 51, 51));
-                Jpanel_SanPham.setBackground(new Color(0, 51, 51));
-                Jpanel_TaiKhoan.setBackground(new Color(0, 51, 51));
-                Jpanel_ThongKe.setBackground(new Color(0, 51, 51));
-                Jpanel_HoaDon.setBackground(new Color(0, 51, 51));
+                TatChonCacMuc();
                 Jpanel_TrangChu.setBackground(new Color(112, 128, 144));
-//                menuClicked(TrangChu_Panel);
-
+                menuClicked(TrangChu_Panel);
             }
         });
-
         Jpanel_BanHang.addMouseListener(new PanelButtonMouseAdapter(Jpanel_BanHang) {
             @Override
             public void mouseClicked(MouseEvent e) {
+                TatChonCacMuc();
                 Jpanel_BanHang.setBackground(new Color(112, 128, 144));
-                Jpanel_DoiTra.setBackground(new Color(0, 51, 51));
-                Jpanel_KhachHang.setBackground(new Color(0, 51, 51));
-                Jpanel_KhuyenMai.setBackground(new Color(0, 51, 51));
-                Jpanel_NhaCungCap.setBackground(new Color(0, 51, 51));
-                Jpanel_NhanVien.setBackground(new Color(0, 51, 51));
-                Jpanel_PhieuNhap.setBackground(new Color(0, 51, 51));
-                Jpanel_SanPham.setBackground(new Color(0, 51, 51));
-                Jpanel_TaiKhoan.setBackground(new Color(0, 51, 51));
-                Jpanel_ThongKe.setBackground(new Color(0, 51, 51));
-                Jpanel_HoaDon.setBackground(new Color(0, 51, 51));
-                Jpanel_TrangChu.setBackground(new Color(0, 51, 51));
                 menuClicked(BanHang_Panel);
             }
         });
         Jpanel_DoiTra.addMouseListener(new PanelButtonMouseAdapter(Jpanel_DoiTra) {
             @Override
             public void mouseClicked(MouseEvent e) {
-                Jpanel_BanHang.setBackground(new Color(0, 51, 51));
+                TatChonCacMuc();
                 Jpanel_DoiTra.setBackground(new Color(112, 128, 144));
-                Jpanel_KhachHang.setBackground(new Color(0, 51, 51));
-                Jpanel_KhuyenMai.setBackground(new Color(0, 51, 51));
-                Jpanel_NhaCungCap.setBackground(new Color(0, 51, 51));
-                Jpanel_NhanVien.setBackground(new Color(0, 51, 51));
-                Jpanel_PhieuNhap.setBackground(new Color(0, 51, 51));
-                Jpanel_SanPham.setBackground(new Color(0, 51, 51));
-                Jpanel_TaiKhoan.setBackground(new Color(0, 51, 51));
-                Jpanel_ThongKe.setBackground(new Color(0, 51, 51));
-                Jpanel_HoaDon.setBackground(new Color(0, 51, 51));
-                Jpanel_TrangChu.setBackground(new Color(0, 51, 51));
                 menuClicked(DoiTra_Panel);
             }
         });
-
         Jpanel_KhachHang.addMouseListener(new PanelButtonMouseAdapter(Jpanel_KhachHang) {
             @Override
             public void mouseClicked(MouseEvent e) {
-                Jpanel_BanHang.setBackground(new Color(0, 51, 51));
-                Jpanel_DoiTra.setBackground(new Color(0, 51, 51));
+                TatChonCacMuc();
                 Jpanel_KhachHang.setBackground(new Color(112, 128, 144));
-                Jpanel_KhuyenMai.setBackground(new Color(0, 51, 51));
-                Jpanel_NhaCungCap.setBackground(new Color(0, 51, 51));
-                Jpanel_NhanVien.setBackground(new Color(0, 51, 51));
-                Jpanel_PhieuNhap.setBackground(new Color(0, 51, 51));
-                Jpanel_SanPham.setBackground(new Color(0, 51, 51));
-                Jpanel_TaiKhoan.setBackground(new Color(0, 51, 51));
-                Jpanel_ThongKe.setBackground(new Color(0, 51, 51));
-                Jpanel_HoaDon.setBackground(new Color(0, 51, 51));
-                Jpanel_TrangChu.setBackground(new Color(0, 51, 51));
+
                 menuClicked(KhachHang_Panel);
             }
         });
         Jpanel_KhuyenMai.addMouseListener(new PanelButtonMouseAdapter(Jpanel_KhuyenMai) {
             @Override
             public void mouseClicked(MouseEvent e) {
-                Jpanel_BanHang.setBackground(new Color(0, 51, 51));
-                Jpanel_DoiTra.setBackground(new Color(0, 51, 51));
-                Jpanel_KhachHang.setBackground(new Color(0, 51, 51));
+                TatChonCacMuc();
                 Jpanel_KhuyenMai.setBackground(new Color(112, 128, 144));
-                Jpanel_NhaCungCap.setBackground(new Color(0, 51, 51));
-                Jpanel_NhanVien.setBackground(new Color(0, 51, 51));
-                Jpanel_PhieuNhap.setBackground(new Color(0, 51, 51));
-                Jpanel_SanPham.setBackground(new Color(0, 51, 51));
-                Jpanel_TaiKhoan.setBackground(new Color(0, 51, 51));
-                Jpanel_ThongKe.setBackground(new Color(0, 51, 51));
-                Jpanel_HoaDon.setBackground(new Color(0, 51, 51));
-                Jpanel_TrangChu.setBackground(new Color(0, 51, 51));
+
                 menuClicked(KhuyenMai_Panel);
             }
         });
         Jpanel_NhaCungCap.addMouseListener(new PanelButtonMouseAdapter(Jpanel_NhaCungCap) {
             @Override
             public void mouseClicked(MouseEvent e) {
-                Jpanel_BanHang.setBackground(new Color(0, 51, 51));
-                Jpanel_DoiTra.setBackground(new Color(0, 51, 51));
-                Jpanel_KhachHang.setBackground(new Color(0, 51, 51));
-                Jpanel_KhuyenMai.setBackground(new Color(0, 51, 51));
+                TatChonCacMuc();
                 Jpanel_NhaCungCap.setBackground(new Color(112, 128, 144));
-                Jpanel_NhanVien.setBackground(new Color(0, 51, 51));
-                Jpanel_PhieuNhap.setBackground(new Color(0, 51, 51));
-                Jpanel_SanPham.setBackground(new Color(0, 51, 51));
-                Jpanel_TaiKhoan.setBackground(new Color(0, 51, 51));
-                Jpanel_ThongKe.setBackground(new Color(0, 51, 51));
-                Jpanel_HoaDon.setBackground(new Color(0, 51, 51));
-                Jpanel_TrangChu.setBackground(new Color(0, 51, 51));
+
                 menuClicked(NhaCungCap_Panel);
             }
         });
         Jpanel_NhanVien.addMouseListener(new PanelButtonMouseAdapter(Jpanel_NhanVien) {
             @Override
             public void mouseClicked(MouseEvent e) {
-                Jpanel_BanHang.setBackground(new Color(0, 51, 51));
-                Jpanel_DoiTra.setBackground(new Color(0, 51, 51));
-                Jpanel_KhachHang.setBackground(new Color(0, 51, 51));
-                Jpanel_KhuyenMai.setBackground(new Color(0, 51, 51));
-                Jpanel_NhaCungCap.setBackground(new Color(0, 51, 51));
+                TatChonCacMuc();
                 Jpanel_NhanVien.setBackground(new Color(112, 128, 144));
-                Jpanel_PhieuNhap.setBackground(new Color(0, 51, 51));
-                Jpanel_SanPham.setBackground(new Color(0, 51, 51));
-                Jpanel_TaiKhoan.setBackground(new Color(0, 51, 51));
-                Jpanel_ThongKe.setBackground(new Color(0, 51, 51));
-                Jpanel_HoaDon.setBackground(new Color(0, 51, 51));
-                Jpanel_TrangChu.setBackground(new Color(0, 51, 51));
+
                 menuClicked(NhanVien_Panel);
             }
         });
         Jpanel_PhieuNhap.addMouseListener(new PanelButtonMouseAdapter(Jpanel_PhieuNhap) {
             @Override
             public void mouseClicked(MouseEvent e) {
-                Jpanel_BanHang.setBackground(new Color(0, 51, 51));
-                Jpanel_DoiTra.setBackground(new Color(0, 51, 51));
-                Jpanel_KhachHang.setBackground(new Color(0, 51, 51));
-                Jpanel_KhuyenMai.setBackground(new Color(0, 51, 51));
-                Jpanel_NhaCungCap.setBackground(new Color(0, 51, 51));
-                Jpanel_NhanVien.setBackground(new Color(0, 51, 51));
+                TatChonCacMuc();
                 Jpanel_PhieuNhap.setBackground(new Color(112, 128, 144));
-                Jpanel_SanPham.setBackground(new Color(0, 51, 51));
-                Jpanel_TaiKhoan.setBackground(new Color(0, 51, 51));
-                Jpanel_ThongKe.setBackground(new Color(0, 51, 51));
-                Jpanel_HoaDon.setBackground(new Color(0, 51, 51));
-                Jpanel_TrangChu.setBackground(new Color(0, 51, 51));
+
                 menuClicked(PhieuNhap_Panel);
             }
         });
-        Jpanel_SanPham.addMouseListener(new PanelButtonMouseAdapter(Jpanel_SanPham) {
+        Jpanel_QuanLyTau.addMouseListener(new PanelButtonMouseAdapter(Jpanel_QuanLyTau) {
             @Override
             public void mouseClicked(MouseEvent e) {
-                Jpanel_BanHang.setBackground(new Color(0, 51, 51));
-                Jpanel_DoiTra.setBackground(new Color(0, 51, 51));
-                Jpanel_KhachHang.setBackground(new Color(0, 51, 51));
-                Jpanel_KhuyenMai.setBackground(new Color(0, 51, 51));
-                Jpanel_NhaCungCap.setBackground(new Color(0, 51, 51));
-                Jpanel_NhanVien.setBackground(new Color(0, 51, 51));
-                Jpanel_PhieuNhap.setBackground(new Color(0, 51, 51));
-                Jpanel_SanPham.setBackground(new Color(112, 128, 144));
-                Jpanel_TaiKhoan.setBackground(new Color(0, 51, 51));
-                Jpanel_ThongKe.setBackground(new Color(0, 51, 51));
-                Jpanel_HoaDon.setBackground(new Color(0, 51, 51));
-                Jpanel_TrangChu.setBackground(new Color(0, 51, 51));
-                menuClicked(SanPham_Panel);
+                TatChonCacMuc();
+                Jpanel_QuanLyTau.setBackground(new Color(112, 128, 144));
+
+                menuClicked(QuanLyTau_Panel);
             }
         });
         Jpanel_TaiKhoan.addMouseListener(new PanelButtonMouseAdapter(Jpanel_TaiKhoan) {
             @Override
             public void mouseClicked(MouseEvent e) {
-                Jpanel_BanHang.setBackground(new Color(0, 51, 51));
-                Jpanel_DoiTra.setBackground(new Color(0, 51, 51));
-                Jpanel_KhachHang.setBackground(new Color(0, 51, 51));
-                Jpanel_KhuyenMai.setBackground(new Color(0, 51, 51));
-                Jpanel_NhaCungCap.setBackground(new Color(0, 51, 51));
-                Jpanel_NhanVien.setBackground(new Color(0, 51, 51));
-                Jpanel_PhieuNhap.setBackground(new Color(0, 51, 51));
-                Jpanel_SanPham.setBackground(new Color(0, 51, 51));
+                TatChonCacMuc();
                 Jpanel_TaiKhoan.setBackground(new Color(112, 128, 144));
-                Jpanel_ThongKe.setBackground(new Color(0, 51, 51));
-                Jpanel_HoaDon.setBackground(new Color(0, 51, 51));
-                Jpanel_TrangChu.setBackground(new Color(0, 51, 51));
+
                 menuClicked(TaiKhoan_Panel);
             }
         });
         Jpanel_ThongKe.addMouseListener(new PanelButtonMouseAdapter(Jpanel_ThongKe) {
             @Override
             public void mouseClicked(MouseEvent e) {
-                Jpanel_BanHang.setBackground(new Color(0, 51, 51));
-                Jpanel_DoiTra.setBackground(new Color(0, 51, 51));
-                Jpanel_KhachHang.setBackground(new Color(0, 51, 51));
-                Jpanel_KhuyenMai.setBackground(new Color(0, 51, 51));
-                Jpanel_NhaCungCap.setBackground(new Color(0, 51, 51));
-                Jpanel_NhanVien.setBackground(new Color(0, 51, 51));
-                Jpanel_PhieuNhap.setBackground(new Color(0, 51, 51));
-                Jpanel_SanPham.setBackground(new Color(0, 51, 51));
-                Jpanel_TaiKhoan.setBackground(new Color(0, 51, 51));
+                TatChonCacMuc();
                 Jpanel_ThongKe.setBackground(new Color(112, 128, 144));
-                Jpanel_HoaDon.setBackground(new Color(0, 51, 51));
-                Jpanel_TrangChu.setBackground(new Color(0, 51, 51));
+
                 menuClicked(ThongKe_Panel);
             }
         });
         Jpanel_HoaDon.addMouseListener(new PanelButtonMouseAdapter(Jpanel_HoaDon) {
             @Override
             public void mouseClicked(MouseEvent e) {
-                Jpanel_BanHang.setBackground(new Color(0, 51, 51));
-                Jpanel_DoiTra.setBackground(new Color(0, 51, 51));
-                Jpanel_KhachHang.setBackground(new Color(0, 51, 51));
-                Jpanel_KhuyenMai.setBackground(new Color(0, 51, 51));
-                Jpanel_NhaCungCap.setBackground(new Color(0, 51, 51));
-                Jpanel_NhanVien.setBackground(new Color(0, 51, 51));
-                Jpanel_PhieuNhap.setBackground(new Color(0, 51, 51));
-                Jpanel_SanPham.setBackground(new Color(0, 51, 51));
-                Jpanel_TaiKhoan.setBackground(new Color(0, 51, 51));
-                Jpanel_ThongKe.setBackground(new Color(0, 51, 51));
+                TatChonCacMuc();
                 Jpanel_HoaDon.setBackground(new Color(112, 128, 144));
-                Jpanel_TrangChu.setBackground(new Color(0, 51, 51));
+
                 menuClicked(HoaDon_Panel);
+            }
+        });
+
+        Jpanel_NhaSanXuat.addMouseListener(new PanelButtonMouseAdapter(Jpanel_NhaSanXuat) {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                TatChonCacMuc();
+                Jpanel_NhaSanXuat.setBackground(new Color(112, 128, 144));
+
+                menuClicked(NhaSanXuat_Panel);
             }
         });
 
@@ -450,7 +363,6 @@ public class TrangChu_GUI extends javax.swing.JFrame {
                 // Định dạng thời gian
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                 String formattedDate = dateFormat.format(now);
-
                 // Đặt thời gian đã định dạng vào JLabel
                 JMenu_Time.setText(formattedDate);
             }
@@ -459,13 +371,33 @@ public class TrangChu_GUI extends javax.swing.JFrame {
 
 //        menuClicked(TrangChu_Panel);
 
+                   TatChonCacMuc();
+                Jpanel_TrangChu.setBackground(new Color(112, 128, 144));
+                menuClicked(TrangChu_Panel);
+
+    }
+
+    private void TatChonCacMuc() {
+        Jpanel_BanHang.setBackground(new Color(0,102,102));
+        Jpanel_DoiTra.setBackground(new Color(0,102,102));
+        Jpanel_KhachHang.setBackground(new Color(0,102,102));
+        Jpanel_KhuyenMai.setBackground(new Color(0,102,102));
+        Jpanel_NhaCungCap.setBackground(new Color(0,102,102));
+        Jpanel_NhanVien.setBackground(new Color(0,102,102));
+        Jpanel_PhieuNhap.setBackground(new Color(0,102,102));
+        Jpanel_QuanLyTau.setBackground(new Color(0,102,102));
+        Jpanel_TaiKhoan.setBackground(new Color(0,102,102));
+        Jpanel_ThongKe.setBackground(new Color(0,102,102));
+        Jpanel_HoaDon.setBackground(new Color(0,102,102));
+        Jpanel_TrangChu.setBackground(new Color(0,102,102));
+        Jpanel_NhaSanXuat.setBackground(new Color(0,102,102));
     }
 
     public void menuClicked(JPanel panel) {
 
-//        TrangChu_Panel.setVisible(false);
+        TrangChu_Panel.setVisible(false);
         BanHang_Panel.setVisible(false);
-        SanPham_Panel.setVisible(false);
+        QuanLyTau_Panel.setVisible(false);
         HoaDon_Panel.setVisible(false);
         KhachHang_Panel.setVisible(false);
         DoiTra_Panel.setVisible(false);
@@ -481,613 +413,376 @@ public class TrangChu_GUI extends javax.swing.JFrame {
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-	// Generated using JFormDesigner Evaluation license - locser
-	private void initComponents() {
-		jMenuBar1 = new JMenuBar();
-		jMenu1 = new JMenu();
-		JMenu_ThayMatKhau = new JMenuItem();
-		JMenu_DangXuat = new JMenuItem();
-		JMenuItem_An = new JMenuItem();
-		jMenu2 = new JMenu();
-		JMenu_GioiThieu = new JMenuItem();
-		JMenu_TroGiup = new JMenuItem();
-		JMenu_Time = new JMenu();
-		Jpanel_Menu = new JPanel();
-		Jpanel_Users = new JPanel();
-		jlb_name = new JLabel();
-		lbl_Users = new JLabel();
-		lbl_ChucVu = new JLabel();
-		Jpanel_TaiKhoan = new JPanel();
-		lbl_TaiKhoan = new JLabel();
-		lbl_IconTaiKhoan = new JLabel();
-		Jpanel_KhuyenMai = new JPanel();
-		lbl_KhuyenMai = new JLabel();
-		lbl_IconKhuyenMai = new JLabel();
-		Jpanel_PhieuNhap = new JPanel();
-		lbl_PhieuNhap = new JLabel();
-		lbl_IconPhieuNhap = new JLabel();
-		Jpanel_NhaCungCap = new JPanel();
-		lbl_NhaCungCap = new JLabel();
-		lbl_IconNhaCungCap = new JLabel();
-		Jpanel_NhanVien = new JPanel();
-		lbl_NhanVien = new JLabel();
-		lbl_IconNhanVien = new JLabel();
-		Jpanel_ThongKe = new JPanel();
-		lbl_ThongKe = new JLabel();
-		lbl_IconThongKe = new JLabel();
-		Jpanel_DoiTra = new JPanel();
-		lbl_DoiTra = new JLabel();
-		lbl_IconDoiTra = new JLabel();
-		Jpanel_SanPham = new JPanel();
-		lbl_SanPham = new JLabel();
-		lbl_IconSanPham = new JLabel();
-		Jpanel_BanHang = new JPanel();
-		lbl_BanHang = new JLabel();
-		lbl_IconBanHang = new JLabel();
-		Jpanel_TrangChu = new JPanel();
-		lbl_TrangChu = new JLabel();
-		lbl_IconTrangChu = new JLabel();
-		Jpanel_HoaDon = new JPanel();
-		lbl_IconHoaDon = new JLabel();
-		jLabel3 = new JLabel();
-		Jpanel_KhachHang = new JPanel();
-		lbl_IconKhachHang = new JLabel();
-		lbl_KhachHang = new JLabel();
-		Jpanel_Time = new JPanel();
-		Jpanel_Main = new JPanel();
+    private void initComponents() {
 
-		//======== this ========
-		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		setMinimumSize(new Dimension(1200, 720));
-		setUndecorated(true);
-		Container contentPane = getContentPane();
-		contentPane.setLayout(null);
+        Jpanel_Menu = new javax.swing.JPanel();
+        Jpanel_Users = new javax.swing.JPanel();
+        jlb_name = new javax.swing.JLabel();
+        lbl_Users = new javax.swing.JLabel();
+        lbl_ChucVu = new javax.swing.JLabel();
+        Jpanel_KhuyenMai = new javax.swing.JPanel();
+        lbl_KhuyenMai = new javax.swing.JLabel();
+        lbl_IconKhuyenMai = new javax.swing.JLabel();
+        Jpanel_PhieuNhap = new javax.swing.JPanel();
+        lbl_PhieuNhap = new javax.swing.JLabel();
+        lbl_IconPhieuNhap = new javax.swing.JLabel();
+        Jpanel_NhaCungCap = new javax.swing.JPanel();
+        lbl_NhaCungCap = new javax.swing.JLabel();
+        lbl_IconNhaCungCap = new javax.swing.JLabel();
+        Jpanel_NhanVien = new javax.swing.JPanel();
+        lbl_NhanVien = new javax.swing.JLabel();
+        lbl_IconNhanVien = new javax.swing.JLabel();
+        Jpanel_ThongKe = new javax.swing.JPanel();
+        lbl_ThongKe = new javax.swing.JLabel();
+        lbl_IconThongKe = new javax.swing.JLabel();
+        Jpanel_DoiTra = new javax.swing.JPanel();
+        lbl_DoiTra = new javax.swing.JLabel();
+        lbl_IconDoiTra = new javax.swing.JLabel();
+        Jpanel_BanHang = new javax.swing.JPanel();
+        lbl_IconTimTau = new javax.swing.JLabel();
+        lbl_BanHang = new javax.swing.JLabel();
+        Jpanel_TrangChu = new javax.swing.JPanel();
+        lbl_TrangChu = new javax.swing.JLabel();
+        lbl_IconTrangChu = new javax.swing.JLabel();
+        Jpanel_HoaDon = new javax.swing.JPanel();
+        lbl_IconHoaDon = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        Jpanel_KhachHang = new javax.swing.JPanel();
+        lbl_IconKhachHang = new javax.swing.JLabel();
+        lbl_KhachHang = new javax.swing.JLabel();
+        Jpanel_NhaSanXuat = new javax.swing.JPanel();
+        lbl_Nhom19 = new javax.swing.JLabel();
+        lbl_IconNhom19 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        Jpanel_TaiKhoan = new javax.swing.JPanel();
+        lbl_TaiKhoan = new javax.swing.JLabel();
+        lbl_IconTaiKhoan = new javax.swing.JLabel();
+        Jpanel_QuanLyTau = new javax.swing.JPanel();
+        lbl_QuanLyTau = new javax.swing.JLabel();
+        lbl_IconQuanLyTau = new javax.swing.JLabel();
+        Jpanel_Main = new javax.swing.JPanel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        JMenu_ThayMatKhau = new javax.swing.JMenuItem();
+        JMenu_DangXuat = new javax.swing.JMenuItem();
+        JMenuItem_An = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        JMenu_GioiThieu = new javax.swing.JMenuItem();
+        JMenu_TroGiup = new javax.swing.JMenuItem();
+        JMenu_Time = new javax.swing.JMenu();
 
-		//======== jMenuBar1 ========
-		{
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(1200, 720));
+        setUndecorated(true);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-			//======== jMenu1 ========
-			{
-				jMenu1.setText("H\u1ec7 Th\u1ed1ng");
+        Jpanel_Menu.setBackground(new java.awt.Color(0, 51, 51));
+        Jpanel_Menu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Jpanel_Menu.setMinimumSize(new java.awt.Dimension(180, 672));
+        Jpanel_Menu.setPreferredSize(new java.awt.Dimension(180, 768));
+        Jpanel_Menu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-				//---- JMenu_ThayMatKhau ----
-				JMenu_ThayMatKhau.setText("Thay M\u1eadt Kh\u1ea9u");
-				JMenu_ThayMatKhau.addMouseListener(new MouseAdapter() {
-					public void mouseClicked(MouseEvent e) {
-						JMenu_ThayMatKhauMouseClicked(e);
-					}
-				});
-				JMenu_ThayMatKhau.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						JMenu_ThayMatKhauActionPerformed(e);
-					}
-				});
-				jMenu1.add(JMenu_ThayMatKhau);
+        Jpanel_Users.setBackground(new java.awt.Color(0, 102, 102));
+        Jpanel_Users.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
+        Jpanel_Users.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-				//---- JMenu_DangXuat ----
-				JMenu_DangXuat.setText("\u0110\u0103ng Xu\u1ea5t");
-				JMenu_DangXuat.addMouseListener(new MouseAdapter() {
-					public void mouseClicked(MouseEvent e) {
-						JMenu_DangXuatMouseClicked(e);
-					}
-				});
-				JMenu_DangXuat.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						JMenu_DangXuatActionPerformed(e);
-					}
-				});
-				jMenu1.add(JMenu_DangXuat);
+        jlb_name.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jlb_name.setForeground(new java.awt.Color(255, 255, 255));
+        jlb_name.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlb_name.setText("Phạm Hữu Lộc");
+        Jpanel_Users.add(jlb_name, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 180, 30));
+        Jpanel_Users.add(lbl_Users, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 30, 30));
 
-				//---- JMenuItem_An ----
-				JMenuItem_An.setText("keyDangXuat");
-				jMenu1.add(JMenuItem_An);
-			}
-			jMenuBar1.add(jMenu1);
+        lbl_ChucVu.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        lbl_ChucVu.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_ChucVu.setText("Quản Lý");
+        Jpanel_Users.add(lbl_ChucVu, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 110, 30));
 
-			//======== jMenu2 ========
-			{
-				jMenu2.setText("Tr\u1ee3 Gi\u00fap");
-				jMenu2.setMargin(new Insets(3, 6, 3, 8));
+        Jpanel_Menu.add(Jpanel_Users, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 80));
 
-				//---- JMenu_GioiThieu ----
-				JMenu_GioiThieu.setText("Gi\u1edbi Thi\u1ec7u");
-				JMenu_GioiThieu.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						JMenu_GioiThieuActionPerformed(e);
-					}
-				});
-				jMenu2.add(JMenu_GioiThieu);
+        Jpanel_KhuyenMai.setBackground(new java.awt.Color(0, 102, 102));
+        Jpanel_KhuyenMai.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-				//---- JMenu_TroGiup ----
-				JMenu_TroGiup.setText("Tr\u1ee3 Gi\u00fap");
-				JMenu_TroGiup.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						JMenu_TroGiupActionPerformed(e);
-					}
-				});
-				jMenu2.add(JMenu_TroGiup);
-			}
-			jMenuBar1.add(jMenu2);
+        lbl_KhuyenMai.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        lbl_KhuyenMai.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_KhuyenMai.setText("Khuyến Mãi");
+        Jpanel_KhuyenMai.add(lbl_KhuyenMai, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 100, 29));
+        Jpanel_KhuyenMai.add(lbl_IconKhuyenMai, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 30, 30));
 
-			//======== JMenu_Time ========
-			{
-				JMenu_Time.setText("Time");
-			}
-			jMenuBar1.add(JMenu_Time);
-		}
-		setJMenuBar(jMenuBar1);
+        Jpanel_Menu.add(Jpanel_KhuyenMai, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 580, 180, 50));
 
-		//======== Jpanel_Menu ========
-		{
-			Jpanel_Menu.setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new
-			javax.swing.border.EmptyBorder(0,0,0,0), "JF\u006frmD\u0065sig\u006eer \u0045val\u0075ati\u006fn",javax
-			.swing.border.TitledBorder.CENTER,javax.swing.border.TitledBorder.BOTTOM,new java
-			.awt.Font("Dia\u006cog",java.awt.Font.BOLD,12),java.awt
-			.Color.red),Jpanel_Menu. getBorder()));Jpanel_Menu. addPropertyChangeListener(new java.beans.
-			PropertyChangeListener(){ public void propertyChange(java.beans.PropertyChangeEvent e){if("b\u006frde\u0072".
-			equals(e.getPropertyName()))throw new RuntimeException();}});
-			Jpanel_Menu.setLayout(null);
+        Jpanel_PhieuNhap.setBackground(new java.awt.Color(0, 102, 102));
+        Jpanel_PhieuNhap.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-			//======== Jpanel_Users ========
-			{
-				Jpanel_Users.setBorder(new MatteBorder(0, 0, 2, 0, Color.white));
-				Jpanel_Users.setLayout(null);
+        lbl_PhieuNhap.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        lbl_PhieuNhap.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_PhieuNhap.setText("Phiếu Nhập");
+        Jpanel_PhieuNhap.add(lbl_PhieuNhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 100, 29));
+        Jpanel_PhieuNhap.add(lbl_IconPhieuNhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 30, 30));
 
-				//---- jlb_name ----
-				jlb_name.setHorizontalAlignment(SwingConstants.CENTER);
-				jlb_name.setText("\u0110inh Nguy\u00ean Chung");
-				Jpanel_Users.add(jlb_name);
-				jlb_name.setBounds(0, 40, 180, 30);
-				Jpanel_Users.add(lbl_Users);
-				lbl_Users.setBounds(10, 10, 30, 30);
+        Jpanel_Menu.add(Jpanel_PhieuNhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 530, 180, 50));
 
-				//---- lbl_ChucVu ----
-				lbl_ChucVu.setText("Qu\u1ea3n L\u00fd");
-				Jpanel_Users.add(lbl_ChucVu);
-				lbl_ChucVu.setBounds(60, 10, 110, 30);
+        Jpanel_NhaCungCap.setBackground(new java.awt.Color(0, 102, 102));
+        Jpanel_NhaCungCap.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-				{
-					// compute preferred size
-					Dimension preferredSize = new Dimension();
-					for(int i = 0; i < Jpanel_Users.getComponentCount(); i++) {
-						Rectangle bounds = Jpanel_Users.getComponent(i).getBounds();
-						preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
-						preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
-					}
-					Insets insets = Jpanel_Users.getInsets();
-					preferredSize.width += insets.right;
-					preferredSize.height += insets.bottom;
-					Jpanel_Users.setMinimumSize(preferredSize);
-					Jpanel_Users.setPreferredSize(preferredSize);
-				}
-			}
-			Jpanel_Menu.add(Jpanel_Users);
-			Jpanel_Users.setBounds(0, 0, 180, 80);
+        lbl_NhaCungCap.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        lbl_NhaCungCap.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_NhaCungCap.setText("Nhà Cung Cấp");
+        Jpanel_NhaCungCap.add(lbl_NhaCungCap, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 100, 29));
+        Jpanel_NhaCungCap.add(lbl_IconNhaCungCap, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 30, 30));
 
-			//======== Jpanel_TaiKhoan ========
-			{
-				Jpanel_TaiKhoan.setLayout(null);
+        Jpanel_Menu.add(Jpanel_NhaCungCap, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 480, 180, 50));
 
-				//---- lbl_TaiKhoan ----
-				lbl_TaiKhoan.setText("T\u00e0i Kho\u1ea3n");
-				Jpanel_TaiKhoan.add(lbl_TaiKhoan);
-				lbl_TaiKhoan.setBounds(70, 10, 100, 29);
-				Jpanel_TaiKhoan.add(lbl_IconTaiKhoan);
-				lbl_IconTaiKhoan.setBounds(20, 10, 30, 30);
+        Jpanel_NhanVien.setBackground(new java.awt.Color(0, 102, 102));
+        Jpanel_NhanVien.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-				{
-					// compute preferred size
-					Dimension preferredSize = new Dimension();
-					for(int i = 0; i < Jpanel_TaiKhoan.getComponentCount(); i++) {
-						Rectangle bounds = Jpanel_TaiKhoan.getComponent(i).getBounds();
-						preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
-						preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
-					}
-					Insets insets = Jpanel_TaiKhoan.getInsets();
-					preferredSize.width += insets.right;
-					preferredSize.height += insets.bottom;
-					Jpanel_TaiKhoan.setMinimumSize(preferredSize);
-					Jpanel_TaiKhoan.setPreferredSize(preferredSize);
-				}
-			}
-			Jpanel_Menu.add(Jpanel_TaiKhoan);
-			Jpanel_TaiKhoan.setBounds(0, 630, 180, 50);
+        lbl_NhanVien.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        lbl_NhanVien.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_NhanVien.setText("Nhân Viên");
+        Jpanel_NhanVien.add(lbl_NhanVien, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 100, 29));
+        Jpanel_NhanVien.add(lbl_IconNhanVien, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 30, 30));
 
-			//======== Jpanel_KhuyenMai ========
-			{
-				Jpanel_KhuyenMai.setLayout(null);
+        Jpanel_Menu.add(Jpanel_NhanVien, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 430, 180, 50));
 
-				//---- lbl_KhuyenMai ----
-				lbl_KhuyenMai.setText("Khuy\u1ebfn M\u00e3i");
-				Jpanel_KhuyenMai.add(lbl_KhuyenMai);
-				lbl_KhuyenMai.setBounds(70, 10, 100, 29);
-				Jpanel_KhuyenMai.add(lbl_IconKhuyenMai);
-				lbl_IconKhuyenMai.setBounds(20, 10, 30, 30);
+        Jpanel_ThongKe.setBackground(new java.awt.Color(0, 102, 102));
+        Jpanel_ThongKe.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-				{
-					// compute preferred size
-					Dimension preferredSize = new Dimension();
-					for(int i = 0; i < Jpanel_KhuyenMai.getComponentCount(); i++) {
-						Rectangle bounds = Jpanel_KhuyenMai.getComponent(i).getBounds();
-						preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
-						preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
-					}
-					Insets insets = Jpanel_KhuyenMai.getInsets();
-					preferredSize.width += insets.right;
-					preferredSize.height += insets.bottom;
-					Jpanel_KhuyenMai.setMinimumSize(preferredSize);
-					Jpanel_KhuyenMai.setPreferredSize(preferredSize);
-				}
-			}
-			Jpanel_Menu.add(Jpanel_KhuyenMai);
-			Jpanel_KhuyenMai.setBounds(0, 580, 180, 50);
+        lbl_ThongKe.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        lbl_ThongKe.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_ThongKe.setText("Thống Kê");
+        Jpanel_ThongKe.add(lbl_ThongKe, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 100, 29));
+        Jpanel_ThongKe.add(lbl_IconThongKe, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 30, 30));
 
-			//======== Jpanel_PhieuNhap ========
-			{
-				Jpanel_PhieuNhap.setLayout(null);
+        Jpanel_Menu.add(Jpanel_ThongKe, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 380, 180, 50));
 
-				//---- lbl_PhieuNhap ----
-				lbl_PhieuNhap.setText("Phi\u1ebfu Nh\u1eadp");
-				Jpanel_PhieuNhap.add(lbl_PhieuNhap);
-				lbl_PhieuNhap.setBounds(70, 10, 100, 29);
-				Jpanel_PhieuNhap.add(lbl_IconPhieuNhap);
-				lbl_IconPhieuNhap.setBounds(20, 10, 30, 30);
+        Jpanel_DoiTra.setBackground(new java.awt.Color(0, 102, 102));
+        Jpanel_DoiTra.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-				{
-					// compute preferred size
-					Dimension preferredSize = new Dimension();
-					for(int i = 0; i < Jpanel_PhieuNhap.getComponentCount(); i++) {
-						Rectangle bounds = Jpanel_PhieuNhap.getComponent(i).getBounds();
-						preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
-						preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
-					}
-					Insets insets = Jpanel_PhieuNhap.getInsets();
-					preferredSize.width += insets.right;
-					preferredSize.height += insets.bottom;
-					Jpanel_PhieuNhap.setMinimumSize(preferredSize);
-					Jpanel_PhieuNhap.setPreferredSize(preferredSize);
-				}
-			}
-			Jpanel_Menu.add(Jpanel_PhieuNhap);
-			Jpanel_PhieuNhap.setBounds(0, 530, 180, 50);
+        lbl_DoiTra.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        lbl_DoiTra.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_DoiTra.setText("Đổi Trả");
+        Jpanel_DoiTra.add(lbl_DoiTra, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 100, 29));
+        Jpanel_DoiTra.add(lbl_IconDoiTra, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 30, 30));
 
-			//======== Jpanel_NhaCungCap ========
-			{
-				Jpanel_NhaCungCap.setLayout(null);
+        Jpanel_Menu.add(Jpanel_DoiTra, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 330, 180, 50));
 
-				//---- lbl_NhaCungCap ----
-				lbl_NhaCungCap.setText("Nh\u00e0 Cung C\u1ea5p");
-				Jpanel_NhaCungCap.add(lbl_NhaCungCap);
-				lbl_NhaCungCap.setBounds(70, 10, 100, 29);
-				Jpanel_NhaCungCap.add(lbl_IconNhaCungCap);
-				lbl_IconNhaCungCap.setBounds(20, 10, 30, 30);
+        Jpanel_BanHang.setBackground(new java.awt.Color(0, 102, 102));
+        Jpanel_BanHang.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        Jpanel_BanHang.add(lbl_IconTimTau, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 30, 30));
 
-				{
-					// compute preferred size
-					Dimension preferredSize = new Dimension();
-					for(int i = 0; i < Jpanel_NhaCungCap.getComponentCount(); i++) {
-						Rectangle bounds = Jpanel_NhaCungCap.getComponent(i).getBounds();
-						preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
-						preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
-					}
-					Insets insets = Jpanel_NhaCungCap.getInsets();
-					preferredSize.width += insets.right;
-					preferredSize.height += insets.bottom;
-					Jpanel_NhaCungCap.setMinimumSize(preferredSize);
-					Jpanel_NhaCungCap.setPreferredSize(preferredSize);
-				}
-			}
-			Jpanel_Menu.add(Jpanel_NhaCungCap);
-			Jpanel_NhaCungCap.setBounds(0, 480, 180, 50);
+        lbl_BanHang.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        lbl_BanHang.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_BanHang.setText("Tìm Tàu");
+        Jpanel_BanHang.add(lbl_BanHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 100, 29));
 
-			//======== Jpanel_NhanVien ========
-			{
-				Jpanel_NhanVien.setLayout(null);
+        Jpanel_Menu.add(Jpanel_BanHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 180, 50));
 
-				//---- lbl_NhanVien ----
-				lbl_NhanVien.setText("Nh\u00e2n Vi\u00ean");
-				Jpanel_NhanVien.add(lbl_NhanVien);
-				lbl_NhanVien.setBounds(70, 10, 100, 29);
-				Jpanel_NhanVien.add(lbl_IconNhanVien);
-				lbl_IconNhanVien.setBounds(20, 10, 30, 30);
+        Jpanel_TrangChu.setBackground(new java.awt.Color(0, 102, 102));
+        Jpanel_TrangChu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-				{
-					// compute preferred size
-					Dimension preferredSize = new Dimension();
-					for(int i = 0; i < Jpanel_NhanVien.getComponentCount(); i++) {
-						Rectangle bounds = Jpanel_NhanVien.getComponent(i).getBounds();
-						preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
-						preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
-					}
-					Insets insets = Jpanel_NhanVien.getInsets();
-					preferredSize.width += insets.right;
-					preferredSize.height += insets.bottom;
-					Jpanel_NhanVien.setMinimumSize(preferredSize);
-					Jpanel_NhanVien.setPreferredSize(preferredSize);
-				}
-			}
-			Jpanel_Menu.add(Jpanel_NhanVien);
-			Jpanel_NhanVien.setBounds(0, 430, 180, 50);
+        lbl_TrangChu.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        lbl_TrangChu.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_TrangChu.setText("Trang Chủ");
+        Jpanel_TrangChu.add(lbl_TrangChu, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 100, 29));
+        Jpanel_TrangChu.add(lbl_IconTrangChu, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 30, 30));
 
-			//======== Jpanel_ThongKe ========
-			{
-				Jpanel_ThongKe.setLayout(null);
+        Jpanel_Menu.add(Jpanel_TrangChu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 180, 50));
 
-				//---- lbl_ThongKe ----
-				lbl_ThongKe.setText("Th\u1ed1ng K\u00ea");
-				Jpanel_ThongKe.add(lbl_ThongKe);
-				lbl_ThongKe.setBounds(70, 10, 100, 29);
-				Jpanel_ThongKe.add(lbl_IconThongKe);
-				lbl_IconThongKe.setBounds(20, 10, 30, 30);
+        Jpanel_HoaDon.setBackground(new java.awt.Color(0, 102, 102));
+        Jpanel_HoaDon.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        Jpanel_HoaDon.add(lbl_IconHoaDon, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 30, 30));
 
-				{
-					// compute preferred size
-					Dimension preferredSize = new Dimension();
-					for(int i = 0; i < Jpanel_ThongKe.getComponentCount(); i++) {
-						Rectangle bounds = Jpanel_ThongKe.getComponent(i).getBounds();
-						preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
-						preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
-					}
-					Insets insets = Jpanel_ThongKe.getInsets();
-					preferredSize.width += insets.right;
-					preferredSize.height += insets.bottom;
-					Jpanel_ThongKe.setMinimumSize(preferredSize);
-					Jpanel_ThongKe.setPreferredSize(preferredSize);
-				}
-			}
-			Jpanel_Menu.add(Jpanel_ThongKe);
-			Jpanel_ThongKe.setBounds(0, 380, 180, 50);
+        jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Hóa Đơn");
+        Jpanel_HoaDon.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 100, 29));
 
-			//======== Jpanel_DoiTra ========
-			{
-				Jpanel_DoiTra.setLayout(null);
+        Jpanel_Menu.add(Jpanel_HoaDon, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 180, 50));
 
-				//---- lbl_DoiTra ----
-				lbl_DoiTra.setText("\u0110\u1ed5i Tr\u1ea3");
-				Jpanel_DoiTra.add(lbl_DoiTra);
-				lbl_DoiTra.setBounds(70, 10, 100, 29);
-				Jpanel_DoiTra.add(lbl_IconDoiTra);
-				lbl_IconDoiTra.setBounds(20, 10, 30, 30);
+        Jpanel_KhachHang.setBackground(new java.awt.Color(0, 102, 102));
+        Jpanel_KhachHang.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        Jpanel_KhachHang.add(lbl_IconKhachHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 30, 30));
 
-				{
-					// compute preferred size
-					Dimension preferredSize = new Dimension();
-					for(int i = 0; i < Jpanel_DoiTra.getComponentCount(); i++) {
-						Rectangle bounds = Jpanel_DoiTra.getComponent(i).getBounds();
-						preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
-						preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
-					}
-					Insets insets = Jpanel_DoiTra.getInsets();
-					preferredSize.width += insets.right;
-					preferredSize.height += insets.bottom;
-					Jpanel_DoiTra.setMinimumSize(preferredSize);
-					Jpanel_DoiTra.setPreferredSize(preferredSize);
-				}
-			}
-			Jpanel_Menu.add(Jpanel_DoiTra);
-			Jpanel_DoiTra.setBounds(0, 330, 180, 50);
+        lbl_KhachHang.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        lbl_KhachHang.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_KhachHang.setText("Hành Khách");
+        Jpanel_KhachHang.add(lbl_KhachHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 100, 29));
 
-			//======== Jpanel_SanPham ========
-			{
-				Jpanel_SanPham.setLayout(null);
+        Jpanel_Menu.add(Jpanel_KhachHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 180, 50));
 
-				//---- lbl_SanPham ----
-				lbl_SanPham.setText("S\u1ea3n Ph\u1ea9m");
-				Jpanel_SanPham.add(lbl_SanPham);
-				lbl_SanPham.setBounds(70, 10, 100, 29);
-				Jpanel_SanPham.add(lbl_IconSanPham);
-				lbl_IconSanPham.setBounds(20, 10, 30, 30);
+        Jpanel_NhaSanXuat.setBackground(new java.awt.Color(0, 102, 102));
+        Jpanel_NhaSanXuat.setToolTipText("");
 
-				{
-					// compute preferred size
-					Dimension preferredSize = new Dimension();
-					for(int i = 0; i < Jpanel_SanPham.getComponentCount(); i++) {
-						Rectangle bounds = Jpanel_SanPham.getComponent(i).getBounds();
-						preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
-						preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
-					}
-					Insets insets = Jpanel_SanPham.getInsets();
-					preferredSize.width += insets.right;
-					preferredSize.height += insets.bottom;
-					Jpanel_SanPham.setMinimumSize(preferredSize);
-					Jpanel_SanPham.setPreferredSize(preferredSize);
-				}
-			}
-			Jpanel_Menu.add(Jpanel_SanPham);
-			Jpanel_SanPham.setBounds(0, 180, 180, 50);
+        lbl_Nhom19.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        lbl_Nhom19.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_Nhom19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl_Nhom19.setText("Nhóm 19");
 
-			//======== Jpanel_BanHang ========
-			{
-				Jpanel_BanHang.setLayout(null);
+        lbl_IconNhom19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pic/icon/about-us.png"))); // NOI18N
+        lbl_IconNhom19.setText("jLabel4");
+        lbl_IconNhom19.setMaximumSize(new java.awt.Dimension(30, 30));
+        lbl_IconNhom19.setMinimumSize(new java.awt.Dimension(30, 30));
 
-				//---- lbl_BanHang ----
-				lbl_BanHang.setText("B\u00e1n H\u00e0ng");
-				Jpanel_BanHang.add(lbl_BanHang);
-				lbl_BanHang.setBounds(70, 10, 100, 29);
-				Jpanel_BanHang.add(lbl_IconBanHang);
-				lbl_IconBanHang.setBounds(20, 10, 30, 30);
+        javax.swing.GroupLayout Jpanel_NhaSanXuatLayout = new javax.swing.GroupLayout(Jpanel_NhaSanXuat);
+        Jpanel_NhaSanXuat.setLayout(Jpanel_NhaSanXuatLayout);
+        Jpanel_NhaSanXuatLayout.setHorizontalGroup(
+            Jpanel_NhaSanXuatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Jpanel_NhaSanXuatLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(lbl_IconNhom19, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lbl_Nhom19, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE)
+                .addGap(56, 56, 56))
+        );
+        Jpanel_NhaSanXuatLayout.setVerticalGroup(
+            Jpanel_NhaSanXuatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Jpanel_NhaSanXuatLayout.createSequentialGroup()
+                .addContainerGap(20, Short.MAX_VALUE)
+                .addGroup(Jpanel_NhaSanXuatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbl_IconNhom19, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbl_Nhom19, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18))
+        );
 
-				{
-					// compute preferred size
-					Dimension preferredSize = new Dimension();
-					for(int i = 0; i < Jpanel_BanHang.getComponentCount(); i++) {
-						Rectangle bounds = Jpanel_BanHang.getComponent(i).getBounds();
-						preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
-						preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
-					}
-					Insets insets = Jpanel_BanHang.getInsets();
-					preferredSize.width += insets.right;
-					preferredSize.height += insets.bottom;
-					Jpanel_BanHang.setMinimumSize(preferredSize);
-					Jpanel_BanHang.setPreferredSize(preferredSize);
-				}
-			}
-			Jpanel_Menu.add(Jpanel_BanHang);
-			Jpanel_BanHang.setBounds(0, 130, 180, 50);
+        Jpanel_Menu.add(Jpanel_NhaSanXuat, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 680, 180, 70));
 
-			//======== Jpanel_TrangChu ========
-			{
-				Jpanel_TrangChu.setLayout(null);
+        jPanel1.setBackground(new java.awt.Color(0, 102, 102));
 
-				//---- lbl_TrangChu ----
-				lbl_TrangChu.setText("Trang Ch\u1ee7");
-				Jpanel_TrangChu.add(lbl_TrangChu);
-				lbl_TrangChu.setBounds(70, 10, 100, 29);
-				Jpanel_TrangChu.add(lbl_IconTrangChu);
-				lbl_IconTrangChu.setBounds(20, 10, 30, 30);
+        jLabel1.setText("jLabel1");
 
-				{
-					// compute preferred size
-					Dimension preferredSize = new Dimension();
-					for(int i = 0; i < Jpanel_TrangChu.getComponentCount(); i++) {
-						Rectangle bounds = Jpanel_TrangChu.getComponent(i).getBounds();
-						preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
-						preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
-					}
-					Insets insets = Jpanel_TrangChu.getInsets();
-					preferredSize.width += insets.right;
-					preferredSize.height += insets.bottom;
-					Jpanel_TrangChu.setMinimumSize(preferredSize);
-					Jpanel_TrangChu.setPreferredSize(preferredSize);
-				}
-			}
-			Jpanel_Menu.add(Jpanel_TrangChu);
-			Jpanel_TrangChu.setBounds(0, 80, 180, 50);
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, Short.MAX_VALUE)
+                .addContainerGap(132, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
+                .addContainerGap(29, Short.MAX_VALUE))
+        );
 
-			//======== Jpanel_HoaDon ========
-			{
-				Jpanel_HoaDon.setLayout(null);
-				Jpanel_HoaDon.add(lbl_IconHoaDon);
-				lbl_IconHoaDon.setBounds(20, 10, 30, 30);
+        Jpanel_Menu.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-				//---- jLabel3 ----
-				jLabel3.setText("H\u00f3a \u0110\u01a1n");
-				Jpanel_HoaDon.add(jLabel3);
-				jLabel3.setBounds(70, 10, 100, 29);
+        Jpanel_TaiKhoan.setBackground(new java.awt.Color(0, 102, 102));
+        Jpanel_TaiKhoan.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-				{
-					// compute preferred size
-					Dimension preferredSize = new Dimension();
-					for(int i = 0; i < Jpanel_HoaDon.getComponentCount(); i++) {
-						Rectangle bounds = Jpanel_HoaDon.getComponent(i).getBounds();
-						preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
-						preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
-					}
-					Insets insets = Jpanel_HoaDon.getInsets();
-					preferredSize.width += insets.right;
-					preferredSize.height += insets.bottom;
-					Jpanel_HoaDon.setMinimumSize(preferredSize);
-					Jpanel_HoaDon.setPreferredSize(preferredSize);
-				}
-			}
-			Jpanel_Menu.add(Jpanel_HoaDon);
-			Jpanel_HoaDon.setBounds(0, 230, 180, 50);
+        lbl_TaiKhoan.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        lbl_TaiKhoan.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_TaiKhoan.setText("Tài Khoản");
+        Jpanel_TaiKhoan.add(lbl_TaiKhoan, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 100, 29));
+        Jpanel_TaiKhoan.add(lbl_IconTaiKhoan, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 30, 30));
 
-			//======== Jpanel_KhachHang ========
-			{
-				Jpanel_KhachHang.setLayout(null);
-				Jpanel_KhachHang.add(lbl_IconKhachHang);
-				lbl_IconKhachHang.setBounds(20, 10, 30, 30);
+        Jpanel_Menu.add(Jpanel_TaiKhoan, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 630, 180, 50));
 
-				//---- lbl_KhachHang ----
-				lbl_KhachHang.setText("Kh\u00e1ch H\u00e0ng");
-				Jpanel_KhachHang.add(lbl_KhachHang);
-				lbl_KhachHang.setBounds(70, 10, 100, 29);
+        Jpanel_QuanLyTau.setBackground(new java.awt.Color(0, 102, 102));
+        Jpanel_QuanLyTau.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-				{
-					// compute preferred size
-					Dimension preferredSize = new Dimension();
-					for(int i = 0; i < Jpanel_KhachHang.getComponentCount(); i++) {
-						Rectangle bounds = Jpanel_KhachHang.getComponent(i).getBounds();
-						preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
-						preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
-					}
-					Insets insets = Jpanel_KhachHang.getInsets();
-					preferredSize.width += insets.right;
-					preferredSize.height += insets.bottom;
-					Jpanel_KhachHang.setMinimumSize(preferredSize);
-					Jpanel_KhachHang.setPreferredSize(preferredSize);
-				}
-			}
-			Jpanel_Menu.add(Jpanel_KhachHang);
-			Jpanel_KhachHang.setBounds(0, 280, 180, 50);
+        lbl_QuanLyTau.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        lbl_QuanLyTau.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_QuanLyTau.setText("Quản Lý Tàu");
+        Jpanel_QuanLyTau.add(lbl_QuanLyTau, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 100, 29));
+        Jpanel_QuanLyTau.add(lbl_IconQuanLyTau, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 30, 30));
 
-			//======== Jpanel_Time ========
-			{
+        Jpanel_Menu.add(Jpanel_QuanLyTau, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 180, 50));
 
-				GroupLayout Jpanel_TimeLayout = new GroupLayout(Jpanel_Time);
-				Jpanel_Time.setLayout(Jpanel_TimeLayout);
-				Jpanel_TimeLayout.setHorizontalGroup(
-					Jpanel_TimeLayout.createParallelGroup()
-						.add(0, 180, Short.MAX_VALUE)
-				);
-				Jpanel_TimeLayout.setVerticalGroup(
-					Jpanel_TimeLayout.createParallelGroup()
-						.add(0, 18, Short.MAX_VALUE)
-				);
-			}
-			Jpanel_Menu.add(Jpanel_Time);
-			Jpanel_Time.setBounds(0, 680, 180, 18);
+        getContentPane().add(Jpanel_Menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 750));
 
-			{
-				// compute preferred size
-				Dimension preferredSize = new Dimension();
-				for(int i = 0; i < Jpanel_Menu.getComponentCount(); i++) {
-					Rectangle bounds = Jpanel_Menu.getComponent(i).getBounds();
-					preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
-					preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
-				}
-				Insets insets = Jpanel_Menu.getInsets();
-				preferredSize.width += insets.right;
-				preferredSize.height += insets.bottom;
-				Jpanel_Menu.setMinimumSize(preferredSize);
-				Jpanel_Menu.setPreferredSize(preferredSize);
-			}
-		}
-		contentPane.add(Jpanel_Menu);
-		Jpanel_Menu.setBounds(0, 0, 180, 750);
+        Jpanel_Main.setBackground(new java.awt.Color(204, 204, 255));
+        Jpanel_Main.setPreferredSize(new java.awt.Dimension(1355, 843));
 
-		//======== Jpanel_Main ========
-		{
+        javax.swing.GroupLayout Jpanel_MainLayout = new javax.swing.GroupLayout(Jpanel_Main);
+        Jpanel_Main.setLayout(Jpanel_MainLayout);
+        Jpanel_MainLayout.setHorizontalGroup(
+            Jpanel_MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1186, Short.MAX_VALUE)
+        );
+        Jpanel_MainLayout.setVerticalGroup(
+            Jpanel_MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 750, Short.MAX_VALUE)
+        );
 
-			GroupLayout Jpanel_MainLayout = new GroupLayout(Jpanel_Main);
-			Jpanel_Main.setLayout(Jpanel_MainLayout);
-			Jpanel_MainLayout.setHorizontalGroup(
-				Jpanel_MainLayout.createParallelGroup()
-					.add(0, 0, Short.MAX_VALUE)
-			);
-			Jpanel_MainLayout.setVerticalGroup(
-				Jpanel_MainLayout.createParallelGroup()
-					.add(0, 750, Short.MAX_VALUE)
-			);
-		}
-		contentPane.add(Jpanel_Main);
-		Jpanel_Main.setBounds(180, 0, 1186, 750);
+        getContentPane().add(Jpanel_Main, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 0, 1186, 750));
 
-		{
-			// compute preferred size
-			Dimension preferredSize = new Dimension();
-			for(int i = 0; i < contentPane.getComponentCount(); i++) {
-				Rectangle bounds = contentPane.getComponent(i).getBounds();
-				preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
-				preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
-			}
-			Insets insets = contentPane.getInsets();
-			preferredSize.width += insets.right;
-			preferredSize.height += insets.bottom;
-			((JComponent)contentPane).setMinimumSize(preferredSize);
-			((JComponent)contentPane).setPreferredSize(preferredSize);
-		}
-		pack();
-		setLocationRelativeTo(getOwner());
+        jMenu1.setText("Hệ Thống");
+        jMenu1.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+
+        JMenu_ThayMatKhau.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        JMenu_ThayMatKhau.setText("Thay Mật Khẩu");
+        JMenu_ThayMatKhau.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JMenu_ThayMatKhauMouseClicked(evt);
+            }
+        });
+        JMenu_ThayMatKhau.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JMenu_ThayMatKhauActionPerformed(evt);
+            }
+        });
+        jMenu1.add(JMenu_ThayMatKhau);
+
+        JMenu_DangXuat.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        JMenu_DangXuat.setText("Đăng Xuất");
+        JMenu_DangXuat.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JMenu_DangXuatMouseClicked(evt);
+            }
+        });
+        JMenu_DangXuat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JMenu_DangXuatActionPerformed(evt);
+            }
+        });
+        jMenu1.add(JMenu_DangXuat);
+
+        JMenuItem_An.setText("keyDangXuat");
+        jMenu1.add(JMenuItem_An);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Trợ Giúp");
+        jMenu2.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        jMenu2.setMargin(new java.awt.Insets(3, 6, 3, 8));
+
+        JMenu_GioiThieu.setText("Giới Thiệu");
+        JMenu_GioiThieu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JMenu_GioiThieuActionPerformed(evt);
+            }
+        });
+        jMenu2.add(JMenu_GioiThieu);
+
+        JMenu_TroGiup.setText("Trợ Giúp");
+        JMenu_TroGiup.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JMenu_TroGiupActionPerformed(evt);
+            }
+        });
+        jMenu2.add(JMenu_TroGiup);
+
+        jMenuBar1.add(jMenu2);
+
+        JMenu_Time.setText("Time");
+        JMenu_Time.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        jMenuBar1.add(JMenu_Time);
+
+        setJMenuBar(jMenuBar1);
+
+        pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void JMenu_DangXuatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMenu_DangXuatActionPerformed
         // TODO add your handling code here:
-//        DangNhap_GUI dangnhap = new DangNhap_GUI();
+        DangNhap dangnhap = new DangNhap();
         int hoi = JOptionPane.showConfirmDialog(null, "Bạn có chắn muốn đăng xuất ?", "Chú ý !", JOptionPane.YES_NO_OPTION);
         if (hoi == JOptionPane.YES_OPTION) {
-//            dangnhap.setVisible(true);
+            dangnhap.setVisible(true);
             dispose();
         }
 
@@ -1143,7 +838,7 @@ public class TrangChu_GUI extends javax.swing.JFrame {
 
         @Override
         public void mouseExited(MouseEvent e) {
-//            panel.setBackground(new Color(0, 51, 51));
+//            panel.setBackground(new Color(0,102,0));
         }
 
         @Override
@@ -1159,72 +854,91 @@ public class TrangChu_GUI extends javax.swing.JFrame {
     }
     //
 
-//    private TrangChu_JPanel TrangChu_Panel;
-    private BanHang_JPanel BanHang_Panel;
-    private SanPham_JPanel SanPham_Panel;
+    private TrangChu_JPanel TrangChu_Panel;
+
+    private BanVe_JPanel BanHang_Panel;
+//    private SanPham_JPanel SanPham_Panel;
+    private QuanLyTau_JPanel QuanLyTau_Panel;
     private HoaDon_JPanel HoaDon_Panel;
-    private DoiTra_JPanel DoiTra_Panel;
+    private TrangChu_JPanel DoiTra_Panel;
     private KhachHang_JPanel KhachHang_Panel;
-    private ThongKe_JPanel ThongKe_Panel;
+    private TrangChu_JPanel ThongKe_Panel;
     private NhanVien_JPanel NhanVien_Panel;
-    private NhaCungCap_JPanel NhaCungCap_Panel;
-    private KhuyenMai_JPanel KhuyenMai_Panel;
-    private PhieuNhap_JPanel PhieuNhap_Panel;
-    private TaiKhoan_JPanel TaiKhoan_Panel;
+    private TrangChu_JPanel NhaCungCap_Panel;
+    private TrangChu_JPanel KhuyenMai_Panel;
+    private TrangChu_JPanel PhieuNhap_Panel;
+    private TrangChu_JPanel TaiKhoan_Panel;
+    private NhaSanXuat_JPanel NhaSanXuat_Panel;
+//    private SanPham_JPanel SanPham_Panel;
+
+//    private BanHang_JPanel BanHang_Panel;
+//    private SanPham_JPanel SanPham_Panel;
+//    private HoaDon_JPanel HoaDon_Panel;
+//    private DoiTra_JPanel DoiTra_Panel;
+//    private KhachHang_JPanel KhachHang_Panel;
+//    private ThongKe_JPanel ThongKe_Panel;
+//    private NhanVien_JPanel NhanVien_Panel;
+//    private NhaCungCap_JPanel NhaCungCap_Panel;
+//    private KhuyenMai_JPanel KhuyenMai_Panel;
+//    private PhieuNhap_JPanel PhieuNhap_Panel;
+//    private TaiKhoan_JPanel TaiKhoan_Panel;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-	// Generated using JFormDesigner Evaluation license - locser
-	private JMenuBar jMenuBar1;
-	private JMenu jMenu1;
-	private JMenuItem JMenu_ThayMatKhau;
-	private JMenuItem JMenu_DangXuat;
-	private JMenuItem JMenuItem_An;
-	private JMenu jMenu2;
-	private JMenuItem JMenu_GioiThieu;
-	private JMenuItem JMenu_TroGiup;
-	private JMenu JMenu_Time;
-	private JPanel Jpanel_Menu;
-	private JPanel Jpanel_Users;
-	private JLabel jlb_name;
-	private JLabel lbl_Users;
-	private JLabel lbl_ChucVu;
-	private JPanel Jpanel_TaiKhoan;
-	private JLabel lbl_TaiKhoan;
-	private JLabel lbl_IconTaiKhoan;
-	private JPanel Jpanel_KhuyenMai;
-	private JLabel lbl_KhuyenMai;
-	private JLabel lbl_IconKhuyenMai;
-	private JPanel Jpanel_PhieuNhap;
-	private JLabel lbl_PhieuNhap;
-	private JLabel lbl_IconPhieuNhap;
-	private JPanel Jpanel_NhaCungCap;
-	private JLabel lbl_NhaCungCap;
-	private JLabel lbl_IconNhaCungCap;
-	private JPanel Jpanel_NhanVien;
-	private JLabel lbl_NhanVien;
-	private JLabel lbl_IconNhanVien;
-	private JPanel Jpanel_ThongKe;
-	private JLabel lbl_ThongKe;
-	private JLabel lbl_IconThongKe;
-	private JPanel Jpanel_DoiTra;
-	private JLabel lbl_DoiTra;
-	private JLabel lbl_IconDoiTra;
-	private JPanel Jpanel_SanPham;
-	private JLabel lbl_SanPham;
-	private JLabel lbl_IconSanPham;
-	private JPanel Jpanel_BanHang;
-	private JLabel lbl_BanHang;
-	private JLabel lbl_IconBanHang;
-	private JPanel Jpanel_TrangChu;
-	private JLabel lbl_TrangChu;
-	private JLabel lbl_IconTrangChu;
-	private JPanel Jpanel_HoaDon;
-	private JLabel lbl_IconHoaDon;
-	private JLabel jLabel3;
-	private JPanel Jpanel_KhachHang;
-	private JLabel lbl_IconKhachHang;
-	private JLabel lbl_KhachHang;
-	private JPanel Jpanel_Time;
-	private JPanel Jpanel_Main;
+    private javax.swing.JMenuItem JMenuItem_An;
+    private javax.swing.JMenuItem JMenu_DangXuat;
+    private javax.swing.JMenuItem JMenu_GioiThieu;
+    private javax.swing.JMenuItem JMenu_ThayMatKhau;
+    private javax.swing.JMenu JMenu_Time;
+    private javax.swing.JMenuItem JMenu_TroGiup;
+    private javax.swing.JPanel Jpanel_BanHang;
+    private javax.swing.JPanel Jpanel_DoiTra;
+    private javax.swing.JPanel Jpanel_HoaDon;
+    private javax.swing.JPanel Jpanel_KhachHang;
+    private javax.swing.JPanel Jpanel_KhuyenMai;
+    private javax.swing.JPanel Jpanel_Main;
+    private javax.swing.JPanel Jpanel_Menu;
+    private javax.swing.JPanel Jpanel_NhaCungCap;
+    private javax.swing.JPanel Jpanel_NhaSanXuat;
+    private javax.swing.JPanel Jpanel_NhanVien;
+    private javax.swing.JPanel Jpanel_PhieuNhap;
+    private javax.swing.JPanel Jpanel_QuanLyTau;
+    private javax.swing.JPanel Jpanel_TaiKhoan;
+    private javax.swing.JPanel Jpanel_ThongKe;
+    private javax.swing.JPanel Jpanel_TrangChu;
+    private javax.swing.JPanel Jpanel_Users;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel jlb_name;
+    private javax.swing.JLabel lbl_BanHang;
+    private javax.swing.JLabel lbl_ChucVu;
+    private javax.swing.JLabel lbl_DoiTra;
+    private javax.swing.JLabel lbl_IconDoiTra;
+    private javax.swing.JLabel lbl_IconHoaDon;
+    private javax.swing.JLabel lbl_IconKhachHang;
+    private javax.swing.JLabel lbl_IconKhuyenMai;
+    private javax.swing.JLabel lbl_IconNhaCungCap;
+    private javax.swing.JLabel lbl_IconNhanVien;
+    private javax.swing.JLabel lbl_IconNhom19;
+    private javax.swing.JLabel lbl_IconPhieuNhap;
+    private javax.swing.JLabel lbl_IconQuanLyTau;
+    private javax.swing.JLabel lbl_IconTaiKhoan;
+    private javax.swing.JLabel lbl_IconThongKe;
+    private javax.swing.JLabel lbl_IconTimTau;
+    private javax.swing.JLabel lbl_IconTrangChu;
+    private javax.swing.JLabel lbl_KhachHang;
+    private javax.swing.JLabel lbl_KhuyenMai;
+    private javax.swing.JLabel lbl_NhaCungCap;
+    private javax.swing.JLabel lbl_NhanVien;
+    private javax.swing.JLabel lbl_Nhom19;
+    private javax.swing.JLabel lbl_PhieuNhap;
+    private javax.swing.JLabel lbl_QuanLyTau;
+    private javax.swing.JLabel lbl_TaiKhoan;
+    private javax.swing.JLabel lbl_ThongKe;
+    private javax.swing.JLabel lbl_TrangChu;
+    private javax.swing.JLabel lbl_Users;
     // End of variables declaration//GEN-END:variables
 }
