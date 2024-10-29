@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author                             
+ * @author Nguyen Huy Hoang
  */
 public interface ChiTietDoiTra_Interface {
     public boolean themChiTietDoiTra(ChiTietDoiTraEntity ctdt);

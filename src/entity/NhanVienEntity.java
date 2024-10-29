@@ -17,9 +17,10 @@ public class NhanVienEntity {
     private Date ngayTao;
     private Date ngayCapNhat;
 
+    private String taiKhoan;
     private String matKhau;
 
-    public NhanVienEntity(String maNV, String ten, int loai, Date ngaySinh, String email, String soDienThoai, String diaChi, int trangThai, Date ngayTao, Date ngayCapNhat, String matKhau) {
+    public NhanVienEntity(String maNV, String ten, int loai, Date ngaySinh, String email, String soDienThoai, String diaChi, int trangThai, Date ngayTao, Date ngayCapNhat, String taiKhoan,String matKhau) {
         this.maNV = maNV;
         this.ten = ten;
         this.loai = loai;
@@ -122,7 +123,16 @@ public class NhanVienEntity {
         this.ngayCapNhat = ngayCapNhat;
     }
 
-    public String getMatKhau() {
+    
+    public String getTaiKhoan() {
+		return taiKhoan;
+	}
+
+	public void setTaiKhoan(String taiKhoan) {
+		this.taiKhoan = taiKhoan;
+	}
+
+	public String getMatKhau() {
         return matKhau;
     }
 
@@ -186,6 +196,7 @@ public class NhanVienEntity {
                 ", trangThai=" + trangThai +
                 ", ngayTao=" + ngayTao +
                 ", ngayCapNhat=" + ngayCapNhat +
+                ", taiKhoan='" + taiKhoan + '\'' +
                 ", matKhau='" + matKhau + '\'' +
                 '}';
     }
