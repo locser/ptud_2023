@@ -288,11 +288,11 @@ public class HoaDon_JPanel extends javax.swing.JPanel {
         XoahetDuLieuTrenTable();
         DocDuLieuTuSQLvaoTable();
         if (!txt_MaHoaDon.getText().equals("") && dateNgayLap.getDate() == null) {
-            HoaDonEntity hd = new HoaDonEntity();
+//            HoaDonEntity hd = new HoaDonEntity();
             try {
-                hd = hdbus.getHoaDonTheoMaHD(txt_MaHoaDon.getText());
+//                hd = hdbus.getHoaDonTheoMaHD(txt_MaHoaDon.getText());
                 XoahetDuLieuTrenTable();
-                addRows(new Object[]{hd.getMaHD(), hd.getKhachHang().getMaKH(), hd.getNhanVien().getMaNV(), hd.getChuongTrinhKM().getMaCTKM(), hd.getNgayLapHD(), hd.getTienKhuyenMai(), hd.getTongTien(), hd.getTienThanhToan()});
+//                addRows(new Object[]{hd.getMaHD(), hd.getKhachHang().getMaKH(), hd.getNhanVien().getMaNV(), hd.getChuongTrinhKM().getMaCTKM(), hd.getNgayLapHD(), hd.getTienKhuyenMai(), hd.getTongTien(), hd.getTienThanhToan()});
             } catch (Exception e) {
 //                JOptionPane.showMessageDialog(null, "Không tìm thấy hoá đơn này !");
             }
@@ -304,7 +304,7 @@ public class HoaDon_JPanel extends javax.swing.JPanel {
                 ds = hdbus.getHoaDonTheoNgayLap(ngaylap);
                 XoahetDuLieuTrenTable();
                 for (HoaDonEntity hd : ds) {
-                    addRows(new Object[]{hd.getMaHD(), hd.getKhachHang().getMaKH(), hd.getNhanVien().getMaNV(), hd.getChuongTrinhKM().getMaCTKM(), hd.getNgayLapHD(), hd.getTienKhuyenMai(), hd.getTongTien(), hd.getTienThanhToan()});
+//                    addRows(new Object[]{hd.getMaHD(), hd.getKhachHang().getMaKH(), hd.getNhanVien().getMaNV(), hd.getChuongTrinhKM().getMaCTKM(), hd.getNgayLapHD(), hd.getTienKhuyenMai(), hd.getTongTien(), hd.getTienThanhToan()});
                 }
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Không tìm thấy hoá đơn này !");
@@ -323,7 +323,7 @@ public class HoaDon_JPanel extends javax.swing.JPanel {
                 ds = hdbus.getHoaDonTheoMaHDvaNgayLap(txt_MaHoaDon.getText(),ngaylap);
                 XoahetDuLieuTrenTable();
                 for (HoaDonEntity hd : ds) {
-                    addRows(new Object[]{hd.getMaHD(),hd.getKhachHang().getMaKH(),hd.getNhanVien().getMaNV(),hd.getChuongTrinhKM().getMaCTKM(),hd.getNgayLapHD(),hd.getTienKhuyenMai(), hd.getTongTien(), hd.getTienThanhToan()});
+//                    addRows(new Object[]{hd.getMaHD(),hd.getKhachHang().getMaKH(),hd.getNhanVien().getMaNV(),hd.getChuongTrinhKM().getMaCTKM(),hd.getNgayLapHD(),hd.getTienKhuyenMai(), hd.getTongTien(), hd.getTienThanhToan()});
                 }
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Không tìm thấy hoá đơn này !");
@@ -353,7 +353,7 @@ public class HoaDon_JPanel extends javax.swing.JPanel {
                         else {
                             XoahetDuLieuTrenTable();
                         for (HoaDonEntity hd : ds) {
-                            addRows(new Object[]{hd.getMaHD(),hd.getKhachHang().getMaKH(),hd.getNhanVien().getMaNV(),hd.getChuongTrinhKM().getMaCTKM(),hd.getNgayLapHD(),hd.getTienKhuyenMai(), hd.getTongTien(), hd.getTienThanhToan(),hd.getTinhTrang()});
+//                            addRows(new Object[]{hd.getMaHD(),hd.getKhachHang().getMaKH(),hd.getNhanVien().getMaNV(),hd.getChuongTrinhKM().getMaCTKM(),hd.getNgayLapHD(),hd.getTienKhuyenMai(), hd.getTongTien(), hd.getTienThanhToan(),hd.getTinhTrang()});
                         }
                         }
                         }

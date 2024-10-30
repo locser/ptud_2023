@@ -709,9 +709,9 @@ public class TaoDoiTra_JPanel extends javax.swing.JPanel {
             }
             
             if(hoaDon.getKhachHang() != null) {
-                lbl_MaKhachHang.setText(hoaDon.getKhachHang().getMaKH());
-                lbl_TenKhachHang.setText(hoaDon.getKhachHang().getHoTen());
-                lbl_SoDienThoai.setText(hoaDon.getKhachHang().getSoDienThoai());
+//                lbl_MaKhachHang.setText(hoaDon.getKhachHang().getMaKH());
+//                lbl_TenKhachHang.setText(hoaDon.getKhachHang().getHoTen());
+//                lbl_SoDienThoai.setText(hoaDon.getKhachHang().getSoDienThoai());
             }
             
             lbl_NgayLap.setText(hoaDon.getNgayLapHD().toString());

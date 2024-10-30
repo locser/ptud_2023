@@ -95,9 +95,9 @@ public class HoaDon_dao implements  Interface.HoaDon_Interface{
             statement = con.prepareStatement(sql);
             
             statement.setString(1, hoaDon.getMaHD());
-            statement.setString(2, hoaDon.getKhachHang().getMaKH());
-            statement.setString(3, hoaDon.getNhanVien().getMaNV());
-            statement.setString(4, hoaDon.getChuongTrinhKM().getMaCTKM());
+//            statement.setString(2, hoaDon.getKhachHang().getMaKH());
+//            statement.setString(3, hoaDon.getNhanVien().getMaNV());
+//            statement.setString(4, hoaDon.getChuongTrinhKM().getMaCTKM());
             statement.setDate(5, hoaDon.getNgayLapHD());
             statement.setDouble(6, hoaDon.getTienKhuyenMai());
             statement.setDouble(7, hoaDon.getTongTien());
@@ -142,9 +142,9 @@ public class HoaDon_dao implements  Interface.HoaDon_Interface{
             statement = con.prepareStatement(sql);
             
             statement.setString(1, hoaDon.getMaHD());
-            statement.setString(2, hoaDon.getKhachHang().getMaKH());
-            statement.setString(3, hoaDon.getNhanVien().getMaNV());
-            statement.setString(4, hoaDon.getChuongTrinhKM().getMaCTKM());
+//            statement.setString(2, hoaDon.getKhachHang().getMaKH());
+//            statement.setString(3, hoaDon.getNhanVien().getMaNV());
+//            statement.setString(4, hoaDon.getChuongTrinhKM().getMaCTKM());
             statement.setDate(5, hoaDon.getNgayLapHD());
             statement.setDouble(6, hoaDon.getTienKhuyenMai());
             statement.setDouble(7, hoaDon.getTongTien());
@@ -186,15 +186,15 @@ public class HoaDon_dao implements  Interface.HoaDon_Interface{
             String sql = "Update HoaDon set maNV=?, maCTKM=?, ngayLapHD=?, tienKhuyenMai=?, tongTien=?, tienThanhToan=?, tinhTrang=? where maHD=? and maKH=?";
             statement = con.prepareStatement(sql);
             
-            statement.setString(1, hoaDon.getNhanVien().getMaNV());
-            statement.setString(2, hoaDon.getChuongTrinhKM().getMaCTKM());
+//            statement.setString(1, hoaDon.getNhanVien().getMaNV());
+//            statement.setString(2, hoaDon.getChuongTrinhKM().getMaCTKM());
             statement.setDate(3, hoaDon.getNgayLapHD());
             statement.setDouble(4, hoaDon.getTienKhuyenMai());
             statement.setDouble(5, hoaDon.getTongTien());
             statement.setDouble(6, hoaDon.getTienThanhToan());
             statement.setString(7, "Chưa thanh toán");
             statement.setString(8, hoaDon.getMaHD());
-            statement.setString(9, hoaDon.getKhachHang().getMaKH());
+//            statement.setString(9, hoaDon.getKhachHang().getMaKH());
             
             int ketQua = statement.executeUpdate();
             if(ketQua < 1) {
@@ -240,15 +240,15 @@ public class HoaDon_dao implements  Interface.HoaDon_Interface{
             String sql = "Update HoaDon set maNV=?, maCTKM=?, ngayLapHD=?, tienKhuyenMai=?, tongTien=?, tienThanhToan=?, tinhTrang=? where maHD=? and maKH=?";
             statement = con.prepareStatement(sql);
             
-            statement.setString(1, hoaDon.getNhanVien().getMaNV());
-            statement.setString(2, hoaDon.getChuongTrinhKM().getMaCTKM());
+//            statement.setString(1, hoaDon.getNhanVien().getMaNV());
+//            statement.setString(2, hoaDon.getChuongTrinhKM().getMaCTKM());
             statement.setDate(3, hoaDon.getNgayLapHD());
             statement.setDouble(4, hoaDon.getTienKhuyenMai());
             statement.setDouble(5, hoaDon.getTongTien());
             statement.setDouble(6, hoaDon.getTienThanhToan());
             statement.setString(7, "Đã thanh toán");
             statement.setString(8, hoaDon.getMaHD());
-            statement.setString(9, hoaDon.getKhachHang().getMaKH());
+//            statement.setString(9, hoaDon.getKhachHang().getMaKH());
             
             int ketQua = statement.executeUpdate();
             if(ketQua < 1) {

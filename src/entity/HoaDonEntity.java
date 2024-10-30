@@ -22,6 +22,14 @@ public class HoaDonEntity {
         this.ngayCapNhat = ngayCapNhat;
     }
 
+    public HoaDonEntity(String mahd) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public HoaDonEntity(String ma, java.sql.Date ngayLap, KhachHangEntity kh, NhanVienEntity nv, ChuongTrinhKhuyenMaiEntity ctkm, double tienKhuyenMai, double tongTien, double tienThanhToan, TinhTrangHDEnum TinhTrangHDToEnum) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
     public String getMaHD() {
         return maHD;
     }
@@ -107,5 +115,33 @@ public class HoaDonEntity {
 		HoaDonEntity other = (HoaDonEntity) obj;
 		return Objects.equals(maHD, other.maHD);
 	}
+
+    public void setKhachHang(KhachHangEntity kh) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public Object getKhachHang() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public double getTienThanhToan() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public double getTienKhuyenMai() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public java.sql.Date getNgayLapHD() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public Object getChuongTrinhKM() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public Object getNhanVien() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
 }

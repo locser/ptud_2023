@@ -27,17 +27,17 @@ public class KhachHang_dao implements KhachHang_Interface {
             statement.setString(1, id);
             rs = statement.executeQuery();
             if (rs.next()) {
-                GioiTinhEnum gt = ConvertStringToEnum.GioiTinhtoEnum(rs.getString("gioiTinh"));
-                khachHang = new KhachHangEntity(
-                    rs.getString("maKH"),
-                    rs.getString("hoTen"),
-                    gt,
-                    rs.getString("soDienThoai"),
-                    rs.getString("diaChi"),
-                    rs.getString("soCCCD"),
-                    rs.getDate("ngayTao"),
-                    rs.getDate("ngayCapNhat")
-                );
+//                GioiTinhEnum gt = ConvertStringToEnum.GioiTinhtoEnum(rs.getString("gioiTinh"));
+//                khachHang = new KhachHangEntity(
+//                    rs.getString("maKH"),
+//                    rs.getString("hoTen"),
+////                    gt,
+//                    rs.getString("soDienThoai"),
+//                    rs.getString("diaChi"),
+//                    rs.getString("soCCCD"),
+//                    rs.getDate("ngayTao"),
+//                    rs.getDate("ngayCapNhat")
+//                );
             }
             connect.disconnect();
         } catch (SQLException ex) {
@@ -105,18 +105,18 @@ public class KhachHang_dao implements KhachHang_Interface {
             PreparedStatement statement = connect.getConnection().prepareStatement("SELECT * FROM KhachHang");
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                GioiTinhEnum gt = ConvertStringToEnum.stringToGioiTinhEnum(rs.getString("gioiTinh"));
-                KhachHangEntity khachHang = new KhachHangEntity(
-                    rs.getString("maKH"),
-                    rs.getString("hoTen"),
-                    gt,
-                    rs.getString("soDienThoai"),
-                    rs.getString("diaChi"),
-                    rs.getString("soCCCD"),
-                    rs.getDate("ngayTao"),
-                    rs.getDate("ngayCapNhat")
-                );
-                listKH.add(khachHang);
+//                GioiTinhEnum gt = ConvertStringToEnum.stringToGioiTinhEnum(rs.getString("gioiTinh"));
+//                KhachHangEntity khachHang = new KhachHangEntity(
+//                    rs.getString("maKH"),
+//                    rs.getString("hoTen"),
+//                    gt,
+//                    rs.getString("soDienThoai"),
+//                    rs.getString("diaChi"),
+//                    rs.getString("soCCCD"),
+//                    rs.getDate("ngayTao"),
+//                    rs.getDate("ngayCapNhat")
+//                );
+//                listKH.add(khachHang);
             }
             connect.disconnect();
         } catch (SQLException ex) {
@@ -136,17 +136,17 @@ public class KhachHang_dao implements KhachHang_Interface {
             statement.setString(1, sdt);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
-                GioiTinhEnum gt = ConvertStringToEnum.stringToGioiTinhEnum(rs.getString("gioiTinh"));
-                khachHang = new KhachHangEntity(
-                    rs.getString("maKH"),
-                    rs.getString("hoTen"),
-                    gt,
-                    rs.getString("soDienThoai"),
-                    rs.getString("diaChi"),
-                    rs.getString("soCCCD"),
-                    rs.getDate("ngayTao"),
-                    rs.getDate("ngayCapNhat")
-                );
+//                GioiTinhEnum gt = ConvertStringToEnum.stringToGioiTinhEnum(rs.getString("gioiTinh"));
+//                khachHang = new KhachHangEntity(
+//                    rs.getString("maKH"),
+//                    rs.getString("hoTen"),
+//                    gt,
+//                    rs.getString("soDienThoai"),
+//                    rs.getString("diaChi"),
+//                    rs.getString("soCCCD"),
+//                    rs.getDate("ngayTao"),
+//                    rs.getDate("ngayCapNhat")
+//                );
             }
             connect.disconnect();
         } catch (SQLException e) {
@@ -167,17 +167,17 @@ public class KhachHang_dao implements KhachHang_Interface {
             statement.setString(1, ma);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
-                GioiTinhEnum gt = ConvertStringToEnum.stringToGioiTinhEnum(rs.getString("gioiTinh"));
-                khachHang = new KhachHangEntity(
-                    rs.getString("maKH"),
-                    rs.getString("hoTen"),
-                    gt,
-                    rs.getString("soDienThoai"),
-                    rs.getString("diaChi"),
-                    rs.getString("soCCCD"),
-                    rs.getDate("ngayTao"),
-                    rs.getDate("ngayCapNhat")
-                );
+//                GioiTinhEnum gt = ConvertStringToEnum.stringToGioiTinhEnum(rs.getString("gioiTinh"));
+//                khachHang = new KhachHangEntity(
+//                    rs.getString("maKH"),
+//                    rs.getString("hoTen"),
+//                    gt,
+//                    rs.getString("soDienThoai"),
+//                    rs.getString("diaChi"),
+//                    rs.getString("soCCCD"),
+//                    rs.getDate("ngayTao"),
+//                    rs.getDate("ngayCapNhat")
+//                );
             }
             connect.disconnect();
         } catch (SQLException ex) {
