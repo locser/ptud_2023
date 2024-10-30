@@ -561,7 +561,7 @@ public class TrangChu_GUI extends javax.swing.JFrame {
 
         lbl_DoiTra.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         lbl_DoiTra.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_DoiTra.setText("Đổi Trả");
+        lbl_DoiTra.setText("Đổi Trả Vé");
         Jpanel_DoiTra.add(lbl_DoiTra, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 100, 29));
         Jpanel_DoiTra.add(lbl_IconDoiTra, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 30, 30));
 
@@ -573,7 +573,7 @@ public class TrangChu_GUI extends javax.swing.JFrame {
 
         lbl_BanHang.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         lbl_BanHang.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_BanHang.setText("Tìm Tàu");
+        lbl_BanHang.setText("Tìm Vé");
         Jpanel_BanHang.add(lbl_BanHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 100, 29));
 
         Jpanel_Menu.add(Jpanel_BanHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 180, 50));
