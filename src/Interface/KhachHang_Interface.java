@@ -7,10 +7,7 @@ package Interface;
 import entity.KhachHangEntity;
 import java.util.ArrayList;
 
-/**
- *
- * @author HUY
- */ 
+
 public interface KhachHang_Interface {
     KhachHangEntity findOne(String id   );
     boolean update(KhachHangEntity updateKH);
@@ -22,4 +19,5 @@ public interface KhachHang_Interface {
     public KhachHangEntity timKiemTheoSDT(String sdt);
     // Đinh Nguyên Chung
     public KhachHangEntity getKHTheoMa(String ma);
+	KhachHangEntity getKhachHang(String maKH);
 }

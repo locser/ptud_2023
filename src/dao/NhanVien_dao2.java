@@ -29,7 +29,7 @@ public class NhanVien_dao2 implements NhanVienInterface{
 
         
     @Override
-    public Boolean checkNV(String email, String sdt) {
+    public Boolean checkNV(String email, String soDienThoai) {
         ConnectDB.getInstance();
         Connection con = ConnectDB.getConnection();
         PreparedStatement statement = null;
@@ -38,7 +38,7 @@ public class NhanVien_dao2 implements NhanVienInterface{
             String sql = "SELECT * FROM NhanVien WHERE email = ? AND soDienThoai = ?";
             statement = con.prepareStatement(sql);
             statement.setString(1, email);
-            statement.setString(2, sdt);
+            statement.setString(2, soDienThoai);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                return true;
@@ -58,7 +58,7 @@ public class NhanVien_dao2 implements NhanVienInterface{
       
     }
     @Override
-    public NhanVienEntity getNV( String sdt) {
+    public NhanVienEntity getNV( String soDienThoai) {
         NhanVienEntity nv = new NhanVienEntity();
         ConnectDB.getInstance();
         Connection con = ConnectDB.getConnection();
@@ -67,7 +67,7 @@ public class NhanVien_dao2 implements NhanVienInterface{
 
             String sql = "SELECT * FROM NhanVien WHERE  soDienThoai = ?";
             statement = con.prepareStatement(sql);
-            statement.setString(1, sdt);
+            statement.setString(1, soDienThoai);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                
