@@ -23,7 +23,7 @@ public class KhachHang_dao implements KhachHang_Interface {
         ResultSet rs = null;
         try {
             connect.connect();
-            PreparedStatement statement = connect.getConnection().prepareStatement("SELECT * FROM KhachHang WHERE soDienThoai = ?");
+            PreparedStatement statement = connect.getConnection().prepareStatement("SELECT * FROM KhachHang WHERE maKH = ?");
             statement.setString(1, id);
             rs = statement.executeQuery();
             if (rs.next()) {
@@ -105,7 +105,7 @@ public class KhachHang_dao implements KhachHang_Interface {
             PreparedStatement statement = connect.getConnection().prepareStatement("SELECT * FROM KhachHang");
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                GioiTinhEnum gt = ConvertStringToEnum.stringToGioiTinhEnum(rs.getString("gioiTinh"));
+                GioiTinhEnum gt = ConvertStringToEnum.GioiTinhtoEnum(rs.getString("gioiTinh"));
                 KhachHangEntity khachHang = new KhachHangEntity(
                     rs.getString("maKH"),
                     rs.getString("hoTen"),
@@ -136,7 +136,7 @@ public class KhachHang_dao implements KhachHang_Interface {
             statement.setString(1, sdt);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
-                GioiTinhEnum gt = ConvertStringToEnum.stringToGioiTinhEnum(rs.getString("gioiTinh"));
+                GioiTinhEnum gt = ConvertStringToEnum.GioiTinhtoEnum(rs.getString("gioiTinh"));
                 khachHang = new KhachHangEntity(
                     rs.getString("maKH"),
                     rs.getString("hoTen"),
@@ -167,7 +167,7 @@ public class KhachHang_dao implements KhachHang_Interface {
             statement.setString(1, ma);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
-                GioiTinhEnum gt = ConvertStringToEnum.stringToGioiTinhEnum(rs.getString("gioiTinh"));
+                GioiTinhEnum gt = ConvertStringToEnum.GioiTinhtoEnum(rs.getString("gioiTinh"));
                 khachHang = new KhachHangEntity(
                     rs.getString("maKH"),
                     rs.getString("hoTen"),
@@ -188,9 +188,8 @@ public class KhachHang_dao implements KhachHang_Interface {
         return khachHang;
     }
 
-	@Override
-	public KhachHangEntity getKhachHang(String maKH) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public KhachHangEntity getKhachHang(String maKH) {
+        return getKHTheoMa(maKH);
+    }
 }
