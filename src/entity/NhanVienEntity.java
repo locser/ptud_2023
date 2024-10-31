@@ -1,5 +1,7 @@
 package entity;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
@@ -9,7 +11,7 @@ public class NhanVienEntity {
     private String maNV;
     private String ten;
     private int loai;
-    private Date ngaySinh;
+    private GioiTinhEnum gioiTinh;
     private String email;
     private String soDienThoai;
     private String diaChi;
@@ -20,21 +22,26 @@ public class NhanVienEntity {
     private String taiKhoan;
     private String matKhau;
 
-    public NhanVienEntity(String maNV, String ten, int loai, Date ngaySinh, String email, String soDienThoai, String diaChi, int trangThai, Date ngayTao, Date ngayCapNhat, String taiKhoan,String matKhau) {
-        this.maNV = maNV;
-        this.ten = ten;
-        this.loai = loai;
-        this.ngaySinh = ngaySinh;
-        this.email = email;
-        this.soDienThoai = soDienThoai;
-        this.diaChi = diaChi;
-        this.trangThai = trangThai;
-        this.ngayTao = ngayTao;
-        this.ngayCapNhat = ngayCapNhat;
-        this.matKhau = matKhau;
-    }
+   
 
-    public NhanVienEntity(String maNV) {
+	public NhanVienEntity(String maNV, String ten, int loai, GioiTinhEnum gioiTinh, String email, String soDienThoai,
+			String diaChi, int trangThai, Date ngayTao, Date ngayCapNhat, String taiKhoan, String matKhau) {
+		super();
+		this.maNV = maNV;
+		this.ten = ten;
+		this.loai = loai;
+		this.gioiTinh = gioiTinh;
+		this.email = email;
+		this.soDienThoai = soDienThoai;
+		this.diaChi = diaChi;
+		this.trangThai = trangThai;
+		this.ngayTao = ngayTao;
+		this.ngayCapNhat = ngayCapNhat;
+		this.taiKhoan = taiKhoan;
+		this.matKhau = matKhau;
+	}
+
+	public NhanVienEntity(String maNV) {
         super();
         this.maNV = maNV;
     }
@@ -51,15 +58,16 @@ public class NhanVienEntity {
         this.maNV = maNV;
     }
 
-    public Date getNgaySinh() {
-        return ngaySinh;
-    }
+    
+    public GioiTinhEnum getGioiTinh() {
+		return gioiTinh;
+	}
 
-    public void setNgaySinh(Date ngaySinh) {
-        this.ngaySinh = ngaySinh;
-    }
+	public void setGioiTinh(GioiTinhEnum gioiTinh) {
+		this.gioiTinh = gioiTinh;
+	}
 
-    public String getEmail() {
+	public String getEmail() {
         return email;
     }
 
@@ -164,23 +172,8 @@ public class NhanVienEntity {
         return Objects.equals(this.soDienThoai, other.soDienThoai);
     }
 
-    public static int getAge(Date currentDate, Date birthDate) {
-        Calendar calendarCurrent = Calendar.getInstance();
-        calendarCurrent.setTime(currentDate);
-
-        Calendar calendarBirth = Calendar.getInstance();
-        calendarBirth.setTime(birthDate);
-
-        int years = calendarCurrent.get(Calendar.YEAR) - calendarBirth.get(Calendar.YEAR);
-
-        // Check if the birthdate has occurred this year
-        if (calendarBirth.get(Calendar.MONTH) > calendarCurrent.get(Calendar.MONTH)
-                || (calendarBirth.get(Calendar.MONTH) == calendarCurrent.get(Calendar.MONTH)
-                && calendarBirth.get(Calendar.DAY_OF_MONTH) > calendarCurrent.get(Calendar.DAY_OF_MONTH))) {
-            years--;
-        }
-
-        return years;
+    public static int getAge(LocalDate currentDate, LocalDate birthDate) {
+        return currentDate.getYear() - birthDate.getYear();
     }
 
     @Override
@@ -189,7 +182,7 @@ public class NhanVienEntity {
                 "maNV='" + maNV + '\'' +
                 ", ten='" + ten + '\'' +
                 ", loai=" + loai +
-                ", ngaySinh=" + ngaySinh +
+                ", gioiTinh=" + gioiTinh +
                 ", email='" + email + '\'' +
                 ", soDienThoai='" + soDienThoai + '\'' +
                 ", diaChi='" + diaChi + '\'' +
