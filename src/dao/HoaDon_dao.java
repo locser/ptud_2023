@@ -302,7 +302,7 @@ public class HoaDon_dao implements  Interface.HoaDon_Interface{
                 Date ngayTao = rs.getDate("ngayTao");
                 Date ngayCapNhat = rs.getDate("NgayCapNhat");
                 
-                HoaDonEntity hd = new HoaDonEntity(mahd, kh, tongTien, phuongThucThanhToan, toEnum.trangThaiHoaDontoEnum("Chưa thanh toán"), ngayTao, ngayCapNhat);
+                HoaDonEntity hd = new HoaDonEntity(mahd, kh, tongTien, phuongThucThanhToan, toEnum.TinhTrangHDToEnum("Chưa thanh toán"), ngayTao, ngayCapNhat);
                 hdList.add(hd);
             }
             return hdList;
@@ -362,7 +362,7 @@ public class HoaDon_dao implements  Interface.HoaDon_Interface{
                     }
                 }
 
-                hd = new HoaDonEntity(mahd, kh, tongTien, phuongThucThanhToan, toEnum.trangThaiHoaDontoEnum(trangThai), ngayTao, ngayCapNhat);
+                hd = new HoaDonEntity(mahd, kh, tongTien, phuongThucThanhToan, toEnum.TinhTrangHDToEnum(trangThai), ngayTao, ngayCapNhat);
             }
             return hd;
         } catch (Exception e) {
@@ -456,7 +456,7 @@ public class HoaDon_dao implements  Interface.HoaDon_Interface{
                 Date ngayTao = rs.getDate("ngayTao");
                 Date ngayCapNhat = rs.getDate("NgayCapNhat");
                 
-                HoaDonEntity hd = new HoaDonEntity(mahd, kh, tongTien, phuongThucThanhToan, toEnum.trangThaiHoaDontoEnum("Chưa thanh toán"), ngayTao, ngayCapNhat);
+                HoaDonEntity hd = new HoaDonEntity(mahd, kh, tongTien, phuongThucThanhToan, toEnum.TinhTrangHDToEnum("Chưa thanh toán"), ngayTao, ngayCapNhat);
                 hdList.add(hd);
             }
             return hdList;
@@ -494,7 +494,7 @@ public class HoaDon_dao implements  Interface.HoaDon_Interface{
                 Date ngayTao = rs.getDate("ngayTao");
                 Date ngayCapNhat = rs.getDate("NgayCapNhat");
                 
-                hd = new HoaDonEntity(mahd, kh, tongTien, phuongThucThanhToan, toEnum.trangThaiHoaDontoEnum(trangThai), ngayTao, ngayCapNhat);
+                hd = new HoaDonEntity(mahd, kh, tongTien, phuongThucThanhToan, toEnum.TinhTrangHDToEnum(trangThai), ngayTao, ngayCapNhat);
                 
             }
                     
@@ -523,7 +523,7 @@ public class HoaDon_dao implements  Interface.HoaDon_Interface{
                 Date ngayTao = rs.getDate("ngayTao");
                 Date ngayCapNhat = rs.getDate("NgayCapNhat");
                 
-                HoaDonEntity hd = new HoaDonEntity(mahd, kh, tongTien, phuongThucThanhToan, toEnum.trangThaiHoaDontoEnum(trangThai), ngayTao, ngayCapNhat);
+                HoaDonEntity hd = new HoaDonEntity(mahd, kh, tongTien, phuongThucThanhToan, toEnum.TinhTrangHDToEnum(trangThai), ngayTao, ngayCapNhat);
                 dshd.add(hd);
             }
                     
@@ -575,7 +575,7 @@ public class HoaDon_dao implements  Interface.HoaDon_Interface{
                     }
                 }
 
-                HoaDonEntity hd = new HoaDonEntity(mahd, kh, tongTien, phuongThucThanhToan, toEnum.trangThaiHoaDontoEnum(trangThai), ngayTao, ngayCapNhat);
+                HoaDonEntity hd = new HoaDonEntity(mahd, kh, tongTien, phuongThucThanhToan, toEnum.TinhTrangHDToEnum(trangThai), ngayTao, ngayCapNhat);
                 dshd.add(hd);
             }
             return dshd;

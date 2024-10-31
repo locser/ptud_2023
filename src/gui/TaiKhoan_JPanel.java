@@ -1,274 +1,233 @@
 package gui;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import javax.swing.border.*;
-import bus.TaiKhoan_bus;
+import dao.TaiKhoan_dao;
+import dao.NhanVien_dao;
 import entity.TaiKhoanEntity;
-import entity.TinhTrangTKEnum;
+import entity.NhanVienEntity;
 import java.awt.Image;
 import java.net.URL;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import org.jdesktop.layout.GroupLayout;
-import org.jdesktop.layout.LayoutStyle;
 
 public class TaiKhoan_JPanel extends javax.swing.JPanel {
-    private TaiKhoan_bus bus = new TaiKhoan_bus();
-    private DefaultTableModel tableModel = new DefaultTableModel();
+    private TaiKhoan_dao tkDao;
+    private NhanVien_dao nvDao;
+    private DefaultTableModel model;
+
     public TaiKhoan_JPanel() {
         initComponents();
         setBounds(0, 0, 1186, 748);
-        URL imageLamMoi = TaiKhoan_JPanel.class.getResource("/pic/icon/buttonTimKiem.png");
-        ImageIcon img_btnTimKiem = new ImageIcon(imageLamMoi);
-        Image scaled_btnTimKiem = img_btnTimKiem.getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH);
-        img_btnTimKiem = new ImageIcon(scaled_btnTimKiem);
-        btn_TimKiem.setIcon(img_btnTimKiem);
         
-        URL imageXoa = TaiKhoan_JPanel.class.getResource("/pic/icon/buttonXoa.png");
-        ImageIcon img_btnXoa = new ImageIcon(imageXoa);
-        Image scaled_btnXoa = img_btnXoa.getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH);
-        img_btnXoa = new ImageIcon(scaled_btnXoa);
-        btn_CapNhat.setIcon(img_btnXoa);
+        setUpIcons();
         
-        tableModel = (DefaultTableModel) table_DanhSachTK.getModel();
-        table_DanhSachTK.setModel(tableModel);
+        tkDao = new TaiKhoan_dao();
+        nvDao = new NhanVien_dao();
         
-        loadData();
+        model = (DefaultTableModel) tbl_TaiKhoan.getModel();
+        loadDataToTable();
+        
+        // Không cho phép edit trực tiếp trên table
+        tbl_TaiKhoan.setDefaultEditor(Object.class, null);
     }
-
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
-
-        panel_QuanLyTaiKhoan = new javax.swing.JPanel();
-        lbl_QuanLyTaiKhoan = new javax.swing.JLabel();
-        panel_ThaoTacTK = new javax.swing.JPanel();
-        lbl_NhapTenTK = new javax.swing.JLabel();
-        txt_NhapTenTK = new javax.swing.JTextField();
-        btn_TimKiem = new javax.swing.JButton();
-        btn_CapNhat = new javax.swing.JButton();
-        cbo_TinhTrang = new javax.swing.JComboBox<>();
-        lbl_TinhTrang = new javax.swing.JLabel();
-        panel_TableTaiKhoan = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        table_DanhSachTK = new javax.swing.JTable();
-
-        setBackground(new java.awt.Color(187, 205, 197));
-        setPreferredSize(new java.awt.Dimension(1020, 700));
-
-        panel_QuanLyTaiKhoan.setBackground(new java.awt.Color(187, 205, 197));
-
-        lbl_QuanLyTaiKhoan.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        lbl_QuanLyTaiKhoan.setText("Quản Lý Tài Khoản");
-        panel_QuanLyTaiKhoan.add(lbl_QuanLyTaiKhoan);
-
-        panel_ThaoTacTK.setBackground(new java.awt.Color(187, 205, 197));
-        panel_ThaoTacTK.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Các thao tác", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 14))); // NOI18N
-
-        lbl_NhapTenTK.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
-        lbl_NhapTenTK.setText("Nhập tên tài khoản");
-
-        txt_NhapTenTK.setPreferredSize(new java.awt.Dimension(200, 30));
-        txt_NhapTenTK.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_NhapTenTKActionPerformed(evt);
-            }
-        });
-
-        btn_TimKiem.setBackground(new java.awt.Color(0, 51, 51));
-        btn_TimKiem.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
-        btn_TimKiem.setForeground(new java.awt.Color(255, 255, 255));
-        btn_TimKiem.setText("Tìm kiếm");
-        btn_TimKiem.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btn_TimKiem.setPreferredSize(new java.awt.Dimension(123, 30));
-        btn_TimKiem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_TimKiemActionPerformed(evt);
-            }
-        });
-
-        btn_CapNhat.setBackground(new java.awt.Color(0, 51, 51));
-        btn_CapNhat.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
-        btn_CapNhat.setForeground(new java.awt.Color(255, 255, 255));
-        btn_CapNhat.setText("Cập nhật");
-        btn_CapNhat.setToolTipText("");
-        btn_CapNhat.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btn_CapNhat.setPreferredSize(new java.awt.Dimension(123, 30));
-        btn_CapNhat.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_CapNhatActionPerformed(evt);
-            }
-        });
-
-        cbo_TinhTrang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {"Đang hoạt động", "Ngưng hoạt động"}));
-        cbo_TinhTrang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {"Đang hoạt động", "Ngưng hoạt động"}));
-        cbo_TinhTrang.setPreferredSize(new java.awt.Dimension(200, 30));
-
-        lbl_TinhTrang.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
-        lbl_TinhTrang.setText("Tình trạng tài khoản");
-
-        javax.swing.GroupLayout panel_ThaoTacTKLayout = new javax.swing.GroupLayout(panel_ThaoTacTK);
-        panel_ThaoTacTK.setLayout(panel_ThaoTacTKLayout);
-        panel_ThaoTacTKLayout.setHorizontalGroup(
-            panel_ThaoTacTKLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_ThaoTacTKLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(lbl_NhapTenTK)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txt_NhapTenTK, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btn_TimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lbl_TinhTrang)
-                .addGap(18, 18, 18)
-                .addComponent(cbo_TinhTrang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btn_CapNhat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(200, Short.MAX_VALUE))
-        );
-        panel_ThaoTacTKLayout.setVerticalGroup(
-            panel_ThaoTacTKLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_ThaoTacTKLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panel_ThaoTacTKLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbl_NhapTenTK)
-                    .addComponent(txt_NhapTenTK, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_TimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_CapNhat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbo_TinhTrang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbl_TinhTrang))
-                .addContainerGap(11, Short.MAX_VALUE))
-        );
-
-        panel_TableTaiKhoan.setBackground(new java.awt.Color(187, 205, 197));
-        panel_TableTaiKhoan.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Bảng danh sách tài khoản", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 14))); // NOI18N
-
-        table_DanhSachTK.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Chủ sỡ hữu", "Tên tài khoản", "Thời gian đăng nhập", "Tình trạng"
-            }
-        ));
-        table_DanhSachTK.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                table_DanhSachTKMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(table_DanhSachTK);
-
-        javax.swing.GroupLayout panel_TableTaiKhoanLayout = new javax.swing.GroupLayout(panel_TableTaiKhoan);
-        panel_TableTaiKhoan.setLayout(panel_TableTaiKhoanLayout);
-        panel_TableTaiKhoanLayout.setHorizontalGroup(
-            panel_TableTaiKhoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_TableTaiKhoanLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
-        );
-        panel_TableTaiKhoanLayout.setVerticalGroup(
-            panel_TableTaiKhoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_TableTaiKhoanLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 577, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panel_QuanLyTaiKhoan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panel_ThaoTacTK, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panel_TableTaiKhoan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panel_QuanLyTaiKhoan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panel_ThaoTacTK, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panel_TableTaiKhoan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-    }// </editor-fold>//GEN-END:initComponents
-
-    private void txt_NhapTenTKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_NhapTenTKActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_NhapTenTKActionPerformed
-
-    private void btn_CapNhatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_CapNhatActionPerformed
-        int rowSelected = table_DanhSachTK.getSelectedRow();
-        String tenTaiKhoan = (String) tableModel.getValueAt(rowSelected, 1);
-        TaiKhoanEntity tk = bus.findOne(tenTaiKhoan);
-        tk.setTinhTrang(cbo_TinhTrang.getSelectedItem().equals("Đang hoạt động") == true ? TinhTrangTKEnum.DANG_HOAT_DONG : TinhTrangTKEnum.NGUNG_HOAT_DONG);
-        if (bus.update(tk)) {
-            JOptionPane.showMessageDialog(this, "Cập nhật tình trạng tài khoản thành công!");
-    }
-        else JOptionPane.showConfirmDialog(this, "Cập nhật nhật tình trạng tài khoản thất bại!");
-        
-        
-        refresh();
-    }//GEN-LAST:event_btn_CapNhatActionPerformed
-
-    private void btn_TimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_TimKiemActionPerformed
-        String id = txt_NhapTenTK.getText();
-        if (id.isBlank()) {
-            JOptionPane.showMessageDialog(this, "Bạn chưa nhập tài khoản của nhân viên!");
-            return;
-        }
-        TaiKhoanEntity tk = bus.findOne(id);
-        if (tk == null) {
-            JOptionPane.showMessageDialog(this, "Tài khoản không tồn tại!");
-            return;
-        }
-       tableModel.setRowCount(0);
-//       tableModel.addRow(new Object[] {tk.getNhanVien().getHoTen(), tk.getTenTaiKhoan(), tk.getThoiGianDNGN(), tk.getTinhTrang().toString()});
-    }//GEN-LAST:event_btn_TimKiemActionPerformed
-
-    private void table_DanhSachTKMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_DanhSachTKMouseClicked
-        int selectedRow = table_DanhSachTK.getSelectedRow();
-        cbo_TinhTrang.setSelectedItem(tableModel.getValueAt(selectedRow, 3));
-    }//GEN-LAST:event_table_DanhSachTKMouseClicked
-
-     private void loadData() {
-        ArrayList<TaiKhoanEntity> listTK = new ArrayList<>();
-        listTK = bus.findAll();
-        for (TaiKhoanEntity tk : listTK) {
-//            tableModel.addRow(new Object[]{tk.getNhanVien().getHoTen(), tk.getTenTaiKhoan(), tk.getThoiGianDNGN(), tk.getTinhTrang().toString()});
-        }
-    }
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_CapNhat;
-    private javax.swing.JButton btn_TimKiem;
-    private javax.swing.JComboBox<String> cbo_TinhTrang;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lbl_NhapTenTK;
-    private javax.swing.JLabel lbl_QuanLyTaiKhoan;
-    private javax.swing.JLabel lbl_TinhTrang;
-    private javax.swing.JPanel panel_QuanLyTaiKhoan;
-    private javax.swing.JPanel panel_TableTaiKhoan;
-    private javax.swing.JPanel panel_ThaoTacTK;
-    private javax.swing.JTable table_DanhSachTK;
-    private javax.swing.JTextField txt_NhapTenTK;
-    // End of variables declaration//GEN-END:variables
     
-    public void refresh() {
-        txt_NhapTenTK.setText("");
-        tableModel.setRowCount(0);
-        cbo_TinhTrang.setSelectedIndex(-1);
-        loadData();
+    private void setUpIcons() {
+        try {
+            setButtonIcon(btn_TimKiem, "/pic/icon/buttonTimKiem.png");
+            setButtonIcon(btn_LamMoi, "/pic/icon/buttonLamMoi.png");
+            setButtonIcon(btn_Them, "/pic/icon/buttonThem.png");
+            setButtonIcon(btn_CapNhat, "/pic/icon/buttonCapNhat.png");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+    
+    private void setButtonIcon(javax.swing.JButton button, String iconPath) {
+        try {
+            URL iconURL = getClass().getResource(iconPath);
+            if (iconURL != null) {
+                ImageIcon icon = new ImageIcon(iconURL);
+                Image scaledImage = icon.getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH);
+                button.setIcon(new ImageIcon(scaledImage));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadDataToTable() {
+        model.setRowCount(0);
+        ArrayList<TaiKhoanEntity> dsTK = tkDao.findAll();
+        
+        for(TaiKhoanEntity tk : dsTK) {
+            String tenNV = tk.getNhanVien() != null ? tk.getNhanVien().getTen() : "";
+            model.addRow(new Object[] {
+                tk.getTaiKhoan(),
+                tk.getMatKhau(),
+                tenNV,
+                getTrangThaiText(tk.getTrangThai())
+            });
+        }
+    }
+    
+    private String getTrangThaiText(int trangThai) {
+        switch(trangThai) {
+            case 0: return "Ngưng hoạt động";
+            case 1: return "Đang hoạt động";
+            default: return "Không xác định";
+        }
+    }
+    
+    private void btn_TimKiemActionPerformed(java.awt.event.ActionEvent evt) {
+        String taiKhoan = txt_TimKiem.getText().trim();
+        if(taiKhoan.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập tài khoản cần tìm!");
+            return;
+        }
+        
+        TaiKhoanEntity tk = tkDao.findOne(taiKhoan);
+        if(tk == null) {
+            JOptionPane.showMessageDialog(this, "Không tìm thấy tài khoản!");
+            return;
+        }
+        
+        model.setRowCount(0);
+        String tenNV = tk.getNhanVien() != null ? tk.getNhanVien().getTen() : "";
+        model.addRow(new Object[] {
+            tk.getTaiKhoan(),
+            tk.getMatKhau(),
+            tenNV,
+            getTrangThaiText(tk.getTrangThai())
+        });
+    }
+    
+    private void btn_LamMoiActionPerformed(java.awt.event.ActionEvent evt) {
+        txt_TimKiem.setText("");
+        txt_TaiKhoan.setText("");
+        txt_MatKhau.setText("");
+        txt_MaNV.setText("");
+        cmb_TrangThai.setSelectedIndex(0);
+        loadDataToTable();
+    }
+    
+    private void btn_ThemActionPerformed(java.awt.event.ActionEvent evt) {
+        if(!validateInput()) return;
+        
+        String taiKhoan = txt_TaiKhoan.getText().trim();
+        String matKhau = txt_MatKhau.getText().trim();
+        String maNV = txt_MaNV.getText().trim();
+        int trangThai = cmb_TrangThai.getSelectedIndex();
+        
+        NhanVienEntity nv = nvDao.findOne(maNV);
+        if(nv == null) {
+            JOptionPane.showMessageDialog(this, "Không tìm thấy nhân viên!");
+            return;
+        }
+        
+        TaiKhoanEntity tk = new TaiKhoanEntity(taiKhoan, matKhau, nv, trangThai);
+        
+        if(tkDao.insert(tk)) {
+            JOptionPane.showMessageDialog(this, "Thêm tài khoản thành công!");
+            loadDataToTable();
+            btn_LamMoiActionPerformed(evt);
+        } else {
+            JOptionPane.showMessageDialog(this, "Thêm tài khoản thất bại!");
+        }
+    }
+    
+    private void btn_CapNhatActionPerformed(java.awt.event.ActionEvent evt) {
+        int row = tbl_TaiKhoan.getSelectedRow();
+        if(row < 0) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn tài khoản cần cập nhật!");
+            return;
+        }
+        
+        if(!validateInput()) return;
+        
+        String taiKhoan = txt_TaiKhoan.getText().trim();
+        String matKhau = txt_MatKhau.getText().trim();
+        String maNV = txt_MaNV.getText().trim();
+        int trangThai = cmb_TrangThai.getSelectedIndex();
+        
+        NhanVienEntity nv = nvDao.findOne(maNV);
+        if(nv == null) {
+            JOptionPane.showMessageDialog(this, "Không tìm thấy nhân viên!");
+            return;
+        }
+        
+        TaiKhoanEntity tk = new TaiKhoanEntity(taiKhoan, matKhau, nv, trangThai);
+        
+        if(tkDao.update(tk)) {
+            JOptionPane.showMessageDialog(this, "Cập nhật tài khoản thành công!");
+            loadDataToTable();
+            btn_LamMoiActionPerformed(evt);
+        } else {
+            JOptionPane.showMessageDialog(this, "Cập nhật tài khoản thất bại!");
+        }
+    }
+    
+    private void tbl_TaiKhoanMouseClicked(java.awt.event.MouseEvent evt) {
+        int row = tbl_TaiKhoan.getSelectedRow();
+        if(row < 0) return;
+        
+        String taiKhoan = tbl_TaiKhoan.getValueAt(row, 0).toString();
+        TaiKhoanEntity tk = tkDao.findOne(taiKhoan);
+        if(tk == null) return;
+        
+        txt_TaiKhoan.setText(tk.getTaiKhoan());
+        txt_MatKhau.setText(tk.getMatKhau());
+        txt_MaNV.setText(tk.getNhanVien() != null ? tk.getNhanVien().getMaNV() : "");
+        cmb_TrangThai.setSelectedIndex(tk.getTrangThai());
+    }
+    
+    private boolean validateInput() {
+        String taiKhoan = txt_TaiKhoan.getText().trim();
+        String matKhau = txt_MatKhau.getText().trim();
+        String maNV = txt_MaNV.getText().trim();
+        
+        if(taiKhoan.isEmpty() || matKhau.isEmpty() || maNV.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin!");
+            return false;
+        }
+        
+        if(!taiKhoan.matches("^[a-zA-Z0-9]{6,20}$")) {
+            JOptionPane.showMessageDialog(this, "Tài khoản phải từ 6-20 ký tự và không chứa ký tự đặc biệt!");
+            return false;
+        }
+        
+        if(!matKhau.matches("^[a-zA-Z0-9]{6,20}$")) {
+            JOptionPane.showMessageDialog(this, "Mật khẩu phải từ 6-20 ký tự và không chứa ký tự đặc biệt!");
+            return false;
+        }
+        
+        return true;
+    }
+
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+    private void initComponents() {
+        // Generated code here
+    }// </editor-fold>                        
+
+    // Variables declaration - do not modify                     
+    private javax.swing.JButton btn_CapNhat;
+    private javax.swing.JButton btn_LamMoi;
+    private javax.swing.JButton btn_Them;
+    private javax.swing.JButton btn_TimKiem;
+    private javax.swing.JComboBox<String> cmb_TrangThai;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tbl_TaiKhoan;
+    private javax.swing.JTextField txt_MaNV;
+    private javax.swing.JTextField txt_MatKhau;
+    private javax.swing.JTextField txt_TaiKhoan;
+    private javax.swing.JTextField txt_TimKiem;
+    // End of variables declaration                   
 }

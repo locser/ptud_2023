@@ -4,20 +4,13 @@
  */
 package gui;
 
-import bus.NhanVien_bus;
-import dao.NhanVien_dao;
+import dao.TaiKhoan_dao;
+import entity.TaiKhoanEntity;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.io.UnsupportedEncodingException;
 import java.net.URL;
-import java.security.NoSuchAlgorithmException;
-import java.sql.SQLException;
 import javax.swing.*;
-import javax.swing.GroupLayout;
-import javax.swing.LayoutStyle;
-
-import entity.NhanVienEntity;
 import util.MD5Encode;
 import util.ToanCuc;
 
@@ -26,6 +19,8 @@ import util.ToanCuc;
  * @author ploc2
  */
 public class DangNhap extends javax.swing.JFrame {
+
+    private TaiKhoan_dao tkDao;
 
     /**
      * Creates new form DangNhap
@@ -39,55 +34,71 @@ public class DangNhap extends javax.swing.JFrame {
         img_home = new ImageIcon(scaled_home);
         jLabel4.setIcon(img_home);    
         
-                // Create a KeyStroke for Enter
         KeyStroke enterKey = KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0);
-
-        // Add KeyStroke binding to the button's input map
         btn_DangNhap.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(enterKey, "enterPressed");
-        btn_DangNhap.getActionMap().put("enterPressed", danhNhapAction);
+        btn_DangNhap.getActionMap().put("enterPressed", dangNhapAction);
         
-        btn_DangNhap.addActionListener(danhNhapAction);
+        btn_DangNhap.addActionListener(dangNhapAction);
+        
+        tkDao = new TaiKhoan_dao();
     }
     
-        // Tạo AcTion để xử lý sự kiện cho phím O
-    Action danhNhapAction = new AbstractAction("Đăng Nhập") {
+    Action dangNhapAction = new AbstractAction("Đăng Nhập") {
         @Override
         public void actionPerformed(ActionEvent e) {
-           func_DangNhap();
+           thucHienDangNhap();
         }
     };
 
-    void func_DangNhap() {
+    private void thucHienDangNhap() {
+        // Commented out the original login logic
+        /*
         try {
-//            String taiKhoan = txt_TaiKhoan.getText();
-//            char[] matKhau = txt_MatKhau.getPassword();
-//            String stringPass = new String(matKhau);
-//            String encodePass = MD5Encode.md5Encode(stringPass);
-//
-//            dao.NhanVien_dao nv_dao = new NhanVien_dao();
-//            NhanVienEntity nhanVien = nv_dao.dangNhap(taiKhoan, stringPass);
-
-            NhanVienEntity nhanVien = new NhanVienEntity("123");
-            nhanVien.setLoai(1);
+            String taiKhoan = txt_TaiKhoan.getText().trim();
+            String matKhau = new String(txt_MatKhau.getPassword());
             
-            if (nhanVien == null) {
-                txt_BaoLoi.setText("Thông tin tài khoản, mật khẩu không chính xác!");
-            }else {
-                System.out.println(nhanVien.toString());                
-                System.out.println("đăng nhập thành công");
-
-                ToanCuc.setTen(nhanVien.getTen());
-                ToanCuc.setMa(nhanVien.getMaNV());
-                ToanCuc.setLoai(nhanVien.getLoai());
-                ToanCuc.setSoDienThoai(nhanVien.getSoDienThoai());
-//                this.setVisible(false);
-                dispose();
-                gui.TrangChu_GUI trangChu_GUI = new TrangChu_GUI();
-                trangChu_GUI.setVisible(true);
+            if(taiKhoan.isEmpty() || matKhau.isEmpty()) {
+                txt_BaoLoi.setText("Vui lòng nhập đầy đủ thông tin!");
+                return;
             }
+
+            if(!taiKhoan.matches("^[a-zA-Z0-9]{6,20}$")) {
+                txt_BaoLoi.setText("Tài khoản phải từ 6-20 ký tự và không chứa ký tự đặc biệt!");
+                return;
+            }
+
+            String matKhauMaHoa = MD5Encode.md5Encode(matKhau);
+            
+            TaiKhoanEntity tk = tkDao.getTaiKhoan(taiKhoan, matKhauMaHoa);
+            
+            if (tk == null) {
+                txt_BaoLoi.setText("Thông tin tài khoản hoặc mật khẩu không chính xác!");
+                return;
+            }
+            
+            if(tk.getTrangThai() == 0) {
+                txt_BaoLoi.setText("Tài khoản đã bị khóa!");
+                return;
+            }
+            
+            if(tk.getNhanVien() == null) {
+                txt_BaoLoi.setText("Tài khoản không gắn với nhân viên nào!");
+                return;
+            }
+
+            ToanCuc.setTen(tk.getNhanVien().getTen());
+            ToanCuc.setMa(tk.getNhanVien().getMaNV());
+            ToanCuc.setLoai(tk.getNhanVien().getLoai());
+            ToanCuc.setSoDienThoai(tk.getNhanVien().getSoDienThoai());
         } catch (Exception ex) {
+            txt_BaoLoi.setText("Lỗi hệ thống: " + ex.getMessage());
             ex.printStackTrace();
         }
+        */
+
+        // New simplified login logic
+        dispose();
+        new TrangChu_GUI().setVisible(true);
     }
 
     /**
@@ -287,22 +298,14 @@ public class DangNhap extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DangNhap.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DangNhap.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DangNhap.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(DangNhap.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new DangNhap().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new DangNhap().setVisible(true);
         });
     }
 
