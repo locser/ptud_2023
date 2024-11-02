@@ -6,23 +6,21 @@ import java.util.Objects;
 public class TauEntity {
 	private String maTau;
 	private String tenTau;
-	private String gaDi;
-	private String gaDen;
+	private GaTauEntity gaDi;
+	private GaTauEntity gaDen;
 	private Date thoiGianChay;
 	private int soToa;
-	private String loai;
+	private int loai;
 	private int trangThai;
 	private Date ngayTao;
 	private Date ngayCapNhat;
-	private NhanVienEntity maNV;
-
-	public TauEntity(String maTau, String tenTau, String gaDi, String gaDen, Date thoiGianChay, int soToa, String loai,
-			int trangThai, Date ngayTao, Date ngayCapNhat) {
+	private NhanVienEntity nhanVien;
+	public TauEntity(String maTau, String tenTau, GaTauEntity gaDi, GaTauEntity gaDen, int soToa, int loai, int trangThai, Date ngayTao, Date ngayCapNhat) {
 		this.maTau = maTau;
 		this.tenTau = tenTau;
 		this.gaDi = gaDi;
 		this.gaDen = gaDen;
-		this.thoiGianChay = thoiGianChay;
+//		this.thoiGianChay = thoiGianChay;
 		this.soToa = soToa;
 		this.loai = loai;
 		this.trangThai = trangThai;
@@ -30,7 +28,46 @@ public class TauEntity {
 		this.ngayCapNhat = ngayCapNhat;
 	}
 
-	public String getMaTau() {
+	public TauEntity(String maTau, String tenTau, GaTauEntity gaDi, GaTauEntity gaDen, int soToa, int loai,
+					 int trangThai, Date ngayTao, Date ngayCapNhat, NhanVienEntity nhanVien) {
+		this.maTau = maTau;
+		this.tenTau = tenTau;
+		this.gaDi = gaDi;
+		this.gaDen = gaDen;
+		this.soToa = soToa;
+		this.loai = loai;
+		this.trangThai = trangThai;
+		this.ngayTao = ngayTao;
+		this.ngayCapNhat = ngayCapNhat;
+		this.nhanVien =  nhanVien;
+	}
+
+	public TauEntity(String maTau, String tenTau, GaTauEntity gaDi, GaTauEntity gaDen, int soToa, int loai,
+					 int trangThai, NhanVienEntity nhanVien) {
+		this.maTau = maTau;
+		this.tenTau = tenTau;
+		this.gaDi = gaDi;
+		this.gaDen = gaDen;
+		this.soToa = soToa;
+		this.loai = loai;
+		this.trangThai = trangThai;
+		this.nhanVien =  nhanVien;
+	}
+
+
+	public TauEntity(String maTau2) {
+		this.maTau = maTau2;
+	}
+
+	public TauEntity(String maTau2, String tenTau, int soToa) {
+		this.maTau = maTau2;
+		this.tenTau = tenTau;
+		this.soToa = soToa;
+
+
+	}
+
+ public String getMaTau() {
 		return maTau;
 	}
 
@@ -46,19 +83,19 @@ public class TauEntity {
 		this.tenTau = tenTau;
 	}
 
-	public String getGaDi() {
+	public GaTauEntity getGaDi() {
 		return gaDi;
 	}
 
-	public void setGaDi(String gaDi) {
+	public void setGaDi(GaTauEntity gaDi) {
 		this.gaDi = gaDi;
 	}
 
-	public String getGaDen() {
+	public GaTauEntity getGaDen() {
 		return gaDen;
 	}
 
-	public void setGaDen(String gaDen) {
+	public void setGaDen(GaTauEntity gaDen) {
 		this.gaDen = gaDen;
 	}
 
@@ -78,11 +115,11 @@ public class TauEntity {
 		this.soToa = soToa;
 	}
 
-	public String getLoai() {
+	public int getLoai() {
 		return loai;
 	}
 
-	public void setLoai(String loai) {
+	public void setLoai(int loai) {
 		this.loai = loai;
 	}
 
@@ -134,4 +171,11 @@ public class TauEntity {
 		return Objects.equals(maTau, other.maTau);
 	}
 
+	public NhanVienEntity getNhanVien() {
+		return nhanVien;
+	}
+
+	public void setNhanVien(NhanVienEntity nhanVien) {
+		this.nhanVien = nhanVien;
+	}
 }

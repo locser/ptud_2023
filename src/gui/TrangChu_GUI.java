@@ -373,7 +373,7 @@ public class TrangChu_GUI extends javax.swing.JFrame {
 
                    TatChonCacMuc();
                 Jpanel_TrangChu.setBackground(new Color(112, 128, 144));
-                menuClicked(TrangChu_Panel);
+                menuClicked(QuanLyTau_Panel);
 
     }
 

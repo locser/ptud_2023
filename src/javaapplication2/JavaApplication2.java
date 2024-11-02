@@ -26,14 +26,14 @@ public class JavaApplication2 {
         dn.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         dn.setLocationRelativeTo(null);  // Đặt cửa sổ ở giữa màn hình
 
-//        ConnectDB connectDB = new ConnectDB();
-//        try {
-//            connectDB.connect();
-//            System.out.println(ConnectDB.getInstance());
-//
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
+        ConnectDB connectDB = new ConnectDB();
+        try {
+            connectDB.connect();
+            System.out.println(ConnectDB.getInstance());
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
     }
     

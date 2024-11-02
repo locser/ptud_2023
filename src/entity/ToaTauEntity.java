@@ -1,23 +1,48 @@
 package entity;
 
+import java.util.Date;
 import java.util.Objects;
+
 
 public class ToaTauEntity {
     private String maToa;
     private String tenToa;
-    private int soLuongGhe;
-    private String loai;
+    private int soGhe;
+    private int loai;
     private int trangThai;
-    private TauEntity maTau;
+    private Date ngayTao;
+	private Date ngayCapNhat;
+    private TauEntity tau;
 
-    public ToaTauEntity(String maToa, String tenToa, int soLuongGhe, String loai, int trangThai, TauEntity maTau) {
+    public ToaTauEntity(String maToa, String tenToa, int soGhe, int loai, int trangThai, TauEntity tau) {
         this.maToa = maToa;
         this.tenToa = tenToa;
-        this.soLuongGhe = soLuongGhe;
+        this.soGhe = soGhe;
         this.loai = loai;
         this.trangThai = trangThai;
-        this.maTau = maTau;
+        this.tau = tau;
     }
+
+    public ToaTauEntity(String tenToa, int soGhe, int loai, int trangThai, TauEntity tau) {
+        this.tenToa = tenToa;
+        this.soGhe = soGhe;
+        this.loai = loai;
+        this.trangThai = trangThai;
+        this.tau = tau;
+    }
+
+    public ToaTauEntity(String maToa, String tenToa, int soGhe, int loai, int trangThai, Date ngayTao, Date ngayCapNhat, TauEntity tau) {
+        this.maToa = maToa;
+        this.tenToa = tenToa;
+        this.soGhe = soGhe;
+        this.loai = loai;
+        this.trangThai = trangThai;
+        this.tau = tau;
+        this.ngayTao = ngayTao;
+        this.ngayCapNhat = ngayCapNhat;
+    }
+
+
 
     public String getMaToa() {
         return maToa;
@@ -35,19 +60,19 @@ public class ToaTauEntity {
         this.tenToa = tenToa;
     }
 
-    public int getSoLuongGhe() {
-        return soLuongGhe;
+    public int getSoGhe() {
+        return soGhe;
     }
 
-    public void setSoLuongGhe(int soLuongGhe) {
-        this.soLuongGhe = soLuongGhe;
+    public void setSoGhe(int soGhe) {
+        this.soGhe = soGhe;
     }
 
-    public String getLoai() {
+    public int getLoai() {
         return loai;
     }
 
-    public void setLoai(String loai) {
+    public void setLoai(int loai) {
         this.loai = loai;
     }
 
@@ -59,23 +84,38 @@ public class ToaTauEntity {
         this.trangThai = trangThai;
     }
 
-    public TauEntity getMaTau() {
-        return maTau;
+    public TauEntity getTau() {
+        return tau;
     }
 
     public void setMaTau(TauEntity maTau) {
-        this.maTau = maTau;
+        this.tau = maTau;
     }
+
+    public Date getNgayTao () {
+        return this.ngayTao;
+    }
+
+    public Date getNgayCapNhat () {
+        return this.ngayCapNhat;
+    }
+
+    public void setNgayTao(Date ngayTao) {
+		this.ngayTao = ngayTao;
+	}
+	public void setNgayCapNhat(Date ngayCapNhat) {
+		this.ngayCapNhat = ngayCapNhat;
+	}
 
     @Override
     public String toString() {
         return "ToaTauEntity{" +
                 "maToa='" + maToa + '\'' +
                 ", tenToa='" + tenToa + '\'' +
-                ", soLuongGhe=" + soLuongGhe +
+                ", soGhe=" + soGhe +
                 ", loai='" + loai + '\'' +
                 ", trangThai=" + trangThai +
-                ", maTau='" + maTau + '\'' +
+                ", maTau='" + tau.toString() + '\'' +
                 '}';
     }
 

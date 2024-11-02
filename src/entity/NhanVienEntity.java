@@ -43,6 +43,11 @@ public class NhanVienEntity {
         super();
     }
 
+    public NhanVienEntity(String maNV, String tenNhanVien) {
+        this.maNV = maNV;
+        this.ten = tenNhanVien;
+    }
+
     public String getMaNV() {
         return maNV;
     }
