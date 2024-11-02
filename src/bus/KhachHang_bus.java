@@ -53,10 +53,5 @@ public class KhachHang_bus implements KhachHang_Interface {
     public KhachHangEntity getKHTheoMa(String ma) {
        return khachHangDAO.getKHTheoMa(ma);
     }
-
-    @Override
-    public KhachHangEntity getKhachHang(String maKH) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
     
 }

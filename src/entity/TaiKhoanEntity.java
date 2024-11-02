@@ -1,37 +1,56 @@
 package entity;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class TaiKhoanEntity {
-    private String taiKhoan;
-    private String matKhau;
-    private NhanVienEntity nhanVien;
-    private int trangThai;
+	private String tenTaiKhoan, matKhau;
+        private LocalDateTime thoiGianDNGN;
+        private TinhTrangTKEnum tinhTrang;
+        private NhanVienEntity nhanVien;
+
+    public LocalDateTime getThoiGianDNGN() {
+        return thoiGianDNGN;
+    }
+
+    public void setThoiGianDNGN(LocalDateTime thoiGianDNGN) {
+        this.thoiGianDNGN = thoiGianDNGN;
+    }
+
+    public TinhTrangTKEnum getTinhTrang() {
+        return tinhTrang;
+    }
+
+    public void setTinhTrang(TinhTrangTKEnum tinhTrang) {
+        this.tinhTrang = tinhTrang;
+    }
+
+    public TaiKhoanEntity(String tenTaiKhoan, String matKhau, LocalDateTime thoiGianDNGN, TinhTrangTKEnum tinhTrang) {
+        this.tenTaiKhoan = tenTaiKhoan;
+        this.matKhau = matKhau;
+        this.thoiGianDNGN = thoiGianDNGN;
+        this.tinhTrang = tinhTrang;
+    }
+
+    public TaiKhoanEntity(String tenTaiKhoan, String matKhau) {
+        this.tenTaiKhoan = tenTaiKhoan;
+        this.matKhau = matKhau;
+    }
+    
+    
+
+	
 
     public TaiKhoanEntity() {
+            super();
     }
 
-    public TaiKhoanEntity(String taiKhoan, String matKhau, NhanVienEntity nhanVien, int trangThai) {
-        this.taiKhoan = taiKhoan;
+    public TaiKhoanEntity(String tenTaiKhoan, String matKhau, LocalDateTime thoiGianDNGN, TinhTrangTKEnum tinhTrang, NhanVienEntity nhanVien) {
+        this.tenTaiKhoan = tenTaiKhoan;
         this.matKhau = matKhau;
+        this.thoiGianDNGN = thoiGianDNGN;
+        this.tinhTrang = tinhTrang;
         this.nhanVien = nhanVien;
-        this.trangThai = trangThai;
-    }
-
-    public String getTaiKhoan() {
-        return taiKhoan;
-    }
-
-    public void setTaiKhoan(String taiKhoan) {
-        this.taiKhoan = taiKhoan;
-    }
-
-    public String getMatKhau() {
-        return matKhau;
-    }
-
-    public void setMatKhau(String matKhau) {
-        this.matKhau = matKhau;
     }
 
     public NhanVienEntity getNhanVien() {
@@ -41,34 +60,49 @@ public class TaiKhoanEntity {
     public void setNhanVien(NhanVienEntity nhanVien) {
         this.nhanVien = nhanVien;
     }
-
-    public int getTrangThai() {
-        return trangThai;
+    
+    public String getTenTaiKhoan() {
+            return tenTaiKhoan;
     }
 
-    public void setTrangThai(int trangThai) {
-        this.trangThai = trangThai;
+    public void setTenTaiKhoan(String tenTaiKhoan) {
+            this.tenTaiKhoan = tenTaiKhoan;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(taiKhoan);
+    public String getMatKhau() {
+            return matKhau;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        TaiKhoanEntity other = (TaiKhoanEntity) obj;
-        return Objects.equals(taiKhoan, other.taiKhoan);
+    public void setMatKhau(String matKhau) {
+            this.matKhau = matKhau;
     }
 
     @Override
     public String toString() {
-        return "TaiKhoanEntity [taiKhoan=" + taiKhoan + ", matKhau=" + matKhau + ", nhanVien=" + nhanVien + ", trangThai=" + trangThai + "]";
+            return "TaiKhoanEntity [tenTaiKhoan=" + tenTaiKhoan + ", matKhau=" + matKhau + "]";
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final TaiKhoanEntity other = (TaiKhoanEntity) obj;
+        return Objects.equals(this.tenTaiKhoan, other.tenTaiKhoan);
+    }
+	
+        
+	
 }

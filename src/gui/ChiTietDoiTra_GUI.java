@@ -45,9 +45,9 @@ public class ChiTietDoiTra_GUI extends javax.swing.JFrame {
         if(dt != null) {
             lbl_MaDoiTra.setText(dt.getMaDT());
             lbl_MaNhanVien.setText(dt.getNhanVien().getMaNV());
-            if(dt.getHoaDon().getMaKH()!= null) {
-//                lbl_TenKhachHang.setText(dt.getHoaDon().getKhachHang().getHoTen());
-//                lbl_SoDienThoai.setText(dt.getHoaDon().getKhachHang().getSoDienThoai());
+            if(dt.getHoaDon().getKhachHang() != null) {
+                lbl_TenKhachHang.setText(dt.getHoaDon().getKhachHang().getHoTen());
+                lbl_SoDienThoai.setText(dt.getHoaDon().getKhachHang().getSoDienThoai());
             } else {
                 lbl_TenKhachHang.setText("");
                 lbl_SoDienThoai.setText("");

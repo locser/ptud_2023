@@ -4,31 +4,32 @@
  */
 package entity;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Objects;
 
-
+/**
+ *
+ * @author HUY
+ */
 public class KhachHangEntity {
     private String maKH;
     private String hoTen;
     private GioiTinhEnum gioiTinh;
     private String soDienThoai;
     private String diaChi;
-    private String soCCCD;
-    private Date ngayTao;
-    private Date ngayCapNhat;
-	public KhachHangEntity(String maKH, String hoTen, GioiTinhEnum gioiTinh, String soDienThoai, String diaChi,
-			String soCCCD, Date ngayTao, Date ngayCapNhat) {
+	public KhachHangEntity(String maKH, String hoTen, GioiTinhEnum gioiTinh, String soDienThoai, String diaChi) {
 		super();
 		this.maKH = maKH;
 		this.hoTen = hoTen;
 		this.gioiTinh = gioiTinh;
 		this.soDienThoai = soDienThoai;
 		this.diaChi = diaChi;
-		this.soCCCD = soCCCD;
-		this.ngayTao = ngayTao;
-		this.ngayCapNhat = ngayCapNhat;
+	}
+	public KhachHangEntity(String maKH) {
+		super();
+		this.maKH = maKH;
+	}
+	public KhachHangEntity() {
+		super();
 	}
 	public String getMaKH() {
 		return maKH;
@@ -60,28 +61,12 @@ public class KhachHangEntity {
 	public void setDiaChi(String diaChi) {
 		this.diaChi = diaChi;
 	}
-	public String getSoCCCD() {
-		return soCCCD;
-	}
-	public void setSoCCCD(String soCCCD) {
-		this.soCCCD = soCCCD;
-	}
-	public Date getNgayTao() {
-		return ngayTao;
-	}
-	public void setNgayTao(Date ngayTao) {
-		this.ngayTao = ngayTao;
-	}
-	public Date getNgayCapNhat() {
-		return ngayCapNhat;
-	}
-	public void setNgayCapNhat(Date ngayCapNhat) {
-		this.ngayCapNhat = ngayCapNhat;
-	}
-	public int hashCode() {
+
+    @Override
+    public int hashCode() {
         int hash = 7;
-        hash = 79 * hash + Objects.hashCode(this.maKH);
-        hash = 79 * hash + Objects.hashCode(this.soDienThoai);
+        hash = 29 * hash + Objects.hashCode(this.maKH);
+        hash = 29 * hash + Objects.hashCode(this.soDienThoai);
         return hash;
     }
 
@@ -97,36 +82,8 @@ public class KhachHangEntity {
             return false;
         }
         final KhachHangEntity other = (KhachHangEntity) obj;
-
+        
         return Objects.equals(this.soDienThoai, other.soDienThoai);
     }
-
-    public static int getAge(Date currentDate, Date birthDate) {
-        Calendar calendarCurrent = Calendar.getInstance();
-        calendarCurrent.setTime(currentDate);
-
-        Calendar calendarBirth = Calendar.getInstance();
-        calendarBirth.setTime(birthDate);
-
-        int years = calendarCurrent.get(Calendar.YEAR) - calendarBirth.get(Calendar.YEAR);
-
-        if (calendarBirth.get(Calendar.MONTH) > calendarCurrent.get(Calendar.MONTH)
-                || (calendarBirth.get(Calendar.MONTH) == calendarCurrent.get(Calendar.MONTH)
-                && calendarBirth.get(Calendar.DAY_OF_MONTH) > calendarCurrent.get(Calendar.DAY_OF_MONTH))) {
-            years--;
-        }
-
-        return years;
-    }
-	@Override
-	public String toString() {
-		return "KhachHangEntity [maKH=" + maKH + ", hoTen=" + hoTen + ", gioiTinh=" + gioiTinh + ", soDienThoai="
-				+ soDienThoai + ", diaChi=" + diaChi + ", soCCCD=" + soCCCD + ", ngayTao=" + ngayTao + ", ngayCapNhat="
-				+ ngayCapNhat + "]";
-	}
-	public String getEmail() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-    
+	
 }

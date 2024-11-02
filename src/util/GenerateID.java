@@ -9,7 +9,7 @@ import java.util.Date;
 
 /**
  *
- * @author LOC
+ * @author HUY
  */
 public class GenerateID {
     private static String lastDate = "";
@@ -25,9 +25,10 @@ public class GenerateID {
         return datePart;
     }
     public static String sinhMa(String ten) {
-       Date dateNow = new Date();
+       Date datenow = new Date();
        SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyyHHmmss");
-        String maPhatSinh = dateFormat.format(dateNow);
+       String formattedDate = dateFormat.format(datenow);
+       String maPhatSinh = formattedDate;
        return ten + maPhatSinh;
     }
 }

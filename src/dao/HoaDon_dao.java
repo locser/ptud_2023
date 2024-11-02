@@ -5,6 +5,7 @@ import entity.HoaDonEntity;
 import java.util.ArrayList;
 import connectDB.ConnectDB;
 import entity.ChiTietHoaDonEntity;
+import entity.ChuongTrinhKhuyenMaiEntity;
 import entity.KhachHangEntity;
 import entity.NhanVienEntity;
 import java.sql.Date;
@@ -17,14 +18,17 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import util.ConvertStringToEnum;
 
-
+/**
+ *
+ * @author DELL
+ */
 public class HoaDon_dao implements  Interface.HoaDon_Interface{
     
     private ConvertStringToEnum toEnum = new ConvertStringToEnum();
     
     public HoaDon_dao(){
     
-    }
+}
     
     @Override
     public ArrayList<HoaDonEntity> getallHoaDon() {
@@ -32,22 +36,24 @@ public class HoaDon_dao implements  Interface.HoaDon_Interface{
         try {
             ConnectDB.getInstance().connect();
             Connection con =ConnectDB.getConnection();
-            String sql = "Select * from don_hang";
+            String sql = "Select * from HoaDon";
              Statement statement = con.createStatement();
              ResultSet rs = statement.executeQuery(sql);
              while(rs.next()){
-                 String maHD = rs.getString("maHD");
-//                 KhachHangEntity maKH = new KhachHangEntity(rs.getString("maKH"));
+                 String ma = rs.getString("maHD");
+                 Date ngayLap = rs.getDate("ngaylapHD");
+                 KhachHangEntity kh = new KhachHangEntity(rs.getString("maKH"));
+                 NhanVienEntity nv = new NhanVienEntity(rs.getString("maNV"));
+                 ChuongTrinhKhuyenMaiEntity ctkm = new ChuongTrinhKhuyenMaiEntity(rs.getString("maCTKM"));
+                 double tienKhuyenMai = rs.getDouble("tienKhuyenMai");
                  double tongTien = rs.getDouble("tongTien");
-                 int phuongThucThanhToan = rs.getInt("phuongThucThanhToan");
-                 String trangThai = rs.getString("trangThai");
-                 Date ngayTao = rs.getDate("ngayTao");
-                 Date NgayCapNhat = rs.getDate("NgayCapNhat");
+                 double tienThanhToan = rs.getDouble("tienThanhToan");
+                 String tinhTrang = rs.getString("tinhTrang");
                  
                  ConvertStringToEnum toEnum = new ConvertStringToEnum();
                  
-//                 HoaDonEntity hd = new HoaDonEntity(maHD, maKH, tongTien, phuongThucThanhToan, toEnum.trangThaiHoaDontoEnum(trangThai),ngayTao,NgayCapNhat);
-//                 dshd.add(hd);
+                 HoaDonEntity hd = new HoaDonEntity(ma, ngayLap, kh, nv, ctkm, tienKhuyenMai, tongTien, tienThanhToan, toEnum.TinhTrangHDToEnum(tinhTrang));
+                 dshd.add(hd);
              }
             
         } catch (Exception e) {
@@ -77,6 +83,7 @@ public class HoaDon_dao implements  Interface.HoaDon_Interface{
         return total;
     }
     
+    // Nguyen Huy Hoang
     @Override
     public boolean themHoaDon(HoaDonEntity hoaDon, ArrayList<ChiTietHoaDonEntity> danhSachCTHD) {
         PreparedStatement statement = null;
@@ -84,16 +91,18 @@ public class HoaDon_dao implements  Interface.HoaDon_Interface{
             ConnectDB.getInstance().connect();
             Connection con = ConnectDB.getConnection();
             
-            String sql = "Insert into HoaDon(maHD, maKH, tongTien, phuongThucThanhToan, trangThai, ngayTao, NgayCapNhat) values (?, ?, ?, ?, ?, ?, ?)";
+            String sql = "Insert into HoaDon(maHD, maKH, maNV, maCTKM, ngayLapHD, tienKhuyenMai, tongTien, tienThanhToan, tinhTrang) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             statement = con.prepareStatement(sql);
             
             statement.setString(1, hoaDon.getMaHD());
-//            statement.setString(2, hoaDon.getKhachHang().getMaKH());
-//            statement.setDouble(3, hoaDon.getTongTien());
-//            statement.setInt(4, hoaDon.getPhuongThucThanhToan());
-//            statement.setString(5, hoaDon.getTrangThai().toString());
-            statement.setDate(6, new java.sql.Date(hoaDon.getNgayTao().getTime()));
-            statement.setDate(7, new java.sql.Date(hoaDon.getNgayCapNhat().getTime()));
+            statement.setString(2, hoaDon.getKhachHang().getMaKH());
+            statement.setString(3, hoaDon.getNhanVien().getMaNV());
+            statement.setString(4, hoaDon.getChuongTrinhKM().getMaCTKM());
+            statement.setDate(5, hoaDon.getNgayLapHD());
+            statement.setDouble(6, hoaDon.getTienKhuyenMai());
+            statement.setDouble(7, hoaDon.getTongTien());
+            statement.setDouble(8, hoaDon.getTienThanhToan());
+            statement.setString(9, "Đã thanh toán");
             
             int ketQua = statement.executeUpdate();
             if(ketQua < 1) {
@@ -129,16 +138,18 @@ public class HoaDon_dao implements  Interface.HoaDon_Interface{
             ConnectDB.getInstance().connect();
             Connection con = ConnectDB.getConnection();
             
-            String sql = "Insert into HoaDon(maHD, maKH, tongTien, phuongThucThanhToan, trangThai, ngayTao, NgayCapNhat) values (?, ?, ?, ?, ?, ?, ?)";
+            String sql = "Insert into HoaDon(maHD, maKH, maNV, maCTKM, ngayLapHD, tienKhuyenMai, tongTien, tienThanhToan, tinhTrang) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             statement = con.prepareStatement(sql);
             
             statement.setString(1, hoaDon.getMaHD());
-//            statement.setString(2, hoaDon.getKhachHang().getMaKH());
-            statement.setDouble(3, hoaDon.getTongTien());
-//            statement.setInt(4, hoaDon.getPhuongThucThanhToan());
-            statement.setString(5, "Chưa thanh toán");
-            statement.setDate(6, new java.sql.Date(hoaDon.getNgayTao().getTime()));
-            statement.setDate(7, new java.sql.Date(hoaDon.getNgayCapNhat().getTime()));
+            statement.setString(2, hoaDon.getKhachHang().getMaKH());
+            statement.setString(3, hoaDon.getNhanVien().getMaNV());
+            statement.setString(4, hoaDon.getChuongTrinhKM().getMaCTKM());
+            statement.setDate(5, hoaDon.getNgayLapHD());
+            statement.setDouble(6, hoaDon.getTienKhuyenMai());
+            statement.setDouble(7, hoaDon.getTongTien());
+            statement.setDouble(8, hoaDon.getTienThanhToan());
+            statement.setString(9, "Chưa thanh toán");
             
             int ketQua = statement.executeUpdate();
             if(ketQua < 1) {
@@ -172,15 +183,18 @@ public class HoaDon_dao implements  Interface.HoaDon_Interface{
             ConnectDB.getInstance().connect();
             Connection con = ConnectDB.getConnection();
             
-            String sql = "Update HoaDon set tongTien=?, phuongThucThanhToan=?, trangThai=?, NgayCapNhat=? where maHD=? and maKH=?";
+            String sql = "Update HoaDon set maNV=?, maCTKM=?, ngayLapHD=?, tienKhuyenMai=?, tongTien=?, tienThanhToan=?, tinhTrang=? where maHD=? and maKH=?";
             statement = con.prepareStatement(sql);
             
-            statement.setDouble(1, hoaDon.getTongTien());
-//            statement.setInt(2, hoaDon.getPhuongThucThanhToan());
-            statement.setString(3, "Chưa thanh toán");
-            statement.setDate(4, new java.sql.Date(hoaDon.getNgayCapNhat().getTime()));
-            statement.setString(5, hoaDon.getMaHD());
-//            statement.setString(6, hoaDon.getKhachHang().getMaKH());
+            statement.setString(1, hoaDon.getNhanVien().getMaNV());
+            statement.setString(2, hoaDon.getChuongTrinhKM().getMaCTKM());
+            statement.setDate(3, hoaDon.getNgayLapHD());
+            statement.setDouble(4, hoaDon.getTienKhuyenMai());
+            statement.setDouble(5, hoaDon.getTongTien());
+            statement.setDouble(6, hoaDon.getTienThanhToan());
+            statement.setString(7, "Chưa thanh toán");
+            statement.setString(8, hoaDon.getMaHD());
+            statement.setString(9, hoaDon.getKhachHang().getMaKH());
             
             int ketQua = statement.executeUpdate();
             if(ketQua < 1) {
@@ -223,15 +237,18 @@ public class HoaDon_dao implements  Interface.HoaDon_Interface{
             ConnectDB.getInstance().connect();
             Connection con = ConnectDB.getConnection();
             
-            String sql = "Update HoaDon set tongTien=?, phuongThucThanhToan=?, trangThai=?, NgayCapNhat=? where maHD=? and maKH=?";
+            String sql = "Update HoaDon set maNV=?, maCTKM=?, ngayLapHD=?, tienKhuyenMai=?, tongTien=?, tienThanhToan=?, tinhTrang=? where maHD=? and maKH=?";
             statement = con.prepareStatement(sql);
             
-            statement.setDouble(1, hoaDon.getTongTien());
-//            statement.setInt(2, hoaDon.getPhuongThucThanhToan());
-            statement.setString(3, "Đã thanh toán");
-            statement.setDate(4, new java.sql.Date(hoaDon.getNgayCapNhat().getTime()));
-            statement.setString(5, hoaDon.getMaHD());
-//            statement.setString(6, hoaDon.getKhachHang().getMaKH());
+            statement.setString(1, hoaDon.getNhanVien().getMaNV());
+            statement.setString(2, hoaDon.getChuongTrinhKM().getMaCTKM());
+            statement.setDate(3, hoaDon.getNgayLapHD());
+            statement.setDouble(4, hoaDon.getTienKhuyenMai());
+            statement.setDouble(5, hoaDon.getTongTien());
+            statement.setDouble(6, hoaDon.getTienThanhToan());
+            statement.setString(7, "Đã thanh toán");
+            statement.setString(8, hoaDon.getMaHD());
+            statement.setString(9, hoaDon.getKhachHang().getMaKH());
             
             int ketQua = statement.executeUpdate();
             if(ketQua < 1) {
@@ -277,7 +294,7 @@ public class HoaDon_dao implements  Interface.HoaDon_Interface{
         
         try {
             String sql = "Select hd.*, kh.hoTen, kh.gioiTinh, kh.soDienThoai, kh.diaChi from HoaDon as hd inner join KhachHang as kh on hd.maKH=kh.maKH " +
-            "where kh.soDienThoai=? and hd.trangThai=N'Chưa thanh toán' ";
+            "where kh.soDienThoai=? and hd.tinhTrang=N'Chưa thanh toán' ";
             statement = con.prepareStatement(sql);
             statement.setString(1, sdt);
             
@@ -290,20 +307,24 @@ public class HoaDon_dao implements  Interface.HoaDon_Interface{
                 String gioiTinh = rs.getString("gioiTinh");
                 String soDienThoai = rs.getString("soDienThoai");
                 String diaChi = rs.getString("diaChi");
-//                KhachHangEntity kh = new KhachHangEntity();
-//                kh.setMaKH(makh);
-//                kh.setHoTen(hoTen);
-//                kh.setGioiTinh(toEnum.GioiTinhtoEnum(gioiTinh));
-//                kh.setSoDienThoai(soDienThoai);
-//                kh.setDiaChi(diaChi);
+                KhachHangEntity kh = new KhachHangEntity();
+                kh.setMaKH(makh);
+                kh.setHoTen(hoTen);
+                kh.setGioiTinh(toEnum.GioiTinhtoEnum(gioiTinh));
+                kh.setSoDienThoai(soDienThoai);
+                kh.setDiaChi(diaChi);
                 
+                String manv = rs.getString("maNV");
+                NhanVienEntity nv = new NhanVienEntity(manv);
+                String mactkm = rs.getString("maCTKM");
+                ChuongTrinhKhuyenMaiEntity km = new ChuongTrinhKhuyenMaiEntity(mactkm);
+                Date nglap = rs.getDate("ngayLapHD");
                 double tongTien = rs.getDouble("tongTien");
-                int phuongThucThanhToan = rs.getInt("phuongThucThanhToan");
-                Date ngayTao = rs.getDate("ngayTao");
-                Date ngayCapNhat = rs.getDate("NgayCapNhat");
+                double tienKhuyenMai = rs.getDouble("tienKhuyenMai");
+                double tienThanhToan = rs.getDouble("tienThanhToan");
                 
-//                HoaDonEntity hd = new HoaDonEntity(mahd, kh, tongTien, phuongThucThanhToan, toEnum.TinhTrangHDToEnum("Chưa thanh toán"), ngayTao, ngayCapNhat);
-//                hdList.add(hd);
+                HoaDonEntity hd = new HoaDonEntity(mahd, nglap, kh, nv, km, tienKhuyenMai, tongTien, tienThanhToan, toEnum.TinhTrangHDToEnum("Chưa thanh toán"));
+                hdList.add(hd);
             }
             return hdList;
         } catch (Exception e) {
@@ -331,7 +352,7 @@ public class HoaDon_dao implements  Interface.HoaDon_Interface{
         PreparedStatement statement = null;
         
         try {
-            String sql = "Select * from HoaDon where maHD=? and trangThai=N'Đã thanh toán' ";
+            String sql = "Select * from HoaDon where maHD=? and tinhTrang=N'Đã thanh toán' ";
             statement = con.prepareStatement(sql);
             statement.setString(1, maHD);
             
@@ -340,15 +361,19 @@ public class HoaDon_dao implements  Interface.HoaDon_Interface{
             if(rs.next()) {
                 String mahd = rs.getString("maHD");
                 String makh = rs.getString("maKH");
+                String manv = rs.getString("maNV");
+                NhanVienEntity nv = new NhanVienEntity(manv);
+                String mactkm = rs.getString("maCTKM");
+                ChuongTrinhKhuyenMaiEntity km = new ChuongTrinhKhuyenMaiEntity(mactkm);
+                Date nglap = rs.getDate("ngayLapHD");
                 double tongTien = rs.getDouble("tongTien");
-                int phuongThucThanhToan = rs.getInt("phuongThucThanhToan");
-                String trangThai = rs.getString("trangThai");
-                Date ngayTao = rs.getDate("ngayTao");
-                Date ngayCapNhat = rs.getDate("NgayCapNhat");
-//                KhachHangEntity kh = new KhachHangEntity();
+                double tienKhuyenMai = rs.getDouble("tienKhuyenMai");
+                double tienThanhToan = rs.getDouble("tienThanhToan");
+                String tinhTrang = rs.getString("tinhTrang");
+                KhachHangEntity kh = new KhachHangEntity();
                 
                 if(makh != null) {
-//                    kh.setMaKH(makh);
+                    kh.setMaKH(makh);
                     String sql_kh = "Select hoTen, soDienThoai from KhachHang where maKH=?";
                     statement = con.prepareStatement(sql_kh);
                     statement.setString(1, makh);
@@ -357,12 +382,12 @@ public class HoaDon_dao implements  Interface.HoaDon_Interface{
                     if(rs.next()) {
                         String hoTen = rs.getString("hoTen");
                         String soDienThoai = rs.getString("soDienThoai");
-//                        kh.setHoTen(hoTen);
-//                        kh.setSoDienThoai(soDienThoai);
+                        kh.setHoTen(hoTen);
+                        kh.setSoDienThoai(soDienThoai);
                     }
                 }
 
-//                hd = new HoaDonEntity(mahd, kh, tongTien, phuongThucThanhToan, toEnum.TinhTrangHDToEnum(trangThai), ngayTao, ngayCapNhat);
+                hd = new HoaDonEntity(mahd, nglap, kh, nv, km, tienKhuyenMai, tongTien, tienThanhToan, toEnum.TinhTrangHDToEnum(tinhTrang));
             }
             return hd;
         } catch (Exception e) {
@@ -426,13 +451,13 @@ public class HoaDon_dao implements  Interface.HoaDon_Interface{
         PreparedStatement statement = null;
         
         try {
-            String sql_del = "Delete from HoaDon where year(ngayTao) = year(getdate()) and month(ngayTao) = month(getdate()) and day(ngayTao)<day(getdate()) and trangThai=N'Chưa thanh toán' ";
+            String sql_del = "Delete from HoaDon where year(ngayLapHD) = year(getdate()) and month(ngayLapHD) = month(getdate()) and day(ngayLapHD)<day(getdate()) and tinhTrang=N'Chưa thanh toán' ";
             statement = con.prepareStatement(sql_del);
             
             statement.executeUpdate();
             
             String sql_sel = "Select hd.*, kh.hoTen, kh.gioiTinh, kh.soDienThoai, kh.diaChi from HoaDon as hd inner join KhachHang as kh on hd.maKH=kh.maKH " +
-            "where hd.trangThai=N'Chưa thanh toán' ";
+            "where hd.tinhTrang=N'Chưa thanh toán' ";
             statement = con.prepareStatement(sql_sel);
             
             ResultSet rs = statement.executeQuery();
@@ -444,20 +469,24 @@ public class HoaDon_dao implements  Interface.HoaDon_Interface{
                 String gioiTinh = rs.getString("gioiTinh");
                 String soDienThoai = rs.getString("soDienThoai");
                 String diaChi = rs.getString("diaChi");
-//                KhachHangEntity kh = new KhachHangEntity();
-//                kh.setMaKH(makh);
-//                kh.setHoTen(hoTen);
-//                kh.setGioiTinh(toEnum.GioiTinhtoEnum(gioiTinh));
-//                kh.setSoDienThoai(soDienThoai);
-//                kh.setDiaChi(diaChi);
+                KhachHangEntity kh = new KhachHangEntity();
+                kh.setMaKH(makh);
+                kh.setHoTen(hoTen);
+                kh.setGioiTinh(toEnum.GioiTinhtoEnum(gioiTinh));
+                kh.setSoDienThoai(soDienThoai);
+                kh.setDiaChi(diaChi);
                 
+                String manv = rs.getString("maNV");
+                NhanVienEntity nv = new NhanVienEntity(manv);
+                String mactkm = rs.getString("maCTKM");
+                ChuongTrinhKhuyenMaiEntity km = new ChuongTrinhKhuyenMaiEntity(mactkm);
+                Date nglap = rs.getDate("ngayLapHD");
                 double tongTien = rs.getDouble("tongTien");
-                int phuongThucThanhToan = rs.getInt("phuongThucThanhToan");
-                Date ngayTao = rs.getDate("ngayTao");
-                Date ngayCapNhat = rs.getDate("NgayCapNhat");
+                double tienKhuyenMai = rs.getDouble("tienKhuyenMai");
+                double tienThanhToan = rs.getDouble("tienThanhToan");
                 
-//                HoaDonEntity hd = new HoaDonEntity(mahd, kh, tongTien, phuongThucThanhToan, toEnum.TinhTrangHDToEnum("Chưa thanh toán"), ngayTao, ngayCapNhat);
-//                hdList.add(hd);
+                HoaDonEntity hd = new HoaDonEntity(mahd, nglap, kh, nv, km, tienKhuyenMai, tongTien, tienThanhToan, toEnum.TinhTrangHDToEnum("Chưa thanh toán"));
+                hdList.add(hd);
             }
             return hdList;
         } catch (Exception e) {
@@ -487,14 +516,18 @@ public class HoaDon_dao implements  Interface.HoaDon_Interface{
             while (rs.next()){
                 String mahd = rs.getString("maHD");
                 String makh = rs.getString("maKH");
-//                KhachHangEntity kh = new KhachHangEntity(makh);
+                KhachHangEntity kh = new KhachHangEntity(makh);
+                String manv = rs.getString("maNV");
+                NhanVienEntity nv = new NhanVienEntity(manv);
+                String mactkm = rs.getString("maCTKM");
+                ChuongTrinhKhuyenMaiEntity km = new ChuongTrinhKhuyenMaiEntity(mactkm);
+                Date nglap = rs.getDate("ngayLapHD");
                 double tongTien = rs.getDouble("tongTien");
-                int phuongThucThanhToan = rs.getInt("phuongThucThanhToan");
-                String trangThai = rs.getString("trangThai");
-                Date ngayTao = rs.getDate("ngayTao");
-                Date ngayCapNhat = rs.getDate("NgayCapNhat");
+                double tienKhuyenMai = rs.getDouble("tienKhuyenMai");
+                double tienThanhToan = rs.getDouble("tienThanhToan");
+                String tinhTrang = rs.getString("tinhTrang");
                 
-//                hd = new HoaDonEntity(mahd, kh, tongTien, phuongThucThanhToan, toEnum.TinhTrangHDToEnum(trangThai), ngayTao, ngayCapNhat);
+                hd = new HoaDonEntity(mahd, nglap, kh, nv, km, tienKhuyenMai, tongTien, tienThanhToan, toEnum.TinhTrangHDToEnum(tinhTrang));
                 
             }
                     
@@ -510,21 +543,25 @@ public class HoaDon_dao implements  Interface.HoaDon_Interface{
             try {
             ConnectDB.getInstance().connect();
             Connection con = ConnectDB.getConnection();
-            PreparedStatement stmt = con.prepareCall("select * from HoaDon where ngayTao = ?");
+            PreparedStatement stmt = con.prepareCall("select * from HoaDon where ngayLapHD = ?");
             stmt.setDate(1,ngayLap);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()){
                 String mahd = rs.getString("maHD");
                 String makh = rs.getString("maKH");
-//                KhachHangEntity kh = new KhachHangEntity(makh);
+                KhachHangEntity kh = new KhachHangEntity(makh);
+                String manv = rs.getString("maNV");
+                NhanVienEntity nv = new NhanVienEntity(manv);
+                String mactkm = rs.getString("maCTKM");
+                ChuongTrinhKhuyenMaiEntity km = new ChuongTrinhKhuyenMaiEntity(mactkm);
+                Date nglap = rs.getDate("ngayLapHD");
                 double tongTien = rs.getDouble("tongTien");
-                int phuongThucThanhToan = rs.getInt("phuongThucThanhToan");
-                String trangThai = rs.getString("trangThai");
-                Date ngayTao = rs.getDate("ngayTao");
-                Date ngayCapNhat = rs.getDate("NgayCapNhat");
+                double tienKM = rs.getDouble("tienKhuyenMai");
+                double tienTT = rs.getDouble("tienThanhToan");
+                String tinhTrang = rs.getString("tinhTrang");
                 
-//                HoaDonEntity hd = new HoaDonEntity(mahd, kh, tongTien, phuongThucThanhToan, toEnum.TinhTrangHDToEnum(trangThai), ngayTao, ngayCapNhat);
-//                dshd.add(hd);
+                HoaDonEntity hd = new HoaDonEntity(mahd, nglap, kh, nv, km, tienKM, tongTien, tienTT, toEnum.TinhTrangHDToEnum(tinhTrang));
+                dshd.add(hd);
             }
                     
         } catch (Exception e) {
@@ -544,24 +581,28 @@ public class HoaDon_dao implements  Interface.HoaDon_Interface{
         PreparedStatement statement = null;
         
         try {
-            String sql = "Select * from HoaDon where maHD=? and ngayTao=? ";
+            String sql = "Select * from HoaDon where maHD=? and ngayLapHD=? ";
             statement = con.prepareStatement(sql);
             statement.setString(1, maHD);
-            statement.setDate(2, new java.sql.Date(ngayLap.getTime()));
+            statement.setDate(2, (Date) ngayLap);
             ResultSet rs = statement.executeQuery();
             ArrayList<HoaDonEntity> dshd = new ArrayList<>();
             if(rs.next()) {
                 String mahd = rs.getString("maHD");
                 String makh = rs.getString("maKH");
+                String manv = rs.getString("maNV");
+                NhanVienEntity nv = new NhanVienEntity(manv);
+                String mactkm = rs.getString("maCTKM");
+                ChuongTrinhKhuyenMaiEntity km = new ChuongTrinhKhuyenMaiEntity(mactkm);
+                Date nglap = rs.getDate("ngayLapHD");
                 double tongTien = rs.getDouble("tongTien");
-                int phuongThucThanhToan = rs.getInt("phuongThucThanhToan");
-                String trangThai = rs.getString("trangThai");
-                Date ngayTao = rs.getDate("ngayTao");
-                Date ngayCapNhat = rs.getDate("NgayCapNhat");
-//                KhachHangEntity kh = new KhachHangEntity();
+                double tienKhuyenMai = rs.getDouble("tienKhuyenMai");
+                double tienThanhToan = rs.getDouble("tienThanhToan");
+                String tinhTrang = rs.getString("tinhTrang");
+                KhachHangEntity kh = new KhachHangEntity();
                 
                 if(makh != null) {
-//                    kh.setMaKH(makh);
+                    kh.setMaKH(makh);
                     String sql_kh = "Select hoTen, soDienThoai from KhachHang where maKH=?";
                     statement = con.prepareStatement(sql_kh);
                     statement.setString(1, makh);
@@ -570,13 +611,13 @@ public class HoaDon_dao implements  Interface.HoaDon_Interface{
                     if(rs.next()) {
                         String hoTen = rs.getString("hoTen");
                         String soDienThoai = rs.getString("soDienThoai");
-//                        kh.setHoTen(hoTen);
-//                        kh.setSoDienThoai(soDienThoai);
+                        kh.setHoTen(hoTen);
+                        kh.setSoDienThoai(soDienThoai);
                     }
                 }
 
-//                HoaDonEntity hd = new HoaDonEntity(mahd, kh, tongTien, phuongThucThanhToan, toEnum.TinhTrangHDToEnum(trangThai), ngayTao, ngayCapNhat);
-//                dshd.add(hd);
+                HoaDonEntity hd = new HoaDonEntity(mahd, nglap, kh, nv, km, tienKhuyenMai, tongTien, tienThanhToan, toEnum.TinhTrangHDToEnum(tinhTrang));
+                dshd.add(hd);
             }
             return dshd;
         } catch (Exception e) {
