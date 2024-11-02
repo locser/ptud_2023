@@ -55,6 +55,44 @@ public class TauEnum {
         }
     }
 
+    public enum LoaiGhe {
+        KHAC,
+        GHE_NGOI,
+        GHE_NAM;
+
+        public static String convertLoaiGheToString(int tinhTrang) {
+            switch (tinhTrang) {
+                case 0:
+                    return "Khác";
+                case 1:
+                    return "Ghế ngồi";
+                    case 2:
+                    return "Ghế nằm";
+                default:
+                    return "Khác";
+            }
+        }
+    }
+
+    public enum TinhTrangGhe {
+        TRONG,
+        DA_DAT,
+        DA_THANH_TOAN;
+
+        public static String convertLoaiGheToString(int tinhTrang) {
+            switch (tinhTrang) {
+                case 0:
+                    return "Trống";
+                case 1:
+                    return "Đã đặt";
+                    case 2:
+                    return "Đã thanh toán";
+                default:
+                    return "Trống";
+            }
+        }
+    }
+
 
 
 

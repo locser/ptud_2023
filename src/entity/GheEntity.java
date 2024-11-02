@@ -1,43 +1,64 @@
 package entity;
 
+import java.util.Date;
 import java.util.Objects;
 
 public class GheEntity {
-    private String maGhe;
-    private String maToa;
-    private String loai;
+    private int maGhe;
+    private String ten;
+    private ToaTauEntity toa;
+    private int loai;
     private int trangThai;
-    private TauEntity maTau;
+    private Date ngayTao;
+    private Date ngayCapNhat;
 
-    public GheEntity(String maGhe, String maToa, String loai, int trangThai, TauEntity maTau) {
+    public GheEntity(int maGhe, String ten, String maToa, int loai, int trangThai, ToaTauEntity toa) {
         this.maGhe = maGhe;
-        this.maToa = maToa;
+        this.ten = ten;
+        this.toa = toa;
         this.loai = loai;
         this.trangThai = trangThai;
-        this.maTau = maTau;
     }
 
-    public String getMaGhe() {
+    public GheEntity(int maGhe, String ten, int loai, int trangThai, Date ngayTao, Date ngayCapNhat, ToaTauEntity toa ) {
+        this.ten = ten;
+        this.toa = toa;
+        this.loai = loai;
+        this.trangThai = trangThai;
+        this.ngayTao = ngayTao;
+        this.ngayCapNhat = ngayCapNhat;
+    }
+    
+
+    public int getMaGhe() {
         return maGhe;
     }
 
-    public void setMaGhe(String maGhe) {
+    public void setMaGhe(int maGhe) {
         this.maGhe = maGhe;
     }
 
-    public String getMaToa() {
-        return maToa;
+    public String getTen() {
+        return ten;
     }
 
-    public void setMaToa(String maToa) {
-        this.maToa = maToa;
+    public void setTen(String ten) {
+        this.ten = ten;
     }
 
-    public String getLoai() {
+    public ToaTauEntity getToa() {
+        return toa;
+    }
+
+    public void setToa(ToaTauEntity toa) {
+        this.toa = toa;
+    }
+
+    public int getLoai() {
         return loai;
     }
 
-    public void setLoai(String loai) {
+    public void setLoai(int loai) {
         this.loai = loai;
     }
 
@@ -49,23 +70,25 @@ public class GheEntity {
         this.trangThai = trangThai;
     }
 
-    public TauEntity getMaTau() {
-        return maTau;
-    }
-
-    public void setMaTau(TauEntity maTau) {
-        this.maTau = maTau;
-    }
-
     @Override
     public String toString() {
-        return "GheEntity{" +
-                "maGhe='" + maGhe + '\'' +
-                ", maToa='" + maToa + '\'' +
-                ", loai='" + loai + '\'' +
-                ", trangThai=" + trangThai +
-                ", maTau='" + maTau + '\'' +
-                '}';
+        return "GheEntity{" + "maGhe=" + maGhe + ", toa=" + toa + ", loai=" + loai + ", trangThai=" + trangThai + ", ngayTao=" + ngayTao + ", ngayCapNhat=" + ngayCapNhat + '}';
+    }
+
+    public Date getNgayTao() {
+        return ngayTao;
+    }
+
+    public void setNgayTao(Date ngayTao) {
+        this.ngayTao = ngayTao;
+    }
+
+    public Date getNgayCapNhat() {
+        return ngayCapNhat;
+    }
+
+    public void setNgayCapNhat(Date ngayCapNhat) {
+        this.ngayCapNhat = ngayCapNhat;
     }
 
 	@Override

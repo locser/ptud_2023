@@ -1147,7 +1147,7 @@ System.out.println( "loadDuLieuTuDataLenTable"+ dsTau.toString());
             JOptionPane.showMessageDialog(null, "Vui lòng chọn tàu trước khi quản lý ghế");
             return;
         }else  {
-            new QuanLyToa_JPanel(tauHienTai).setVisible(getFocusTraversalKeysEnabled()); 
+            new QuanLyGhe_JPanel1(tauHienTai).setVisible(getFocusTraversalKeysEnabled()); 
             
         }    }//GEN-LAST:event_btn_QuanLyGheActionPerformed
 

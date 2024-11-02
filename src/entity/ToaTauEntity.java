@@ -31,6 +31,10 @@ public class ToaTauEntity {
         this.tau = tau;
     }
 
+    public ToaTauEntity(String maToa) {
+        this.maToa = maToa;
+    }
+
     public ToaTauEntity(String maToa, String tenToa, int soGhe, int loai, int trangThai, Date ngayTao, Date ngayCapNhat, TauEntity tau) {
         this.maToa = maToa;
         this.tenToa = tenToa;
