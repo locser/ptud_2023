@@ -41,15 +41,15 @@ public class ThongTinHoaDon_GUI extends javax.swing.JFrame {
 //        lbl_MaNhanVien.setText(hoaDon.getNhanVien().getMaNV());
 //        lbl_TenKhachHang.setText(hoaDon.getKhachHang().getHoTen());
 //        lbl_SoDienThoai.setText(hoaDon.getKhachHang().getSoDienThoai());
-        lbl_NgayLap.setText(hoaDon.getNgayLapHD().toString());
+//        lbl_NgayLap.setText(hoaDon.getNgayLapHD().toString());
         
         lbl_TongTien.setText(convert.toMoney(hoaDon.getTongTien()));
-        if(hoaDon.getChuongTrinhKM() != null) {
+//        if(hoaDon.getChuongTrinhKM() != null) {
 //            lbl_KhuyenMai.setText(hoaDon.getChuongTrinhKM().getGiamGia()+"");    
-        } else {
-            lbl_KhuyenMai.setText("0");
-        }
-        lbl_TienThanhToan.setText(convert.toMoney(hoaDon.getTienThanhToan()));
+//        } else {
+//            lbl_KhuyenMai.setText("0");
+//        }
+//        lbl_TienThanhToan.setText(convert.toMoney(hoaDon.getTienThanhToan()));
         lbl_TienNhan.setText(convert.toMoney(tienNhan));
         lbl_TienTraLai.setText(convert.toMoney(tienTraLai));
         

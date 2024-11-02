@@ -82,12 +82,12 @@ public class ChiTietHoaDon_GUI extends javax.swing.JFrame {
 //        lbl_MaKhachHang.setText(hdtc.getMaKH());
         // Lấy thôn tin khách hàng
         khbus = new KhachHang_bus();
-         KhachHangEntity kh  = new KhachHangEntity();
-         if(!hdtc.getMaKH().equals("")) {
-             kh = khbus.getKHTheoMa(hdtc.getMaKH());
-              lbl_MaKhachHang.setText(kh.getHoTen());
-                lbl_SDT.setText(kh.getSoDienThoai());
-         }
+//         KhachHangEntity kh  = new KhachHangEntity();
+//         if(!hdtc.getMaKH().equals("")) {
+//             kh = khbus.getKHTheoMa(hdtc.getMaKH());
+//              lbl_MaKhachHang.setText(kh.getHoTen());
+//                lbl_SDT.setText(kh.getSoDienThoai());
+//         }
 
         lbl_MaNhanVien.setText(hdtc.getMaNV());
         lbl_NgayLapHoaDon.setText(hdtc.getNgayLap());

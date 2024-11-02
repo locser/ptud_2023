@@ -84,15 +84,15 @@ public class HoaDon_JPanel extends javax.swing.JPanel {
     private void DocDuLieuTuSQLvaoTable() {
         ArrayList<HoaDonEntity> listHD = hdDao.getallHoaDon();
         for (HoaDonEntity hd : listHD) {
-            addRows(new Object[]{
-                hd.getMaHD(), 
-                hd.getKhachHang() != null ? hd.getKhachHang().getMaKH() : "", 
-                hd.getTongTien(),
-                hd.getPhuongThucThanhToan(),
-                hd.getTrangThai(),
-                hd.getNgayTao(), 
-                hd.getNgayCapNhat()
-            });
+//            addRows(new Object[]{
+//                hd.getMaHD(), 
+//                hd.getKhachHang() != null ? hd.getKhachHang().getMaKH() : "", 
+//                hd.getTongTien(),
+//                hd.getPhuongThucThanhToan(),
+//                hd.getTrangThai(),
+//                hd.getNgayTao(), 
+//                hd.getNgayCapNhat()
+//            });
         }
     }
 
@@ -154,7 +154,7 @@ public class HoaDon_JPanel extends javax.swing.JPanel {
     private void addHoaDonToTable(HoaDonEntity hd) {
         addRows(new Object[]{
             hd.getMaHD(),
-            hd.getKhachHang() != null ? hd.getKhachHang().getMaKH() : "",
+//            hd.getKhachHang() != null ? hd.getKhachHang().getMaKH() : "",
             hd.getTongTien(),
             hd.getPhuongThucThanhToan(),
             hd.getTrangThai(),
@@ -188,10 +188,10 @@ public class HoaDon_JPanel extends javax.swing.JPanel {
 
     private void hienThiChiTietHoaDon(HoaDonEntity hd) {
         lbl_MaHD.setText(hd.getMaHD());
-        lbl_MaKH.setText(hd.getKhachHang() != null ? hd.getKhachHang().getMaKH() : "Khách lẻ");
+//        lbl_MaKH.setText(hd.getKhachHang() != null ? hd.getKhachHang().getMaKH() : "Khách lẻ");
         lbl_NgayTao.setText(sdf.format(hd.getNgayTao()));
         lbl_NgayCapNhat.setText(sdf.format(hd.getNgayCapNhat()));
-        lbl_TrangThai.setText(hd.getTrangThai().toString());
+//        lbl_TrangThai.setText(hd.getTrangThai().toString());
         lbl_PhuongThucTT.setText(String.valueOf(hd.getPhuongThucThanhToan()));
         lbl_TongTien.setText(df.format(hd.getTongTien()) + " VNĐ");
         
@@ -200,7 +200,7 @@ public class HoaDon_JPanel extends javax.swing.JPanel {
         ArrayList<ChiTietHoaDonEntity> dsCTHD = cthdDao.getAllCTHDTheoMaHD(hd.getMaHD());
         for(ChiTietHoaDonEntity cthd : dsCTHD) {
             modelChiTiet.addRow(new Object[] {
-                cthd.getSanPham().getMaVe(),
+//                cthd.getSanPham().getMaVe(),
                 cthd.getSoLuong(),
                 df.format(cthd.getGiaGoc()),
                 df.format(cthd.getGiaBan()),

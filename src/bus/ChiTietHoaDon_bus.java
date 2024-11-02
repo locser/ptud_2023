@@ -20,16 +20,16 @@ public class ChiTietHoaDon_bus implements ChiTietHoaDon_Interface{
     public ArrayList<ChiTietHoaDonEntity> getallCTHD() {
         return cthd_dao.getallCTHD();
     }
-
-    @Override
-    public ArrayList<SanPhamEntity> getSanPhamTheoMaSP(String maSP) {
-        return cthd_dao.getSanPhamTheoMaSP(maSP);
-    }
-
-    @Override
-    public ArrayList<SanPhamEntity> getSanPhamTheoMaHD(String maHD) {
-        return cthd_dao.getSanPhamTheoMaHD(maHD);
-    }
+//
+//    @Override
+//    public ArrayList<SanPhamEntity> getSanPhamTheoMaSP(String maSP) {
+//        return cthd_dao.getSanPhamTheoMaSP(maSP);
+//    }
+//
+//    @Override
+//    public ArrayList<SanPhamEntity> getSanPhamTheoMaHD(String maHD) {
+//        return cthd_dao.getSanPhamTheoMaHD(maHD);
+//    }
     
     
     // Nguyen Huy Hoang
@@ -61,5 +61,15 @@ public class ChiTietHoaDon_bus implements ChiTietHoaDon_Interface{
     @Override
     public int getSoLuongCTHD(String maSP) {
         return cthd_dao.getSoLuongCTHD(maSP);
+    }
+
+    @Override
+    public ArrayList<SanPhamEntity> getSanPhamTheoMaSP(String maSP) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public ArrayList<SanPhamEntity> getSanPhamTheoMaHD(String maHD) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

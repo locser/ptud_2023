@@ -123,7 +123,7 @@ public class NhanVien_dao implements NhanVienInterface {
             PreparedStatement statement = connect.getConnection().prepareStatement(sql);
             statement.setString(1, newNV.getTen());
             statement.setInt(2, newNV.getLoai());
-            statement.setDate(3, new java.sql.Date(newNV.getNgaySinh().getTime()));
+//            statement.setDate(3, new java.sql.Date(newNV.getNgaySinh().getTime()));
             statement.setString(4, newNV.getEmail());
             statement.setString(5, newNV.getSoDienThoai());
             statement.setString(6, newNV.getDiaChi());

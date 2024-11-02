@@ -22,18 +22,18 @@ public class LichTrinh_dao {
             PreparedStatement statement = connect.getConnection().prepareStatement("SELECT * FROM LichTrinh WHERE maLichTrinh = ?");
             statement.setString(1, id);
             rs = statement.executeQuery();
-            if (rs.next()) {
-                TauEntity tau = new Tau_dao().findOne(rs.getString("maTau"));
-                lichTrinh = new LichTrinhEntity(
-                    rs.getString("maLichTrinh"),
-                    tau,
-                    rs.getString("gaDi"),
-                    rs.getString("gaDen"),
-                    rs.getDate("ngayDi"),
-                    rs.getDate("ngayDen"),
-                    rs.getString("trangThai")
-                );
-            }
+//            if (rs.next()) {
+//                TauEntity tau = new Tau_dao().findOne(rs.getString("maTau"));
+//                lichTrinh = new LichTrinhEntity(
+//                    rs.getString("maLichTrinh"),
+//                    tau,
+//                    rs.getString("gaDi"),
+//                    rs.getString("gaDen"),
+//                    rs.getDate("ngayDi"),
+//                    rs.getDate("ngayDen"),
+//                    rs.getString("trangThai")
+//                );
+//            }
             connect.disconnect();
         } catch (SQLException ex) {
             Logger.getLogger(LichTrinh_dao.class.getName()).log(Level.SEVERE, null, ex);
@@ -96,17 +96,17 @@ public class LichTrinh_dao {
             PreparedStatement statement = connect.getConnection().prepareStatement("SELECT * FROM LichTrinh");
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                TauEntity tau = new Tau_dao().findOne(rs.getString("maTau"));
-                LichTrinhEntity lichTrinh = new LichTrinhEntity(
-                    rs.getString("maLichTrinh"),
-                    tau,
-                    rs.getString("gaDi"),
-                    rs.getString("gaDen"),
-                    rs.getDate("ngayDi"),
-                    rs.getDate("ngayDen"),
-                    rs.getString("trangThai")
-                );
-                dsLichTrinh.add(lichTrinh);
+//                TauEntity tau = new Tau_dao().findOne(rs.getString("maTau"));
+//                LichTrinhEntity lichTrinh = new LichTrinhEntity(
+//                    rs.getString("maLichTrinh"),
+//                    tau,
+//                    rs.getString("gaDi"),
+//                    rs.getString("gaDen"),
+//                    rs.getDate("ngayDi"),
+//                    rs.getDate("ngayDen"),
+//                    rs.getString("trangThai")
+//                );
+//                dsLichTrinh.add(lichTrinh);
             }
             connect.disconnect();
         } catch (SQLException ex) {
@@ -126,17 +126,17 @@ public class LichTrinh_dao {
             statement.setString(2, gaDen);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                TauEntity tau = new Tau_dao().findOne(rs.getString("maTau"));
-                LichTrinhEntity lichTrinh = new LichTrinhEntity(
-                    rs.getString("maLichTrinh"),
-                    tau,
-                    rs.getString("gaDi"),
-                    rs.getString("gaDen"),
-                    rs.getDate("ngayDi"),
-                    rs.getDate("ngayDen"),
-                    rs.getString("trangThai")
-                );
-                dsLichTrinh.add(lichTrinh);
+//                TauEntity tau = new Tau_dao().findOne(rs.getString("maTau"));
+//                LichTrinhEntity lichTrinh = new LichTrinhEntity(
+//                    rs.getString("maLichTrinh"),
+//                    tau,
+//                    rs.getString("gaDi"),
+//                    rs.getString("gaDen"),
+//                    rs.getDate("ngayDi"),
+//                    rs.getDate("ngayDen"),
+//                    rs.getString("trangThai")
+//                );
+//                dsLichTrinh.add(lichTrinh);
             }
             connect.disconnect();
         } catch (SQLException ex) {
@@ -155,17 +155,17 @@ public class LichTrinh_dao {
             statement.setDate(1, new java.sql.Date(ngay.getTime()));
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                TauEntity tau = new Tau_dao().findOne(rs.getString("maTau"));
-                LichTrinhEntity lichTrinh = new LichTrinhEntity(
-                    rs.getString("maLichTrinh"),
-                    tau,
-                    rs.getString("gaDi"),
-                    rs.getString("gaDen"),
-                    rs.getDate("ngayDi"),
-                    rs.getDate("ngayDen"),
-                    rs.getString("trangThai")
-                );
-                dsLichTrinh.add(lichTrinh);
+//                TauEntity tau = new Tau_dao().findOne(rs.getString("maTau"));
+//                LichTrinhEntity lichTrinh = new LichTrinhEntity(
+//                    rs.getString("maLichTrinh"),
+//                    tau,
+//                    rs.getString("gaDi"),
+//                    rs.getString("gaDen"),
+//                    rs.getDate("ngayDi"),
+//                    rs.getDate("ngayDen"),
+//                    rs.getString("trangThai")
+//                );
+//                dsLichTrinh.add(lichTrinh);
             }
             connect.disconnect();
         } catch (SQLException ex) {
