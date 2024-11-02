@@ -32,7 +32,7 @@ public class HoaDon_dao implements  Interface.HoaDon_Interface{
         try {
             ConnectDB.getInstance().connect();
             Connection con =ConnectDB.getConnection();
-            String sql = "Select * from HoaDon";
+            String sql = "Select * from don_hang";
              Statement statement = con.createStatement();
              ResultSet rs = statement.executeQuery(sql);
              while(rs.next()){

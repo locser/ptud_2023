@@ -5,6 +5,7 @@
 package gui;
 
 import dao.TaiKhoan_dao;
+import entity.NhanVienEntity;
 import entity.TaiKhoanEntity;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -95,7 +96,37 @@ public class DangNhap extends javax.swing.JFrame {
             ex.printStackTrace();
         }
         */
+        try {
+//            String taiKhoan = txt_TaiKhoan.getText();
+//            char[] matKhau = txt_MatKhau.getPassword();
+//            String stringPass = new String(matKhau);
+//            String encodePass = MD5Encode.md5Encode(stringPass);
+//
+//            dao.NhanVien_dao nv_dao = new NhanVien_dao();
+//            NhanVienEntity nhanVien = nv_dao.dangNhap(taiKhoan, stringPass);
 
+            NhanVienEntity nhanVien = new NhanVienEntity("123");
+            nhanVien.setLoai(1);
+            
+            if (nhanVien == null) {
+                txt_BaoLoi.setText("Thông tin tài khoản, mật khẩu không chính xác!");
+            }else {
+                System.out.println(nhanVien.toString());                
+                System.out.println("đăng nhập thành công");
+
+                ToanCuc.setTen(nhanVien.getTen());
+                ToanCuc.setMa(nhanVien.getMaNV());
+                ToanCuc.setLoai(nhanVien.getLoai());
+                ToanCuc.setSoDienThoai(nhanVien.getSoDienThoai());
+//                this.setVisible(false);
+                dispose();
+                gui.TrangChu_GUI trangChu_GUI = new TrangChu_GUI();
+                trangChu_GUI.setVisible(true);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        
         // New simplified login logic
         dispose();
         new TrangChu_GUI().setVisible(true);

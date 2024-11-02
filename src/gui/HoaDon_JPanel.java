@@ -24,7 +24,7 @@ public class HoaDon_JPanel extends javax.swing.JPanel {
     private HoaDon_dao hdDao;
     private DefaultTableModel model;
     private JPanel pnl_ChiTiet;
-    private JTable tbl_ChiTiet;
+//    private JTable tbl_ChiTiet;
     private DefaultTableModel modelChiTiet;
     private ChiTietHoaDon_dao cthdDao;
     private DecimalFormat df;
@@ -45,12 +45,13 @@ public class HoaDon_JPanel extends javax.swing.JPanel {
         sdf = new SimpleDateFormat("dd/MM/yyyy");
         
         model = (DefaultTableModel) jTable1.getModel();
-        modelChiTiet = new DefaultTableModel();
-        tbl_ChiTiet.setModel(modelChiTiet);
+        modelChiTiet = new DefaultTableModel(new String [] {        }, 0);
+
+//        tbl_ChiTiet.setModel(modelChiTiet);
         
         DocDuLieuTuSQLvaoTable();
         
-        pnl_ChiTiet.setVisible(false);
+//        pnl_ChiTiet.setVisible(false);
     }
     
     private void setupChiTietPanel() {
