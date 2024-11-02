@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class TaiKhoan_dao implements TaiKhoanInterface {
+public class TaiKhoan_dao {
     private ConnectDB connect = new ConnectDB();
     private NhanVien_dao nhanVienDAO = new NhanVien_dao();
 
@@ -44,7 +44,6 @@ public class TaiKhoan_dao implements TaiKhoanInterface {
         return null;
     }
 
-    @Override
     public boolean insert(TaiKhoanEntity tk) {
         try {
             ConnectDB.getInstance().connect();
@@ -65,7 +64,6 @@ public class TaiKhoan_dao implements TaiKhoanInterface {
         }
     }
 
-    @Override
     public boolean update(TaiKhoanEntity tk) {
         try {
             ConnectDB.getInstance().connect();
@@ -86,7 +84,6 @@ public class TaiKhoan_dao implements TaiKhoanInterface {
         }
     }
 
-    @Override
     public boolean delete(TaiKhoanEntity tk) {
         try {
             ConnectDB.getInstance().connect();
@@ -103,7 +100,6 @@ public class TaiKhoan_dao implements TaiKhoanInterface {
         }
     }
 
-    @Override
     public TaiKhoanEntity findOne(String taiKhoan) {
         try {
             ConnectDB.getInstance().connect();
@@ -130,7 +126,6 @@ public class TaiKhoan_dao implements TaiKhoanInterface {
         return null;
     }
 
-    @Override
     public ArrayList<TaiKhoanEntity> findAll() {
         ArrayList<TaiKhoanEntity> listTK = new ArrayList<>();
         try {

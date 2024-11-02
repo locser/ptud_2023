@@ -380,21 +380,21 @@ public class KhachHang_JPanel extends javax.swing.JPanel {
         try {
             if (checkInput()) {
                 GioiTinhEnum gt = null;
-                KhachHangEntity kh = new KhachHangEntity();
-                kh.setMaKH(GenerateID.sinhMa("KH"));
-                kh.setHoTen(txt_HoTen.getText());
-                if (rad_Nam.isSelected()) gt = GioiTinhEnum.NAM;
-                else if (rad_Nu.isSelected()) gt = GioiTinhEnum.NU;
-                else gt = GioiTinhEnum.KHAC;
-                kh.setGioiTinh(gt);
-                kh.setSoDienThoai(txt_SDT.getText());
-                kh.setDiaChi(txt_DiaChi.getText());
-                if (!listKH.contains(kh) && bus.insert(kh)) {
-                    tableModel.addRow(new Object[]{kh.getMaKH(), kh.getHoTen(), kh.getGioiTinh().toString(), kh.getSoDienThoai() ,kh.getDiaChi()});
-                    refresh();
-                    JOptionPane.showMessageDialog(this, "Thêm khách hàng thành công!");
-                }
-                else JOptionPane.showMessageDialog(this, "Thêm thất bại! Số điện thoại khách hàng đã bị trùng!");
+//                KhachHangEntity kh = new KhachHangEntity();
+//                kh.setMaKH(GenerateID.sinhMa("KH"));
+//                kh.setHoTen(txt_HoTen.getText());
+//                if (rad_Nam.isSelected()) gt = GioiTinhEnum.NAM;
+//                else if (rad_Nu.isSelected()) gt = GioiTinhEnum.NU;
+//                else gt = GioiTinhEnum.KHAC;
+//                kh.setGioiTinh(gt);
+//                kh.setSoDienThoai(txt_SDT.getText());
+//                kh.setDiaChi(txt_DiaChi.getText());
+//                if (!listKH.contains(kh) && bus.insert(kh)) {
+//                    tableModel.addRow(new Object[]{kh.getMaKH(), kh.getHoTen(), kh.getGioiTinh().toString(), kh.getSoDienThoai() ,kh.getDiaChi()});
+//                    refresh();
+//                    JOptionPane.showMessageDialog(this, "Thêm khách hàng thành công!");
+//                }
+//                else JOptionPane.showMessageDialog(this, "Thêm thất bại! Số điện thoại khách hàng đã bị trùng!");
             }
         } catch (BadLocationException ex) {
             Logger.getLogger(KhachHang_JPanel.class.getName()).log(Level.SEVERE, null, ex);
@@ -446,24 +446,24 @@ public class KhachHang_JPanel extends javax.swing.JPanel {
                 if (checkInput()) {
                 
                     GioiTinhEnum gt = null;
-                    KhachHangEntity kh = new KhachHangEntity();
-                    kh.setMaKH(txt_MaKH.getText());
-                    kh.setHoTen(txt_HoTen.getText());
-                    if (rad_Nam.isSelected()) gt = GioiTinhEnum.NAM;
-                    else if (rad_Nu.isSelected()) gt = GioiTinhEnum.NU;
-                    else gt = GioiTinhEnum.KHAC;
-                    kh.setGioiTinh(gt);
-                    kh.setSoDienThoai(txt_SDT.getText());
-                    kh.setDiaChi(txt_DiaChi.getText());
+//                    KhachHangEntity kh = new KhachHangEntity();
+//                    kh.setMaKH(txt_MaKH.getText());
+//                    kh.setHoTen(txt_HoTen.getText());
+//                    if (rad_Nam.isSelected()) gt = GioiTinhEnum.NAM;
+//                    else if (rad_Nu.isSelected()) gt = GioiTinhEnum.NU;
+//                    else gt = GioiTinhEnum.KHAC;
+//                    kh.setGioiTinh(gt);
+//                    kh.setSoDienThoai(txt_SDT.getText());
+//                    kh.setDiaChi(txt_DiaChi.getText());
 
     //                listKH.remove(kh);
 
-                    if (bus.update(kh)) {
-    //                    listKH.add(kh);
-                        refresh();
-                        JOptionPane.showMessageDialog(this, "Đã sửa dữ liệu khách hàng thành công!");
-                    }
-                    else JOptionPane.showMessageDialog(this, "Hệ thống không thể cập nhật dữ liệu do số điện thoại đã tồn tại!");
+//                    if (bus.update(kh)) {
+//    //                    listKH.add(kh);
+//                        refresh();
+//                        JOptionPane.showMessageDialog(this, "Đã sửa dữ liệu khách hàng thành công!");
+//                    }
+//                    else JOptionPane.showMessageDialog(this, "Hệ thống không thể cập nhật dữ liệu do số điện thoại đã tồn tại!");
                 }
                 
             }

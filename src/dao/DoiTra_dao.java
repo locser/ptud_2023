@@ -105,7 +105,7 @@ public class DoiTra_dao implements DoiTra_Interface{
             while(rs.next()) {
                 String maDT = rs.getString("maDT");
                 String maHD = rs.getString("maHD");
-                HoaDonEntity hd = new HoaDonEntity(maHD);
+//                HoaDonEntity hd = new HoaDonEntity(maHD);
                 String maNV = rs.getString("maNV");
                 NhanVienEntity nv = new NhanVienEntity(maNV);
                 Date thoiGian = rs.getDate("thoiGianDoiTra");
@@ -114,8 +114,8 @@ public class DoiTra_dao implements DoiTra_Interface{
                 
                 ConvertStringToEnum toEnum = new ConvertStringToEnum();
                 
-                DoiTraEntity dt = new DoiTraEntity(maDT, hd, nv, toEnum.HinhThucDTToEnum(hinhThuc), thoiGian, tongTien);
-                dtList.add(dt);
+//                DoiTraEntity dt = new DoiTraEntity(maDT, hd, nv, toEnum.HinhThucDTToEnum(hinhThuc), thoiGian, tongTien);
+//                dtList.add(dt);
             }
 
             return dtList;
@@ -156,35 +156,35 @@ public class DoiTra_dao implements DoiTra_Interface{
             if(rs.next()) {
                 String maDT = rs.getString("maDT");
                 String maHD = rs.getString("maHD");
-                HoaDonEntity hd = new HoaDonEntity(maHD);
+//                HoaDonEntity hd = new HoaDonEntity(maHD);
                 
                 String maKH = rs.getString("maKH");
-                KhachHangEntity kh = new KhachHangEntity();
+//                KhachHangEntity kh = new KhachHangEntity();
                 
                 String maNV = rs.getString("maNV");
                 NhanVienEntity nv = new NhanVienEntity(maNV);
                 Date thoiGian = rs.getDate("thoiGianDoiTra");
                 String hinhThuc = rs.getString("hinhThucDoiTra");
                 double tongTien = rs.getDouble("tongTien");
-                if(maKH != null) {
-                    kh.setMaKH(maKH);
-                    String sql_kh = "Select hoTen, soDienThoai from KhachHang where maKH=?";
-                    statement = con.prepareStatement(sql_kh);
-                    statement.setString(1, maKH);
-                    
-                    rs = statement.executeQuery();
-                    if(rs.next()) {
-                        
-                        kh.setHoTen(rs.getString("hoTen"));
-                        kh.setSoDienThoai(rs.getString("soDienThoai"));
-                    }
-                    
-                }
-                hd.setKhachHang(kh);
+//                if(maKH != null) {
+//                    kh.setMaKH(maKH);
+//                    String sql_kh = "Select hoTen, soDienThoai from KhachHang where maKH=?";
+//                    statement = con.prepareStatement(sql_kh);
+//                    statement.setString(1, maKH);
+//                    
+//                    rs = statement.executeQuery();
+//                    if(rs.next()) {
+//                        
+//                        kh.setHoTen(rs.getString("hoTen"));
+//                        kh.setSoDienThoai(rs.getString("soDienThoai"));
+//                    }
+//                    
+//                }
+//                hd.setKhachHang(kh);
                 
                 ConvertStringToEnum toEnum = new ConvertStringToEnum();
                 
-                dt = new DoiTraEntity(maDT, hd, nv, toEnum.HinhThucDTToEnum(hinhThuc), thoiGian, tongTien);
+//                dt = new DoiTraEntity(maDT, hd, nv, toEnum.HinhThucDTToEnum(hinhThuc), thoiGian, tongTien);
             }
 
             return dt;
@@ -223,7 +223,7 @@ public class DoiTra_dao implements DoiTra_Interface{
             while(rs.next()) {
                 String maDT = rs.getString("maDT");
                 String maHD = rs.getString("maHD");
-                HoaDonEntity hd = new HoaDonEntity(maHD);
+//                HoaDonEntity hd = new HoaDonEntity(maHD);
                 String maNV = rs.getString("maNV");
                 NhanVienEntity nv = new NhanVienEntity(maNV);
                 Date thoiGian = rs.getDate("thoiGianDoiTra");
@@ -232,9 +232,9 @@ public class DoiTra_dao implements DoiTra_Interface{
                 
                 ConvertStringToEnum toEnum = new ConvertStringToEnum();
                 
-                DoiTraEntity dt = new DoiTraEntity(maDT, hd, nv, toEnum.HinhThucDTToEnum(hinhThuc), thoiGian, tongTien);
+//                DoiTraEntity dt = new DoiTraEntity(maDT, hd, nv, toEnum.HinhThucDTToEnum(hinhThuc), thoiGian, tongTien);
                 
-                dtList.add(dt);
+//                dtList.add(dt);
             }
 
             return dtList;
@@ -276,7 +276,7 @@ public class DoiTra_dao implements DoiTra_Interface{
             if(rs.next()) {
                 String maDT = rs.getString("maDT");
                 String maHD = rs.getString("maHD");
-                HoaDonEntity hd = new HoaDonEntity(maHD);
+//                HoaDonEntity hd = new HoaDonEntity(maHD);
                 String maNV = rs.getString("maNV");
                 NhanVienEntity nv = new NhanVienEntity(maNV);
                 Date thoiGian = rs.getDate("thoiGianDoiTra");
@@ -285,7 +285,7 @@ public class DoiTra_dao implements DoiTra_Interface{
                 
                 ConvertStringToEnum toEnum = new ConvertStringToEnum();
                 
-                dt = new DoiTraEntity(maDT, hd, nv, toEnum.HinhThucDTToEnum(hinhThuc), thoiGian, tongTien);
+//                dt = new DoiTraEntity(maDT, hd, nv, toEnum.HinhThucDTToEnum(hinhThuc), thoiGian, tongTien);
             }
 
             return dt;

@@ -44,10 +44,15 @@ public class TaiKhoan_bus implements TaiKhoanInterface{
     public ArrayList<TaiKhoanEntity> findAll() {
         return dao.findAll();
     }
+//
+//    @Override
+//    public boolean thoiGianDNGN(TaiKhoanEntity tk) {
+//        return dao.thoiGianDNGN(tk);// Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+//    }
 
     @Override
     public boolean thoiGianDNGN(TaiKhoanEntity tk) {
-        return dao.thoiGianDNGN(tk);// Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
     
