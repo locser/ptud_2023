@@ -73,7 +73,6 @@ public class TrangChu_GUI extends javax.swing.JFrame {
 
         TrangChu_Panel = new TrangChu_JPanel();
         BanHang_Panel = new BanVe_JPanel();
-//        SanPham_Panel = new SanPham_JPanel();
         QuanLyTau_Panel = new QuanLyTau_JPanel();
 
         HoaDon_Panel = new HoaDon_JPanel();
@@ -86,18 +85,6 @@ public class TrangChu_GUI extends javax.swing.JFrame {
         TaiKhoan_Panel = new TrangChu_JPanel();
         NhaCungCap_Panel = new TrangChu_JPanel();
         NhaSanXuat_Panel = new NhaSanXuat_JPanel();
-
-//        BanHang_Panel = new BanHang_JPanel(); 
-//        SanPham_Panel = new SanPham_JPanel();
-//        HoaDon_Panel = new HoaDon_JPanel();
-//        DoiTra_Panel = new DoiTra_JPanel();
-//        ThongKe_Panel = new ThongKe_JPanel();
-//        KhachHang_Panel = new KhachHang_JPanel();
-//        NhanVien_Panel = new NhanVien_JPanel();
-//        KhuyenMai_Panel = new KhuyenMai_JPanel();
-//        PhieuNhap_Panel = new PhieuNhap_JPanel();
-//        TaiKhoan_Panel = new TaiKhoan_JPanel();
-//        NhaCungCap_Panel = new NhaCungCap_JPanel();
 
         URL image_home = TrangChu_GUI.class.getResource("/pic/icon/home.png");   
         ImageIcon img_home = new ImageIcon(image_home);
@@ -369,7 +356,11 @@ public class TrangChu_GUI extends javax.swing.JFrame {
         });
         timer.start();
 
-//        menuClicked(TrangChu_Panel);
+        // Kiểm tra xem NhanVien_Panel đã hiển thị lên giao diện chưa
+        if (!NhanVien_Panel.isVisible()) {
+            // Nếu chưa hiển thị, bật nó lên
+            NhanVien_Panel.setVisible(true);
+        }
 
                    TatChonCacMuc();
                 Jpanel_TrangChu.setBackground(new Color(112, 128, 144));

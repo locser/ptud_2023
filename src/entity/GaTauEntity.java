@@ -6,41 +6,13 @@ public class GaTauEntity {
     private String maGa;
     private String tenGa;
     private String diaChi;
-    private int trangThai;
+    private String soDienThoai;
 
-    private NhanVienEntity nhanVien;
-
-    public GaTauEntity(String maGa, String tenGa, String diaChi) {
+    public GaTauEntity(String maGa, String tenGa, String diaChi, String soDienThoai) {
         this.maGa = maGa;
         this.tenGa = tenGa;
         this.diaChi = diaChi;
-    }
-
-    public GaTauEntity(String maGa, String tenGa) {
-        this.maGa = maGa;
-        this.tenGa = tenGa;
-    }
-
-    public GaTauEntity(String maGa) {
-        this.maGa = maGa;
-    }
-    public GaTauEntity(String maGa, String ten, NhanVienEntity nhanVien) {
-        this.maGa = maGa;
-        this.tenGa = ten;
-        this.nhanVien = nhanVien;
-    }
-
-    public GaTauEntity(String maGa, String ten, int trangThai, NhanVienEntity nhanVien) {
-        this.maGa = maGa;
-        this.tenGa = ten;
-        this.trangThai = trangThai;
-        this.nhanVien = nhanVien;
-    }
-
-    public GaTauEntity(String maGa, String ten, int trangThai) {
-        this.maGa = maGa;
-        this.tenGa = ten;
-        this.trangThai = trangThai;
+        this.soDienThoai = soDienThoai;
     }
 
     public String getMaGa() {
@@ -67,20 +39,12 @@ public class GaTauEntity {
         this.diaChi = diaChi;
     }
 
-    public int getTrangThai() {
-        return trangThai;
+    public String getSoDienThoai() {
+        return soDienThoai;
     }
 
-    public void setTrangThai(int trangThai) {
-        this.trangThai = trangThai;
-    }
-
-    public NhanVienEntity getNhanVien() {
-        return nhanVien;
-    }
-
-    public void setNhanVien(NhanVienEntity nhanVien) {
-        this.nhanVien = nhanVien;
+    public void setSoDienThoai(String soDienThoai) {
+        this.soDienThoai = soDienThoai;
     }
 
     @Override
@@ -89,6 +53,7 @@ public class GaTauEntity {
                 "maGa='" + maGa + '\'' +
                 ", tenGa='" + tenGa + '\'' +
                 ", diaChi='" + diaChi + '\'' +
+                ", soDienThoai='" + soDienThoai + '\'' +
                 '}';
     }
 
@@ -102,10 +67,7 @@ public class GaTauEntity {
 		if (this == obj)
 			return true;
 		if (obj == null)
-			return false;
 		if (getClass() != obj.getClass())
-			return false;
-		GaTauEntity other = (GaTauEntity) obj;
 		return Objects.equals(maGa, other.maGa);
 	}
     
