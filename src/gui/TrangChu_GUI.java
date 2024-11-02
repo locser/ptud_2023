@@ -73,7 +73,6 @@ public class TrangChu_GUI extends javax.swing.JFrame {
 
         TrangChu_Panel = new TrangChu_JPanel();
         BanHang_Panel = new BanVe_JPanel();
-//        SanPham_Panel = new SanPham_JPanel();
         QuanLyTau_Panel = new QuanLyTau_JPanel();
 
         HoaDon_Panel = new HoaDon_JPanel();
@@ -86,18 +85,6 @@ public class TrangChu_GUI extends javax.swing.JFrame {
         TaiKhoan_Panel = new TrangChu_JPanel();
         NhaCungCap_Panel = new TrangChu_JPanel();
         NhaSanXuat_Panel = new NhaSanXuat_JPanel();
-
-//        BanHang_Panel = new BanHang_JPanel(); 
-//        SanPham_Panel = new SanPham_JPanel();
-//        HoaDon_Panel = new HoaDon_JPanel();
-//        DoiTra_Panel = new DoiTra_JPanel();
-//        ThongKe_Panel = new ThongKe_JPanel();
-//        KhachHang_Panel = new KhachHang_JPanel();
-//        NhanVien_Panel = new NhanVien_JPanel();
-//        KhuyenMai_Panel = new KhuyenMai_JPanel();
-//        PhieuNhap_Panel = new PhieuNhap_JPanel();
-//        TaiKhoan_Panel = new TaiKhoan_JPanel();
-//        NhaCungCap_Panel = new NhaCungCap_JPanel();
 
         URL image_home = TrangChu_GUI.class.getResource("/pic/icon/home.png");   
         ImageIcon img_home = new ImageIcon(image_home);
@@ -369,11 +356,15 @@ public class TrangChu_GUI extends javax.swing.JFrame {
         });
         timer.start();
 
-//        menuClicked(TrangChu_Panel);
+        // Kiểm tra xem NhanVien_Panel đã hiển thị lên giao diện chưa
+        if (!NhanVien_Panel.isVisible()) {
+            // Nếu chưa hiển thị, bật nó lên
+            NhanVien_Panel.setVisible(true);
+        }
 
                    TatChonCacMuc();
                 Jpanel_TrangChu.setBackground(new Color(112, 128, 144));
-                menuClicked(TrangChu_Panel);
+                menuClicked(QuanLyTau_Panel);
 
     }
 
@@ -561,7 +552,7 @@ public class TrangChu_GUI extends javax.swing.JFrame {
 
         lbl_DoiTra.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         lbl_DoiTra.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_DoiTra.setText("Đổi Trả");
+        lbl_DoiTra.setText("Đổi Trả Vé");
         Jpanel_DoiTra.add(lbl_DoiTra, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 100, 29));
         Jpanel_DoiTra.add(lbl_IconDoiTra, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 30, 30));
 
@@ -573,7 +564,7 @@ public class TrangChu_GUI extends javax.swing.JFrame {
 
         lbl_BanHang.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         lbl_BanHang.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_BanHang.setText("Tìm Tàu");
+        lbl_BanHang.setText("Tìm Vé");
         Jpanel_BanHang.add(lbl_BanHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 100, 29));
 
         Jpanel_Menu.add(Jpanel_BanHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 180, 50));

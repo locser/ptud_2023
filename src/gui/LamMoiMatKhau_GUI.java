@@ -212,14 +212,14 @@ public class LamMoiMatKhau_GUI extends javax.swing.JFrame {
                 int interger = (int) (number * 1000000);
                 String text = interger + "";
                 String encodeText = MD5Encode.md5Encode(text);
-                entity.TaiKhoanEntity tk = new TaiKhoanEntity(sdt, encodeText);
+//                entity.TaiKhoanEntity tk = new TaiKhoanEntity(sdt, encodeText);
                 
-                if (tk_dao.lamMoiMatKhau(tk) == true) {
-                    email.sendMess(mail, text);
-                    JOptionPane.showMessageDialog(null, "Đã làm mới mật khẩu");
-                } else {
-                    JOptionPane.showMessageDialog(null, "lỗi!");
-                }
+//                if (tk_dao.lamMoiMatKhau(tk) == true) {
+//                    email.sendMess(mail, text);
+//                    JOptionPane.showMessageDialog(null, "Đã làm mới mật khẩu");
+//                } else {
+//                    JOptionPane.showMessageDialog(null, "lỗi!");
+//                }
 
             }
 

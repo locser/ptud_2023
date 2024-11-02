@@ -46,17 +46,17 @@ public class ThongTinDoiTra_GUI extends javax.swing.JFrame {
         if(dt != null) {
             lbl_MaDoiTra.setText(dt.getMaDT());
             lbl_MaNhanVien.setText(dt.getNhanVien().getMaNV());
-            if(dt.getHoaDon().getKhachHang() != null) {
-                lbl_TenKhachHang.setText(dt.getHoaDon().getKhachHang().getHoTen());
-                lbl_SoDienThoai.setText(dt.getHoaDon().getKhachHang().getSoDienThoai());
-            } else {
-                lbl_TenKhachHang.setText("");
-                lbl_SoDienThoai.setText("");
-            }
-            lbl_NgayLap.setText(dt.getThoiGianDoiTra().toString());
-            lbl_HinhThuc.setText(dt.getHinhThucDoiTra().toString());
-            lbl_TienHoanTra.setText(convert.toMoney(dt.getTongTien()));
-            
+//            if(dt.getHoaDon().getKhachHang() != null) {
+//                lbl_TenKhachHang.setText(dt.getHoaDon().getKhachHang().getHoTen());
+//                lbl_SoDienThoai.setText(dt.getHoaDon().getKhachHang().getSoDienThoai());
+//            } else {
+//                lbl_TenKhachHang.setText("");
+//                lbl_SoDienThoai.setText("");
+//            }
+//            lbl_NgayLap.setText(dt.getThoiGianDoiTra().toString());
+//            lbl_HinhThuc.setText(dt.getHinhThucDoiTra().toString());
+//            lbl_TienHoanTra.setText(convert.toMoney(dt.getTongTien()));
+//            
             ArrayList<ChiTietDoiTraEntity> ctdtList = ctdt_bus.getAllCTDTTheoMaDT(maDT);
             for (ChiTietDoiTraEntity ctdt : ctdtList) {
                 String[] data = {ctdt.getSanPham().getMaSP(), ctdt.getSanPham().getTenSP(), ctdt.getSanPham().getKichThuoc().toString(), ctdt.getSanPham().getMauSac().toString(), ctdt.getSoLuong()+"", convert.toMoney(ctdt.getGiaBan()), convert.toMoney(ctdt.getThanhTien())};

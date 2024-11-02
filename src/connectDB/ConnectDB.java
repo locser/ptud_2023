@@ -12,21 +12,21 @@ public class ConnectDB {
 
 	// Singleton pattern to get an instance of ConnectDB
 	public static ConnectDB getInstance() {
+
 		return instance;
 	}
 
-	// Method to establish connection
-	public void connect() throws Exception {
-//                            Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+        public void connect() throws Exception {
 
 		try {
 
-			String url = "jdbc:sqlserver://139.162.61.24:1433;databaseName=banve;encrypt=true;trustServerCertificate=true;loginTimeout=30";
+			String url = "jdbc:sqlserver://127.0.0.1:1433;databaseName=banve;encrypt=true;trustServerCertificate=true;loginTimeout=30";
 			String user = "sa";
-			String password = "Password789";
+			String password = "Password1@";
 			con = DriverManager.getConnection(url, user, password);
 
 			System.out.println("Kết nối thành công!");
+			
 		} catch (SQLException e) {
 			System.out.println("Không thể kết nối tới cơ sở dữ liệu");
 //			e.printStackTrace();

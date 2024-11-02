@@ -244,12 +244,12 @@ public class ThayDoiMatKhau_GUI extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Mật khẩu hiện tại không chính xác");
             }else {
                 
-                entity.TaiKhoanEntity newTK = new  TaiKhoanEntity(tenTaiKhoan, encodeNewPass);
-                if(tk_dao.lamMoiMatKhau(newTK) == true){
-                    JOptionPane.showMessageDialog(null, "Đồi mật khẩu thành công");
-                    jpf_MatKhauHienTai.setText("");
-                    jpf_MatKhauMoi.setText("");
-                }
+//                entity.TaiKhoanEntity newTK = new  TaiKhoanEntity(tenTaiKhoan, encodeNewPass);
+//                if(tk_dao.lamMoiMatKhau(newTK) == true){
+//                    JOptionPane.showMessageDialog(null, "Đồi mật khẩu thành công");
+//                    jpf_MatKhauHienTai.setText("");
+//                    jpf_MatKhauMoi.setText("");
+//                }
                 
             }
         } catch (NoSuchAlgorithmException ex) {

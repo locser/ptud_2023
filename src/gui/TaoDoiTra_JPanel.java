@@ -708,16 +708,16 @@ public class TaoDoiTra_JPanel extends javax.swing.JPanel {
                 return;
             }
             
-            if(hoaDon.getKhachHang() != null) {
-                lbl_MaKhachHang.setText(hoaDon.getKhachHang().getMaKH());
-                lbl_TenKhachHang.setText(hoaDon.getKhachHang().getHoTen());
-                lbl_SoDienThoai.setText(hoaDon.getKhachHang().getSoDienThoai());
-            }
+//            if(hoaDon.getKhachHang() != null) {
+//                lbl_MaKhachHang.setText(hoaDon.getKhachHang().getMaKH());
+//                lbl_TenKhachHang.setText(hoaDon.getKhachHang().getHoTen());
+//                lbl_SoDienThoai.setText(hoaDon.getKhachHang().getSoDienThoai());
+//            }
             
-            lbl_NgayLap.setText(hoaDon.getNgayLapHD().toString());
+//            lbl_NgayLap.setText(hoaDon.getNgayLapHD().toString());
             lbl_TongTien.setText(convert.toMoney(hoaDon.getTongTien()));
-            lbl_TienKhuyenMai.setText(convert.toMoney(hoaDon.getTienKhuyenMai()));
-            lbl_TienThanhToan.setText(convert.toMoney(hoaDon.getTienThanhToan()));
+//            lbl_TienKhuyenMai.setText(convert.toMoney(hoaDon.getTienKhuyenMai()));
+//            lbl_TienThanhToan.setText(convert.toMoney(hoaDon.getTienThanhToan()));
             ArrayList<ChiTietHoaDonEntity> cthdList = cthd_bus.getAllCTHDTheoMaHD(maHD);
             if(cthdList != null) {
                 tableModel_HoaDon.setRowCount(0);
@@ -868,7 +868,7 @@ public class TaoDoiTra_JPanel extends javax.swing.JPanel {
         
         String maDT = generateID.sinhMa("DT");
         String maHD = txt_MaHoaDon.getText().trim();
-        HoaDonEntity hd = new HoaDonEntity(maHD);
+//        HoaDonEntity hd = new HoaDonEntity(maHD);
         String maNV = tc.getMa();
         NhanVienEntity nv = new NhanVienEntity(maNV);
         Date thoiGian = Date.valueOf(LocalDate.now());
@@ -880,7 +880,7 @@ public class TaoDoiTra_JPanel extends javax.swing.JPanel {
         }
         double tongTien = convert.toDouble(lbl_TienHoanTra.getText().trim().toString());
         
-        DoiTraEntity dt = new DoiTraEntity(maDT, hd, nv, (HinhThucDoiTraEnum) toEnum.HinhThucDTToEnum(hinhThuc), thoiGian, tongTien);
+//        DoiTraEntity dt = new DoiTraEntity(maDT, hd, nv, (HinhThucDoiTraEnum) toEnum.HinhThucDTToEnum(hinhThuc), thoiGian, tongTien);
         
         ArrayList<ChiTietDoiTraEntity> ctdtList = new ArrayList<ChiTietDoiTraEntity>();
         for (int i = 0; i < tableModel_GioHang.getRowCount(); i++) {
@@ -890,18 +890,18 @@ public class TaoDoiTra_JPanel extends javax.swing.JPanel {
             double giaBan = convert.toDouble(tableModel_GioHang.getValueAt(i, 5).toString());
             double thanhTien = convert.toDouble(tableModel_GioHang.getValueAt(i, 6).toString());
             
-            ChiTietDoiTraEntity ctdt = new ChiTietDoiTraEntity(sanPham, dt, soLuong, giaBan, thanhTien);
+//            ChiTietDoiTraEntity ctdt = new ChiTietDoiTraEntity(sanPham, dt, soLuong, giaBan, thanhTien);
             
-            ctdtList.add(ctdt);
+//            ctdtList.add(ctdt);
         }
         
-        boolean kq = dt_bus.taoDoiTra(dt, ctdtList);
-        if(kq) {
-            lamMoi();
-            new ThongTinDoiTra_GUI(dt.getMaDT()).setVisible(true);
-        } else {
-            JOptionPane.showMessageDialog(this, "Tạo đơn đổi trả thất bại!");
-        }
+//        boolean kq = dt_bus.taoDoiTra(dt, ctdtList);
+//        if(kq) {
+//            lamMoi();
+//            new ThongTinDoiTra_GUI(dt.getMaDT()).setVisible(true);
+//        } else {
+//            JOptionPane.showMessageDialog(this, "Tạo đơn đổi trả thất bại!");
+//        }
     }
     
     public void lamMoi() {
