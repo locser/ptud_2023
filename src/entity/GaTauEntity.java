@@ -67,10 +67,7 @@ public class GaTauEntity {
 		if (this == obj)
 			return true;
 		if (obj == null)
-			return false;
 		if (getClass() != obj.getClass())
-			return false;
-		GaTauEntity other = (GaTauEntity) obj;
 		return Objects.equals(maGa, other.maGa);
 	}
     

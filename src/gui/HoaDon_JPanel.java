@@ -386,7 +386,94 @@ public class HoaDon_JPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>                        
 
-    // Variables declaration - do not modify                     
+//         XoahetDuLieuTrenTable();
+//         DocDuLieuTuSQLvaoTable();
+//         if (!txt_MaHoaDon.getText().equals("") && dateNgayLap.getDate() == null) {
+// //            HoaDonEntity hd = new HoaDonEntity();
+//             try {
+// //                hd = hdbus.getHoaDonTheoMaHD(txt_MaHoaDon.getText());
+//                 XoahetDuLieuTrenTable();
+// //                addRows(new Object[]{hd.getMaHD(), hd.getKhachHang().getMaKH(), hd.getNhanVien().getMaNV(), hd.getChuongTrinhKM().getMaCTKM(), hd.getNgayLapHD(), hd.getTienKhuyenMai(), hd.getTongTien(), hd.getTienThanhToan()});
+//             } catch (Exception e) {
+// //                JOptionPane.showMessageDialog(null, "Không tìm thấy hoá đơn này !");
+//             }
+//         } else if (txt_MaHoaDon.getText().equals("") && dateNgayLap.getDate() != null) {
+//             ArrayList<HoaDonEntity> ds = new ArrayList<HoaDonEntity>();
+//             try {
+//                 java.sql.Date ngaylap = new java.sql.Date(dateNgayLap.getDate().getTime());
+//                 System.out.println("ngay lập " + ngaylap);
+//                 ds = hdbus.getHoaDonTheoNgayLap(ngaylap);
+//                 XoahetDuLieuTrenTable();
+//                 for (HoaDonEntity hd : ds) {
+// //                    addRows(new Object[]{hd.getMaHD(), hd.getKhachHang().getMaKH(), hd.getNhanVien().getMaNV(), hd.getChuongTrinhKM().getMaCTKM(), hd.getNgayLapHD(), hd.getTienKhuyenMai(), hd.getTongTien(), hd.getTienThanhToan()});
+//                 }
+//             } catch (Exception e) {
+//                 JOptionPane.showMessageDialog(null, "Không tìm thấy hoá đơn này !");
+//                  XoahetDuLieuTrenTable();
+//                 DocDuLieuTuSQLvaoTable();
+//                 e.printStackTrace();
+//             }
+//         } else if (txt_MaHoaDon.getText().equals("") && dateNgayLap.getDate() == null) {
+//             JOptionPane.showMessageDialog(null, "Vui lòng nhập dữ liệu Hoá đơn cần tìm !");
+//         }
+//         else if(!txt_MaHoaDon.getText().equals("") && dateNgayLap.getDate() != null){
+//             ArrayList<HoaDonEntity> ds = new ArrayList<HoaDonEntity>();
+//             try {
+//                 java.sql.Date ngaylap = new java.sql.Date(dateNgayLap.getDate().getTime());
+// //                System.out.println("ngay lập " +ngaylap);
+//                 ds = hdbus.getHoaDonTheoMaHDvaNgayLap(txt_MaHoaDon.getText(),ngaylap);
+//                 XoahetDuLieuTrenTable();
+//                 for (HoaDonEntity hd : ds) {
+// //                    addRows(new Object[]{hd.getMaHD(),hd.getKhachHang().getMaKH(),hd.getNhanVien().getMaNV(),hd.getChuongTrinhKM().getMaCTKM(),hd.getNgayLapHD(),hd.getTienKhuyenMai(), hd.getTongTien(), hd.getTienThanhToan()});
+//                 }
+//             } catch (Exception e) {
+//                 JOptionPane.showMessageDialog(null, "Không tìm thấy hoá đơn này !");
+//                 XoahetDuLieuTrenTable();
+//                 DocDuLieuTuSQLvaoTable();
+//                 e.printStackTrace();
+//             }
+//         }
+
+//     }//GEN-LAST:event_btn_TimKiemActionPerformed
+
+    private void dateNgayLapPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dateNgayLapPropertyChange
+        // TODO add your handling code here:
+        XoahetDuLieuTrenTable();
+//        DocDuLieuTuSQLvaoTable();
+        ArrayList<HoaDonEntity> ds = new ArrayList<HoaDonEntity>();
+        try {
+            if (dateNgayLap.getDate() != null) {
+                java.sql.Date ngaylap = new java.sql.Date(dateNgayLap.getDate().getTime());
+                System.out.println("ngay lập " + ngaylap);
+                ds = hdbus.getHoaDonTheoNgayLap(ngaylap);
+                        if(ds.isEmpty())  {
+                            JOptionPane.showMessageDialog(null, "Không tìm thấy hoá đơn này !");
+                            XoahetDuLieuTrenTable();
+                            DocDuLieuTuSQLvaoTable();
+                        }
+                        else {
+                            XoahetDuLieuTrenTable();
+                        for (HoaDonEntity hd : ds) {
+//                            addRows(new Object[]{hd.getMaHD(),hd.getKhachHang().getMaKH(),hd.getNhanVien().getMaNV(),hd.getChuongTrinhKM().getMaCTKM(),hd.getNgayLapHD(),hd.getTienKhuyenMai(), hd.getTongTien(), hd.getTienThanhToan(),hd.getTinhTrang()});
+                        }
+                        }
+                        }
+             else {
+                hdbus = new HoaDon_bus();
+                DocDuLieuTuSQLvaoTable();
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Không tìm thấy hoá đơn này !");
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_dateNgayLapPropertyChange
+    
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel Jpanel_Table;
+    private javax.swing.JPanel Jpanel_ThaoTac;
+    private javax.swing.JPanel Jpanel_TieuDeHoaDon;
     private javax.swing.JButton btn_LamMoi;
     private javax.swing.JButton btn_TimKiem;
     private javax.swing.JButton btn_XemChiTiet;
