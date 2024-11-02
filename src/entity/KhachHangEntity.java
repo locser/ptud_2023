@@ -30,14 +30,6 @@ public class KhachHangEntity {
 		this.ngayTao = ngayTao;
 		this.ngayCapNhat = ngayCapNhat;
 	}
-
-    public KhachHangEntity() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    public KhachHangEntity(String string) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 	public String getMaKH() {
 		return maKH;
 	}
