@@ -12,7 +12,7 @@ import Interface.KhachHang_Interface;
 
 /**
  *
- * @author HUY
+ * @author ploc2
  */
 public class KhachHang_bus implements KhachHang_Interface {
     KhachHang_dao khachHangDAO = new KhachHang_dao();

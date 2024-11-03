@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author HUY
+ * @author ploc2
  */
 public class NhanVien_dao2 implements NhanVienInterface{
     ConnectDB connect = new ConnectDB();

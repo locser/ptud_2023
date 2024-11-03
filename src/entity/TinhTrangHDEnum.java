@@ -6,7 +6,7 @@ package entity;
 
 /**
  *
- * @author Nguyen Huy Hoang
+ * @author ploc2
  */
 public enum TinhTrangHDEnum {
     DATHANHTOAN, CHUATHANHTOAN;

@@ -6,7 +6,7 @@ package entity;
 
 /**
  *
- * @author HUY
+ * @author ploc2
  */
 public enum TinhTrangTKEnum {
     DANG_HOAT_DONG, NGUNG_HOAT_DONG;

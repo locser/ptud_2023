@@ -6,7 +6,7 @@ package entity;
 
 /**
  *
- * @author HUY
+ * @author ploc2
  */
 public enum GioiTinhEnum {
     NAM, NU, KHAC;

@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Nguyen Huy Hoang
+ * @author ploc2
  */
 public class ChiTietDoiTra_dao implements ChiTietDoiTra_Interface{
     

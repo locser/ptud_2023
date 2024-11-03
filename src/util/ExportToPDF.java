@@ -14,7 +14,7 @@ import org.apache.pdfbox.pdmodel.graphics.image.LosslessFactory;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 /**
  *
- * @author Nguyen Huy Hoang
+ * @author ploc2
  */
 public class ExportToPDF {
     

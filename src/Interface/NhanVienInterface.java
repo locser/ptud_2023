@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author HUY
+ * @author ploc2
  */
 public interface NhanVienInterface {
     public Boolean checkNV(String email, String sdt) throws SQLException ;
