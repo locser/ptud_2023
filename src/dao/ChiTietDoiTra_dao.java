@@ -7,10 +7,7 @@ package dao;
 import Interface.ChiTietDoiTra_Interface;
 import connectDB.ConnectDB;
 import entity.ChiTietDoiTraEntity;
-import entity.ChiTietHoaDonEntity;
 import entity.DoiTraEntity;
-import entity.HoaDonEntity;
-import entity.SanPhamEntity;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -39,7 +36,7 @@ public class ChiTietDoiTra_dao implements ChiTietDoiTra_Interface{
             
             String sql = "Insert into ChiTietDoiTra(maSP, maDT, soLuong, giaBan, thanhTien) values (?, ?, ?, ?, ?)";
             statement = con.prepareStatement(sql);
-            statement.setString(1, ctdt.getSanPham().getMaSP());
+//            statement.setString(1, ctdt.getSanPham().getMaSP());
             statement.setString(2, ctdt.getDoiTra().getMaDT());
             statement.setInt(3, ctdt.getSoLuong());
             statement.setDouble(4, ctdt.getGiaBan());
@@ -93,8 +90,8 @@ public class ChiTietDoiTra_dao implements ChiTietDoiTra_Interface{
                 String tensp = rs.getString("tenSP");
                 String kichThuoc = rs.getString("kichThuoc");
                 String mauSac = rs.getString("mauSac");
-                SanPhamEntity sp = new SanPhamEntity(masp);
-                sp.setTenSP(tensp);
+//                SanPhamEntity sp = new SanPhamEntity(masp);
+//                sp.setTenSP(tensp);
 //                ConvertStringToEnum toEnum = new ConvertStringToEnum();
 //                sp.setKichThuoc(toEnum.KichThuoctoEnum(kichThuoc));
 //                sp.setMauSac(toEnum.MauSactoEnum(mauSac));
@@ -102,9 +99,9 @@ public class ChiTietDoiTra_dao implements ChiTietDoiTra_Interface{
                 double giaBan = rs.getDouble("giaBan");
                 double thanhTien = rs.getDouble("thanhTien");
                 
-                ChiTietDoiTraEntity cthd = new ChiTietDoiTraEntity(sp, dt, soLuong, giaBan, thanhTien);
+//                ChiTietDoiTraEntity cthd = new ChiTietDoiTraEntity(sp, dt, soLuong, giaBan, thanhTien);
                 
-                ctdtList.add(cthd);
+//                ctdtList.add(cthd);
             }
             return ctdtList;
         } catch (Exception e) {

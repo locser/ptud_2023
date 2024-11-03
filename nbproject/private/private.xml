@@ -3,14 +3,29 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/daihoc/btl/JavaApplication2/src/dao/HoaDon_dao.java</file>
+            <file>file:/C:/daihoc/btl/JavaApplication2/src/gui/ChiTietDoiTra_GUI.java</file>
+            <file>file:/C:/daihoc/btl/JavaApplication2/src/gui/LichTrinh_JPanel.java</file>
+            <file>file:/C:/daihoc/btl/JavaApplication2/src/gui/TrangChu_GUI.java</file>
+            <file>file:/C:/daihoc/btl/JavaApplication2/src/gui/NhaSanXuat_JPanel.java</file>
+            <file>file:/C:/daihoc/btl/JavaApplication2/src/gui/ChiTietHoaDon_GUI.java</file>
+            <file>file:/C:/daihoc/btl/JavaApplication2/src/gui/DangNhap.java</file>
+            <file>file:/C:/daihoc/btl/JavaApplication2/src/entity/ChiTietDoiTraEntity.java</file>
+            <file>file:/C:/daihoc/btl/JavaApplication2/src/entity/ChiTietHoaDonEntity.java</file>
+            <file>file:/C:/daihoc/btl/JavaApplication2/src/dao/ChiTietDoiTra_dao.java</file>
+            <file>file:/C:/daihoc/btl/JavaApplication2/src/gui/ThongTinHoaDon_GUI.java</file>
+            <file>file:/C:/daihoc/btl/JavaApplication2/src/dao/KhachHang_dao.java</file>
+            <file>file:/C:/daihoc/btl/JavaApplication2/src/gui/ThongTinDoiTra_GUI.java</file>
             <file>file:/C:/daihoc/btl/JavaApplication2/src/gui/QuanLyTau_JPanel.java</file>
-            <file>file:/C:/daihoc/btl/JavaApplication2/src/dao/Toa_dao.java</file>
-            <file>file:/C:/daihoc/btl/JavaApplication2/src/gui/QuanLyGa_JPanel.java</file>
-            <file>file:/C:/daihoc/btl/JavaApplication2/src/dao/NhanVien_dao.java</file>
+            <file>file:/C:/daihoc/btl/JavaApplication2/src/Interface/ChiTietHoaDon_Interface.java</file>
+            <file>file:/C:/daihoc/btl/JavaApplication2/src/dao/ChiTietHoaDon_dao.java</file>
+            <file>file:/C:/daihoc/btl/JavaApplication2/src/dao/DoiTra_dao.java</file>
+            <file>file:/C:/daihoc/btl/JavaApplication2/src/gui/NhanVien_JPanel.java</file>
             <file>file:/C:/daihoc/btl/JavaApplication2/src/gui/QuanLyToa_JPanel.java</file>
-            <file>file:/C:/daihoc/btl/JavaApplication2/src/util/EntityMapper.java</file>
-            <file>file:/C:/daihoc/btl/JavaApplication2/src/gui/QuanLyGhe_JPanel1.java</file>
-            <file>file:/C:/daihoc/btl/JavaApplication2/src/entity/GheEntity.java</file>
+            <file>file:/C:/daihoc/btl/JavaApplication2/src/gui/TaoDoiTra_JPanel.java</file>
+            <file>file:/C:/daihoc/btl/JavaApplication2/src/bus/ChiTietHoaDon_bus.java</file>
+            <file>file:/C:/daihoc/btl/JavaApplication2/src/dao/NhanVien_dao2.java</file>
+            <file>file:/C:/daihoc/btl/JavaApplication2/src/dao/Tau_dao.java</file>
         </group>
     </open-files>
 </project-private>

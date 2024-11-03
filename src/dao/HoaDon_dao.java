@@ -5,8 +5,6 @@ import entity.HoaDonEntity;
 import java.util.ArrayList;
 import connectDB.ConnectDB;
 import entity.ChiTietHoaDonEntity;
-import entity.KhachHangEntity;
-import entity.NhanVienEntity;
 import java.sql.Date;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -15,12 +13,10 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import util.ConvertStringToEnum;
 
 
 public class HoaDon_dao implements  Interface.HoaDon_Interface{
     
-    private ConvertStringToEnum toEnum = new ConvertStringToEnum();
     
     public HoaDon_dao(){
     
@@ -44,7 +40,6 @@ public class HoaDon_dao implements  Interface.HoaDon_Interface{
                  Date ngayTao = rs.getDate("ngayTao");
                  Date NgayCapNhat = rs.getDate("NgayCapNhat");
                  
-                 ConvertStringToEnum toEnum = new ConvertStringToEnum();
                  
 //                 HoaDonEntity hd = new HoaDonEntity(maHD, maKH, tongTien, phuongThucThanhToan, toEnum.trangThaiHoaDontoEnum(trangThai),ngayTao,NgayCapNhat);
 //                 dshd.add(hd);

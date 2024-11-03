@@ -1,17 +1,14 @@
 package dao;
 
 import connectDB.ConnectDB;
-import entity.GioiTinhEnum;
 import entity.KhachHangEntity;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import Interface.KhachHang_Interface;
-import util.ConvertStringToEnum;
 
 
 public class KhachHang_dao implements KhachHang_Interface {

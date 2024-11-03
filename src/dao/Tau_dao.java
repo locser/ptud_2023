@@ -6,7 +6,6 @@ package dao;
 
 import connectDB.ConnectDB;
 import entity.*;
-import util.ConvertStringToEnum;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -392,35 +391,6 @@ public class Tau_dao {
     }
 
     
-    public void capNhatKhuyenMai() {
-        try {
-            Connection con = ConnectDB.getConnection();
-            PreparedStatement ps = null;
-            String sql = "UPDATE Tau SET maCTKM = NULL WHERE maCTKM IN (SELECT maCTKM FROM ChuongTrinhKhuyenMai WHERE ngayKetThuc < SYSDATETIME() AND ngayKetThuc <> CONVERT(DATE, SYSDATETIME()))";
-            ps = con.prepareStatement(sql);
-            ps.executeUpdate();
-            ps.close();
-        } catch (Exception ex) {
-            Logger.getLogger(Tau_dao.class.getName()).log(Level.SEVERE, null, ex);
 
-        }
-    }
-
-    
-    public void capNhatTinhTrang(String maTau, TinhTrangSPEnum tinhTrangDangBan) {
-        try {
-            Connection con = ConnectDB.getConnection();
-            PreparedStatement ps = null;
-            String sql = "UPDATE Tau SET tinhTrang = ? WHERE maTau = ?";
-            ps = con.prepareStatement(sql);
-            ps.setString(1, tinhTrangDangBan.toString());
-            ps.setString(2, maTau);
-            ps.executeUpdate();
-            ps.close();
-        } catch (Exception ex) {
-            Logger.getLogger(Tau_dao.class.getName()).log(Level.SEVERE, null, ex);
-
-        }
-    }
 
 }

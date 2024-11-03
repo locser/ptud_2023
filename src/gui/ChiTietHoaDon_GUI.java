@@ -1,33 +1,18 @@
 
 package gui;
 
-import java.awt.*;
-import javax.swing.*;
-import javax.swing.border.*;
 import bus.ChiTietHoaDon_bus;
-import bus.ChuongTrinhKhuyenMai_bus;
 import bus.HoaDon_bus;
 import bus.KhachHang_bus;
-import bus.SanPham_bus;
 import connectDB.ConnectDB;
 import entity.ChiTietHoaDonEntity;
-import entity.ChuongTrinhKhuyenMaiEntity;
-import entity.HoaDonEntity;
-import entity.KhachHangEntity;
-import entity.SanPhamEntity;
-import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.SQLException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Locale;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
-import org.jdesktop.layout.GroupLayout;
 import util.HoaDon_toancuc;
 
 /**
@@ -57,7 +42,6 @@ public class ChiTietHoaDon_GUI extends javax.swing.JFrame {
     private SanPham_bus spbus;
     private HoaDon_JPanel HDPanel;
     private KhachHang_bus khbus;
-    private ChuongTrinhKhuyenMai_bus kmbus;
     private HoaDon_bus hdbus;
        // Định dạng số tiền sang VND
         NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
@@ -91,18 +75,10 @@ public class ChiTietHoaDon_GUI extends javax.swing.JFrame {
 
         lbl_MaNhanVien.setText(hdtc.getMaNV());
         lbl_NgayLapHoaDon.setText(hdtc.getNgayLap());
-       // Lấy Khuyến Mãi
-        kmbus = new ChuongTrinhKhuyenMai_bus();
-          if(!hdtc.getMaKM().equals("")){
 
-                ChuongTrinhKhuyenMaiEntity ctkm = kmbus.getKMTheomaHD(lbl_MaHoaDon.getText());
-                 
-                     lbl_KhuyenMaiHD.setText(ctkm.getGiamGia()+"%");
-
-       
-          }
        }
-        lbl_IConExit.addMouseListener(new MouseAdapter(){
+       
+    lbl_IConExit.addMouseListener(new MouseAdapter(){
             @Override
             public void mouseClicked(MouseEvent e){
                 System.exit(0);
@@ -118,25 +94,25 @@ public class ChiTietHoaDon_GUI extends javax.swing.JFrame {
     int sl = 0;
         try {
             
-            String maHD = lbl_MaHoaDon.getText();
-            ArrayList<SanPhamEntity> allSP = new ArrayList<>(); // Danh sách tất cả sản phẩm
-             allSP = cthdbus.getSanPhamTheoMaHD(maHD);
-              String giagoc  = "";
-            for(SanPhamEntity sp: allSP){
-                listCTHD = cthdbus.getCTHDTheoMaHDvaMaSP(maHD, sp.getMaSP());
-                for(ChiTietHoaDonEntity ct: listCTHD){
-                    System.out.println(sl);
-                    
-                    if(sp.getChuongTrinhKhuyenMai().getMaCTKM()!= null){
-                        ChuongTrinhKhuyenMaiEntity ctkm = kmbus.getKMTheoma(sp.getChuongTrinhKhuyenMai().getMaCTKM());
-                         giagoc = "<html><strike>"+ct.getGiaGoc()+"</strike><sub>"+"-"+ctkm.getGiamGia()+"%"+"</sub></html>" ;
-                    }
-                    else {
-                        giagoc = ct.getGiaGoc() +"";
-                    }
-                addRows(new Object[]{sp.getMaSP(),sp.getTenSP(),sp.getKichThuoc(),sp.getMauSac(),ct.getSoLuong(),giagoc ,ct.getGiaBan(),ct.getThanhTien()});
-                }
-            }
+//            String maHD = lbl_MaHoaDon.getText();
+//            ArrayList<SanPhamEntity> allSP = new ArrayList<>(); // Danh sách tất cả sản phẩm
+//             allSP = cthdbus.getSanPhamTheoMaHD(maHD);
+//              String giagoc  = "";
+//            for(SanPhamEntity sp: allSP){
+//                listCTHD = cthdbus.getCTHDTheoMaHDvaMaSP(maHD, sp.getMaSP());
+//                for(ChiTietHoaDonEntity ct: listCTHD){
+//                    System.out.println(sl);
+//                    
+//                    if(sp.getChuongTrinhKhuyenMai().getMaCTKM()!= null){
+//                        ChuongTrinhKhuyenMaiEntity ctkm = kmbus.getKMTheoma(sp.getChuongTrinhKhuyenMai().getMaCTKM());
+//                         giagoc = "<html><strike>"+ct.getGiaGoc()+"</strike><sub>"+"-"+ctkm.getGiamGia()+"%"+"</sub></html>" ;
+//                    }
+//                    else {
+//                        giagoc = ct.getGiaGoc() +"";
+//                    }
+//                addRows(new Object[]{sp.getMaSP(),sp.getTenSP(),sp.getKichThuoc(),sp.getMauSac(),ct.getSoLuong(),giagoc ,ct.getGiaBan(),ct.getThanhTien()});
+//                }
+//            }
 //           lblTongTien.setText(TongTien(5));
            lbl_TienThanhToan.setText(TongTien(7));
         } catch (Exception e) {
@@ -165,10 +141,7 @@ public class ChiTietHoaDon_GUI extends javax.swing.JFrame {
 //            lblTongTien.setText(tt+" đ");
         String giamKMHD = lbl_KhuyenMaiHD.getText().replace("%", "");
         double stg = tt * (Double.parseDouble(giamKMHD))/100;
-          ChuongTrinhKhuyenMaiEntity ctkm = kmbus.getKMTheomaHD(lbl_MaHoaDon.getText());
-          if(ctkm != null){
-              if(ctkm.getSoTienToiDa() < stg) stg = ctkm.getSoTienToiDa();
-          }
+
           
         tt = tt - stg;
         } catch (Exception e) {

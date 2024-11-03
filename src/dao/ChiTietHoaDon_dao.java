@@ -1,18 +1,10 @@
 package dao;
 
-import Interface.ChiTietHoaDon_Interface;
 import connectDB.ConnectDB;
 import entity.ChiTietHoaDonEntity;
-import entity.HoaDonEntity;
 import entity.VeEntity;
-import entity.TauEntity;
-import entity.ToaTauEntity;
-import entity.GheEntity;
 import java.util.ArrayList;
 import java.sql.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import util.ConvertStringToEnum;
 
 public class ChiTietHoaDon_dao {
 

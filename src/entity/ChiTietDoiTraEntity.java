@@ -10,7 +10,7 @@ package entity;
  */
 public class ChiTietDoiTraEntity {
     
-    private SanPhamEntity sanPham;
+    private Object sanPham;
     private DoiTraEntity doiTra;
     private int soLuong;
     private double giaBan;
@@ -19,7 +19,7 @@ public class ChiTietDoiTraEntity {
     public ChiTietDoiTraEntity() {
     }
 
-    public ChiTietDoiTraEntity(SanPhamEntity sanPham, DoiTraEntity doiTra, int soLuong, double giaBan, double thanhTien) {
+    public ChiTietDoiTraEntity(Object sanPham, DoiTraEntity doiTra, int soLuong, double giaBan, double thanhTien) {
         this.sanPham = sanPham;
         this.doiTra = doiTra;
         this.soLuong = soLuong;
@@ -27,11 +27,11 @@ public class ChiTietDoiTraEntity {
         this.thanhTien = thanhTien;
     }
 
-    public SanPhamEntity getSanPham() {
+    public Object getSanPham() {
         return sanPham;
     }
 
-    public void setSanPham(SanPhamEntity sanPham) {
+    public void setSanPham(Object sanPham) {
         this.sanPham = sanPham;
     }
 
