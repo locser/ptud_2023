@@ -1,57 +1,71 @@
 package entity;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.Objects;
 
 public class LichTrinhEntity {
-    private String maLichTrinh;
-    private TauEntity maTau;
-    private String gaDi;
-    private String gaDen;
+    private int maHT;
+    private TauEntity tau;
+    private String gioDi;
+    private String gioDen;
     private Date ngayDi;
     private Date ngayDen;
-    private String trangThai;
+    private int trangThai;
+    private int loai;
 
-    public LichTrinhEntity(String maLichTrinh, TauEntity maTau, String gaDi, String gaDen, Date ngayDi, Date ngayDen, String trangThai) {
-        this.maLichTrinh = maLichTrinh;
-        this.maTau = maTau;
-        this.gaDi = gaDi;
-        this.gaDen = gaDen;
+    public LichTrinhEntity(int maLichTrinh, TauEntity maTau, String gioDi, String gioDen, Date ngayDi, Date ngayDen, int trangThai, int loai) {
+        this.maHT = maLichTrinh;
+        this.tau = maTau;
+        this.gioDi = gioDi;
+        this.gioDen = gioDen;
         this.ngayDi = ngayDi;
         this.ngayDen = ngayDen;
         this.trangThai = trangThai;
+        this.loai = loai;
     }
 
-    public String getMaLichTrinh() {
-        return maLichTrinh;
+    public LichTrinhEntity() {
+        //TODO Auto-generated constructor stub
     }
 
-    public void setMaLichTrinh(String maLichTrinh) {
-        this.maLichTrinh = maLichTrinh;
+    public int getMaHT() {
+        return maHT;
     }
 
-    public TauEntity getMaTau() {
-        return maTau;
+    public void setMaHT(int maHT) {
+        this.maHT = maHT;
     }
 
-    public void setMaTau(TauEntity maTau) {
-        this.maTau = maTau;
+    public TauEntity getTau() {
+        return tau;
     }
 
-    public String getGaDi() {
-        return gaDi;
+    public void setTau(TauEntity maTau) {
+        this.tau = maTau;
     }
 
-    public void setGaDi(String gaDi) {
-        this.gaDi = gaDi;
+    public String getGioDi() {
+        return gioDi;
     }
 
-    public String getGaDen() {
-        return gaDen;
+    public void setGioDi(String gioDi) {
+        this.gioDi = gioDi;
     }
 
-    public void setGaDen(String gaDen) {
-        this.gaDen = gaDen;
+    public String getGioDen() {
+        return gioDen;
+    }
+
+    public void setGioDen(String gioDen) {
+        this.gioDen = gioDen;
+    }
+
+    public int getLoai() {
+        return loai;
+    }
+
+    public void setLoai(int loai) {
+        this.loai = loai;
     }
 
     public Date getNgayDi() {
@@ -70,30 +84,23 @@ public class LichTrinhEntity {
         this.ngayDen = ngayDen;
     }
 
-    public String getTrangThai() {
+    public int getTrangThai() {
         return trangThai;
     }
 
-    public void setTrangThai(String trangThai) {
+    public void setTrangThai(int trangThai) {
         this.trangThai = trangThai;
     }
 
     @Override
     public String toString() {
-        return "LichTrinhEntity{" +
-                "maLichTrinh='" + maLichTrinh + '\'' +
-                ", maTau='" + maTau + '\'' +
-                ", gaDi='" + gaDi + '\'' +
-                ", gaDen='" + gaDen + '\'' +
-                ", ngayDi=" + ngayDi +
-                ", ngayDen=" + ngayDen +
-                ", trangThai='" + trangThai + '\'' +
-                '}';
+        return "LichTrinhEntity{" + "maHT=" + maHT + ", tau=" + tau + ", gioDi=" + gioDi + ", gioDen=" + gioDen + ", ngayDi=" + ngayDi + ", ngayDen=" + ngayDen + ", trangThai=" + trangThai + ", loai=" + loai + '}';
     }
+
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(maLichTrinh);
+		return Objects.hash(maHT);
 	}
 
 	@Override
@@ -105,7 +112,7 @@ public class LichTrinhEntity {
 		if (getClass() != obj.getClass())
 			return false;
 		LichTrinhEntity other = (LichTrinhEntity) obj;
-		return Objects.equals(maLichTrinh, other.maLichTrinh);
+		return Objects.equals(maHT, other.maHT);
 	}
     
 }

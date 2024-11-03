@@ -88,6 +88,71 @@ public class Tau_dao {
         return dsTau;
     }
 
+        public ArrayList<TauEntity> getAllTauDangHoatDong() {
+        ArrayList<TauEntity> dsTau = new ArrayList<TauEntity>();
+        try {
+            Connection con = ConnectDB.getConnection();
+            String sql = " SELECT \n" +
+                    "    tau.maTau,\n" +
+                    "    tau.ten ,\n" +
+                    "    tau.soToa,\n" +
+                    "    tau.loai,\n" +
+                    "    tau.trangThai,\n" +
+                    "    tau.ngayTao,\n" +
+                    "    tau.ngayCapNhat,\n" +
+                    "    gaDi.maGa AS maGaDi,\n" +
+                    "    gaDi.ten AS tenGaDi,\n" +
+                    "    gaDen.maGa AS maGaDen,\n" +
+                    "    gaDen.ten AS tenGaDen,\n" +
+                    "    nv.maNV AS maNhanVien,\n" +
+                    "    nv.ten AS tenNhanVien\n" +
+                    "FROM \n" +
+                    "    banve.dbo.tau tau\n" +
+                    "JOIN \n" +
+                    "    banve.dbo.ga gaDi ON tau.gaDi = gaDi.maGa\n" +
+                    "JOIN \n" +
+                    "    banve.dbo.ga gaDen ON tau.gaDen = gaDen.maGa\n" +
+                    "JOIN \n" +
+                    "    banve.dbo.nhan_vien nv ON tau.maNV = nv.maNV \n"
+                    + " where tau.trangThai = 1 order by tau.ngayTao desc;";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                String maTau = rs.getString("maTau");
+                String ten = rs.getString("ten");
+                int soToa = rs.getInt("soToa");
+                int loai = rs.getInt("loai");
+                int trangThai = rs.getInt("trangThai");
+                Date ngayTao = rs.getDate("ngayTao");
+                Date ngayCapNhat = rs.getDate("ngayCapNhat");
+                String maNV = rs.getString("maNhanVien");
+                String tenNhanVien = rs.getString("tenNhanVien");
+                String tenGaDi = rs.getString("tenGaDi");
+                String tenGaDen = rs.getString("tenGaDen");
+                String maGaDi = rs.getString("maGaDi");
+                String maGaDen = rs.getString("maGaDen");
+
+                GaTauEntity gaDi = new GaTauEntity(maGaDi, tenGaDi);
+                GaTauEntity gaDen = new GaTauEntity(maGaDen, tenGaDen);
+
+                NhanVienEntity nhanVien = new NhanVienEntity(maNV, tenNhanVien);
+
+                // Tạo đối tượng TauEntity với thông tin từ ResultSet
+
+                TauEntity tau = new TauEntity(maTau, ten, gaDi, gaDen, soToa, loai, trangThai, ngayTao, ngayCapNhat, nhanVien);
+                dsTau.add(tau);
+            }
+
+            ps.close();
+            rs.close();
+        } catch (Exception ex) {
+            Logger.getLogger(Tau_dao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return dsTau;
+    }
+
+
 
     public boolean themTau(TauEntity sp) {
         try {

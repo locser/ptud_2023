@@ -650,7 +650,7 @@ public class NhanVien_JPanel extends javax.swing.JPanel {
         } catch (BadLocationException ex) {
             Logger.getLogger(NhanVien_JPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_btn_CapNhatActionPerformed
+    }                                           
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -699,7 +699,8 @@ public class NhanVien_JPanel extends javax.swing.JPanel {
                 nv.getMaNV(), 
                 nv.getTen(),
                 nv.getGioiTinh().toString(), // Sử dụng toString() của enum GioiTinhEnum
-                new SimpleDateFormat("dd/MM/yyyy").format(nv.getNgayTao()),
+//                new SimpleDateFormat("dd/MM/yyyy").format(nv.getNgayTao()), 
+                "",
                 nv.getEmail(),
                 nv.getSoDienThoai(),
                 nv.getDiaChi(),

@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 public class LichTrinh_dao {
     ConnectDB connect = new ConnectDB();
 
-    public LichTrinhEntity findOne(String id) {
+    public LichTrinhEntity layLichTrinhTheoMa(String id) {
         LichTrinhEntity lichTrinh = null;
         ResultSet rs = null;
         try {
@@ -34,7 +34,6 @@ public class LichTrinh_dao {
 //                    rs.getString("trangThai")
 //                );
 //            }
-            connect.disconnect();
         } catch (SQLException ex) {
             Logger.getLogger(LichTrinh_dao.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception e) {
@@ -43,21 +42,24 @@ public class LichTrinh_dao {
         return lichTrinh;
     }
 
-    public boolean update(LichTrinhEntity newLichTrinh) {
-        String sql = "UPDATE LichTrinh SET maTau = ?, gaDi = ?, gaDen = ?, ngayDi = ?, ngayDen = ?, trangThai = ? WHERE maLichTrinh = ?";
+    public boolean capNhat(LichTrinhEntity lichTrinh) {
+        String sql = "UPDATE hanh_trinh\n" + //
+                        "SET gioDi=?, ngayDi=?, gioDen=?, ngayDen=?, loai=?, trangThai=?, ngayTao=getdate(), ngayCapNhat=getdate(), maTau=?\n" + //
+                        "WHERE maHT=?;";
         int n = 0;
         try {
-            connect.connect();
-            PreparedStatement statement = connect.getConnection().prepareStatement(sql);
-            statement.setString(1, newLichTrinh.getMaTau().getMaTau());
-            statement.setString(2, newLichTrinh.getGaDi());
-            statement.setString(3, newLichTrinh.getGaDen());
-            statement.setDate(4, new java.sql.Date(newLichTrinh.getNgayDi().getTime()));
-            statement.setDate(5, new java.sql.Date(newLichTrinh.getNgayDen().getTime()));
-            statement.setString(6, newLichTrinh.getTrangThai());
-            statement.setString(7, newLichTrinh.getMaLichTrinh());
+            PreparedStatement statement = ConnectDB.getConnection().prepareStatement(sql);
+            statement.setString(1, lichTrinh.getGioDi());
+            statement.setDate(2,(lichTrinh.getNgayDi()));
+            statement.setString(3, lichTrinh.getGioDen());
+            statement.setDate(4, lichTrinh.getNgayDen());
+
+            statement.setInt(5, lichTrinh.getLoai());
+            statement.setInt(6, lichTrinh.getTrangThai());
+            statement.setString(7, lichTrinh.getTau().getMaTau());
+
+            statement.setInt(8, lichTrinh.getMaHT());
             n = statement.executeUpdate();
-            connect.disconnect();
         } catch (SQLException ex) {
             Logger.getLogger(LichTrinh_dao.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception e) {
@@ -66,21 +68,22 @@ public class LichTrinh_dao {
         return n > 0;
     }
 
-    public boolean insert(LichTrinhEntity lichTrinh) {
+    public boolean them(LichTrinhEntity lichTrinh) {
         int n = 0;
-        String sql = "INSERT INTO LichTrinh(maLichTrinh, maTau, gaDi, gaDen, ngayDi, ngayDen, trangThai) VALUES(?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO hanh_trinh\n" +
+"(gioDi, ngayDi, gioDen, ngayDen, loai, trangThai, ngayTao, ngayCapNhat, maTau)\n" +
+"VALUES( ?, ?, ?, ?, ?, ?, getdate(), getdate(), ?);";
         try {
-            connect.connect();
-            PreparedStatement statement = connect.getConnection().prepareStatement(sql);
-            statement.setString(1, lichTrinh.getMaLichTrinh());
-            statement.setString(2, lichTrinh.getMaTau().getMaTau());
-            statement.setString(3, lichTrinh.getGaDi());
-            statement.setString(4, lichTrinh.getGaDen());
-            statement.setDate(5, new java.sql.Date(lichTrinh.getNgayDi().getTime()));
-            statement.setDate(6, new java.sql.Date(lichTrinh.getNgayDen().getTime()));
-            statement.setString(7, lichTrinh.getTrangThai());
+            PreparedStatement statement = ConnectDB.getConnection().prepareStatement(sql);
+            statement.setString(1, lichTrinh.getGioDi());
+            statement.setDate(2,(lichTrinh.getNgayDi()));
+            statement.setString(3, lichTrinh.getGioDen());
+            statement.setDate(4, lichTrinh.getNgayDen());
+
+            statement.setInt(5, lichTrinh.getLoai());
+            statement.setInt(6, lichTrinh.getTrangThai());
+            statement.setString(7, lichTrinh.getTau().getMaTau());
             n = statement.executeUpdate();
-            connect.disconnect();
         } catch (SQLException ex) {
             Logger.getLogger(LichTrinh_dao.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception e) {
@@ -89,26 +92,33 @@ public class LichTrinh_dao {
         return n > 0;
     }
 
-    public ArrayList<LichTrinhEntity> findAll() {
+    public ArrayList<LichTrinhEntity> layAllHanhTrinh(int trangThai) {
         ArrayList<LichTrinhEntity> dsLichTrinh = new ArrayList<>();
+
+        String sql = "SELECT * FROM hanh_trinh";
+
+        if(trangThai != -1) {
+            sql = "SELECT * FROM hanh_trinh WHERE trangThai = ?";
+        }
+        
         try {
-            connect.connect();
-            PreparedStatement statement = connect.getConnection().prepareStatement("SELECT * FROM LichTrinh");
+
+            PreparedStatement statement = ConnectDB.getConnection().prepareStatement(sql);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-//                TauEntity tau = new Tau_dao().findOne(rs.getString("maTau"));
-//                LichTrinhEntity lichTrinh = new LichTrinhEntity(
-//                    rs.getString("maLichTrinh"),
-//                    tau,
-//                    rs.getString("gaDi"),
-//                    rs.getString("gaDen"),
-//                    rs.getDate("ngayDi"),
-//                    rs.getDate("ngayDen"),
-//                    rs.getString("trangThai")
-//                );
-//                dsLichTrinh.add(lichTrinh);
+               TauEntity tau = new TauEntity(rs.getString("maTau"));
+               LichTrinhEntity lichTrinh = new LichTrinhEntity(
+                   rs.getInt("maHt"),
+                   tau,
+                   rs.getString("gioDi"),
+                   rs.getString("gioDen"),
+                   rs.getDate("ngayDi"),
+                   rs.getDate("ngayDen"),
+                   rs.getInt("trangThai"),
+                   rs.getInt("loai")
+               );
+               dsLichTrinh.add(lichTrinh);
             }
-            connect.disconnect();
         } catch (SQLException ex) {
             Logger.getLogger(LichTrinh_dao.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception e) {
@@ -138,7 +148,6 @@ public class LichTrinh_dao {
 //                );
 //                dsLichTrinh.add(lichTrinh);
             }
-            connect.disconnect();
         } catch (SQLException ex) {
             Logger.getLogger(LichTrinh_dao.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception e) {
@@ -167,7 +176,35 @@ public class LichTrinh_dao {
 //                );
 //                dsLichTrinh.add(lichTrinh);
             }
-            connect.disconnect();
+        } catch (SQLException ex) {
+            Logger.getLogger(LichTrinh_dao.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return dsLichTrinh;
+    }
+
+    public ArrayList<LichTrinhEntity> getAllLichTrinh() {
+        ArrayList<LichTrinhEntity> dsLichTrinh = new ArrayList<>();
+        try {
+            PreparedStatement statement = ConnectDB.getConnection().prepareStatement("SELECT maHT, gioDi, ngayDi, gioDen, ngayDen, loai, trangThai, ngayTao, ngayCapNhat, maTau\n" + //
+                                "FROM hanh_trinh;");
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                    TauEntity tau = new TauEntity(rs.getString("maTau"));
+
+                LichTrinhEntity lichTrinh = new LichTrinhEntity(
+                    rs.getInt("maHT"),
+                    tau,
+                    rs.getString("gioDi"),
+                    rs.getString("gioDen"),
+                    rs.getDate("ngayDi"),
+                    rs.getDate("ngayDen"),
+                    rs.getInt("trangThai"),
+                    rs.getInt("loai")
+                );
+                dsLichTrinh.add(lichTrinh);
+            }
         } catch (SQLException ex) {
             Logger.getLogger(LichTrinh_dao.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception e) {

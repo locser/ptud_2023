@@ -1,17 +1,9 @@
 package gui;
 
-import java.awt.*;
-import javax.swing.*;
-import javax.swing.border.*;
-import connectDB.ConnectDB;
 import java.awt.Color;
 import java.awt.ComponentOrientation;
 import java.awt.Desktop;
-import java.awt.Dimension;
-import java.awt.GraphicsEnvironment;
 import java.awt.Image;
-import java.awt.Rectangle;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -31,7 +23,6 @@ import javax.swing.KeyStroke;
 import javax.swing.Timer;
 
 import entity.EntityEnum;
-import org.jdesktop.layout.GroupLayout;
 import util.ToanCuc;
 
 public class TrangChu_GUI extends javax.swing.JFrame {
@@ -59,15 +50,7 @@ public class TrangChu_GUI extends javax.swing.JFrame {
 
         if (ToanCuc.getLoai() == 0) {
             Jpanel_NhanVien.setVisible(false);
-            Jpanel_NhaCungCap.setVisible(false);
-            Jpanel_KhuyenMai.setVisible(false);
-            Jpanel_TaiKhoan.setVisible(false);
-            Jpanel_PhieuNhap.setVisible(false);
         }
-            Jpanel_NhaCungCap.setVisible(false);
-            Jpanel_KhuyenMai.setVisible(false);
-            Jpanel_TaiKhoan.setVisible(false);
-            Jpanel_PhieuNhap.setVisible(false);
         setSize(1366, 768);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -84,11 +67,8 @@ public class TrangChu_GUI extends javax.swing.JFrame {
         ThongKe_Panel = new TrangChu_JPanel();
         KhachHang_Panel = new KhachHang_JPanel();
         NhanVien_Panel = new NhanVien_JPanel();
-        KhuyenMai_Panel = new TrangChu_JPanel();
-        PhieuNhap_Panel = new TrangChu_JPanel();
-        TaiKhoan_Panel = new TrangChu_JPanel();
-        NhaCungCap_Panel = new TrangChu_JPanel();
-        NhaSanXuat_Panel = new TrangChu_JPanel();
+        NhaSanXuat_Panel = new NhaSanXuat_JPanel();
+        LichTrinh_Panel = new LichTrinh_JPanel();
 
         URL image_home = TrangChu_GUI.class.getResource("/pic/icon/home.png");   
         ImageIcon img_home = new ImageIcon(image_home);
@@ -144,30 +124,6 @@ public class TrangChu_GUI extends javax.swing.JFrame {
         img_ThongKe = new ImageIcon(scaled_ThongKe);
         lbl_IconThongKe.setIcon(img_ThongKe);
 
-        URL image_NhaCungCap = TrangChu_GUI.class.getResource("/pic/icon/nhacungcap.png");
-        ImageIcon img_NhaCungCap = new ImageIcon(image_NhaCungCap);
-        Image scaled_NhaCungCap = img_NhaCungCap.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-        img_NhaCungCap = new ImageIcon(scaled_NhaCungCap);
-        lbl_IconNhaCungCap.setIcon(img_NhaCungCap);
-
-        URL image_PhieuNhap = TrangChu_GUI.class.getResource("/pic/icon/phieunhap.png");
-        ImageIcon img_PhieuNhap = new ImageIcon(image_PhieuNhap);
-        Image scaled_PhieuNhap = img_PhieuNhap.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-        img_PhieuNhap = new ImageIcon(scaled_PhieuNhap);
-        lbl_IconPhieuNhap.setIcon(img_PhieuNhap);
-
-        URL image_KhuyenMai = TrangChu_GUI.class.getResource("/pic/icon/discount.png");
-        ImageIcon img_KhuyenMai = new ImageIcon(image_KhuyenMai);
-        Image scaled_KhuyenMai = img_KhuyenMai.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-        img_KhuyenMai = new ImageIcon(scaled_KhuyenMai);
-        lbl_IconKhuyenMai.setIcon(img_KhuyenMai);
-
-        URL image_TaiKhoan = TrangChu_GUI.class.getResource("/pic/icon/taikhoan.png");
-        ImageIcon img_TaiKhoan = new ImageIcon(image_TaiKhoan);
-        Image scaled_TaiKhoan = img_TaiKhoan.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-        img_TaiKhoan = new ImageIcon(scaled_TaiKhoan);
-        lbl_IconTaiKhoan.setIcon(img_TaiKhoan);
-
         URL image_DangXuat = TrangChu_GUI.class.getResource("/pic/icon/logout.png");
         ImageIcon img_DangXuat = new ImageIcon(image_DangXuat);
         Image scaled_DangXuat = img_DangXuat.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
@@ -201,11 +157,9 @@ public class TrangChu_GUI extends javax.swing.JFrame {
         Jpanel_Main.add(ThongKe_Panel);
         Jpanel_Main.add(KhachHang_Panel);
         Jpanel_Main.add(NhanVien_Panel);
-        Jpanel_Main.add(NhaCungCap_Panel);
-        Jpanel_Main.add(PhieuNhap_Panel);
-        Jpanel_Main.add(KhuyenMai_Panel);
-        Jpanel_Main.add(TaiKhoan_Panel);
+        Jpanel_Main.add(LichTrinh_Panel);
         Jpanel_Main.add(NhaSanXuat_Panel);
+        
 
         // Gán panleTrangChu background
         Jpanel_TrangChu.setBackground(new Color(112, 128, 144));
@@ -243,22 +197,14 @@ public class TrangChu_GUI extends javax.swing.JFrame {
                 menuClicked(KhachHang_Panel);
             }
         });
-        Jpanel_KhuyenMai.addMouseListener(new PanelButtonMouseAdapter(Jpanel_KhuyenMai) {
+
+        Jpanel_LichTrinh.addMouseListener(new PanelButtonMouseAdapter(Jpanel_LichTrinh) {
             @Override
             public void mouseClicked(MouseEvent e) {
                 TatChonCacMuc();
-                Jpanel_KhuyenMai.setBackground(new Color(112, 128, 144));
+                Jpanel_LichTrinh.setBackground(new Color(112, 128, 144));
 
-                menuClicked(KhuyenMai_Panel);
-            }
-        });
-        Jpanel_NhaCungCap.addMouseListener(new PanelButtonMouseAdapter(Jpanel_NhaCungCap) {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                TatChonCacMuc();
-                Jpanel_NhaCungCap.setBackground(new Color(112, 128, 144));
-
-                menuClicked(NhaCungCap_Panel);
+                menuClicked(LichTrinh_Panel);
             }
         });
         Jpanel_NhanVien.addMouseListener(new PanelButtonMouseAdapter(Jpanel_NhanVien) {
@@ -270,15 +216,7 @@ public class TrangChu_GUI extends javax.swing.JFrame {
                 menuClicked(NhanVien_Panel);
             }
         });
-        Jpanel_PhieuNhap.addMouseListener(new PanelButtonMouseAdapter(Jpanel_PhieuNhap) {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                TatChonCacMuc();
-                Jpanel_PhieuNhap.setBackground(new Color(112, 128, 144));
 
-                menuClicked(PhieuNhap_Panel);
-            }
-        });
         Jpanel_QuanLyTau.addMouseListener(new PanelButtonMouseAdapter(Jpanel_QuanLyTau) {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -288,15 +226,7 @@ public class TrangChu_GUI extends javax.swing.JFrame {
                 menuClicked(QuanLyTau_Panel);
             }
         });
-        Jpanel_TaiKhoan.addMouseListener(new PanelButtonMouseAdapter(Jpanel_TaiKhoan) {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                TatChonCacMuc();
-                Jpanel_TaiKhoan.setBackground(new Color(112, 128, 144));
 
-                menuClicked(TaiKhoan_Panel);
-            }
-        });
         Jpanel_ThongKe.addMouseListener(new PanelButtonMouseAdapter(Jpanel_ThongKe) {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -361,14 +291,14 @@ public class TrangChu_GUI extends javax.swing.JFrame {
         timer.start();
 
         // Kiểm tra xem NhanVien_Panel đã hiển thị lên giao diện chưa
-        if (!NhanVien_Panel.isVisible()) {
-            // Nếu chưa hiển thị, bật nó lên
-            NhanVien_Panel.setVisible(true);
-        }
-
-                   TatChonCacMuc();
-                Jpanel_TrangChu.setBackground(new Color(112, 128, 144));
-                menuClicked(QuanLyTau_Panel);
+//        if (!NhanVien_Panel.isVisible()) {
+//            // Nếu chưa hiển thị, bật nó lên
+//            NhanVien_Panel.setVisible(true);
+//        }
+        
+            TatChonCacMuc();
+         Jpanel_TrangChu.setBackground(new Color(112, 128, 144));
+         menuClicked(Jpanel_TrangChu);
 
     }
 
@@ -376,12 +306,9 @@ public class TrangChu_GUI extends javax.swing.JFrame {
         Jpanel_BanHang.setBackground(new Color(0,102,102));
         Jpanel_DoiTra.setBackground(new Color(0,102,102));
         Jpanel_KhachHang.setBackground(new Color(0,102,102));
-        Jpanel_KhuyenMai.setBackground(new Color(0,102,102));
-        Jpanel_NhaCungCap.setBackground(new Color(0,102,102));
+        Jpanel_LichTrinh.setBackground(new Color(0,102,102));
         Jpanel_NhanVien.setBackground(new Color(0,102,102));
-        Jpanel_PhieuNhap.setBackground(new Color(0,102,102));
         Jpanel_QuanLyTau.setBackground(new Color(0,102,102));
-        Jpanel_TaiKhoan.setBackground(new Color(0,102,102));
         Jpanel_ThongKe.setBackground(new Color(0,102,102));
         Jpanel_HoaDon.setBackground(new Color(0,102,102));
         Jpanel_TrangChu.setBackground(new Color(0,102,102));
@@ -398,10 +325,7 @@ public class TrangChu_GUI extends javax.swing.JFrame {
         DoiTra_Panel.setVisible(false);
         ThongKe_Panel.setVisible(false);
         NhanVien_Panel.setVisible(false);
-        NhaCungCap_Panel.setVisible(false);
-        PhieuNhap_Panel.setVisible(false);
-        KhuyenMai_Panel.setVisible(false);
-        TaiKhoan_Panel.setVisible(false);
+        LichTrinh_Panel.setVisible(false);
 
         panel.setVisible(true);
     }
@@ -415,15 +339,9 @@ public class TrangChu_GUI extends javax.swing.JFrame {
         jlb_name = new javax.swing.JLabel();
         lbl_Users = new javax.swing.JLabel();
         lbl_ChucVu = new javax.swing.JLabel();
-        Jpanel_KhuyenMai = new javax.swing.JPanel();
-        lbl_KhuyenMai = new javax.swing.JLabel();
-        lbl_IconKhuyenMai = new javax.swing.JLabel();
-        Jpanel_PhieuNhap = new javax.swing.JPanel();
-        lbl_PhieuNhap = new javax.swing.JLabel();
-        lbl_IconPhieuNhap = new javax.swing.JLabel();
-        Jpanel_NhaCungCap = new javax.swing.JPanel();
-        lbl_NhaCungCap = new javax.swing.JLabel();
-        lbl_IconNhaCungCap = new javax.swing.JLabel();
+        Jpanel_LichTrinh = new javax.swing.JPanel();
+        lbl_lichTrinh = new javax.swing.JLabel();
+        lbl_IconLichTrinh = new javax.swing.JLabel();
         Jpanel_NhanVien = new javax.swing.JPanel();
         lbl_NhanVien = new javax.swing.JLabel();
         lbl_IconNhanVien = new javax.swing.JLabel();
@@ -450,9 +368,6 @@ public class TrangChu_GUI extends javax.swing.JFrame {
         lbl_IconNhom19 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        Jpanel_TaiKhoan = new javax.swing.JPanel();
-        lbl_TaiKhoan = new javax.swing.JLabel();
-        lbl_IconTaiKhoan = new javax.swing.JLabel();
         Jpanel_QuanLyTau = new javax.swing.JPanel();
         lbl_QuanLyTau = new javax.swing.JLabel();
         lbl_IconQuanLyTau = new javax.swing.JLabel();
@@ -496,38 +411,16 @@ public class TrangChu_GUI extends javax.swing.JFrame {
 
         Jpanel_Menu.add(Jpanel_Users, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 80));
 
-        Jpanel_KhuyenMai.setBackground(new java.awt.Color(0, 102, 102));
-        Jpanel_KhuyenMai.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        Jpanel_LichTrinh.setBackground(new java.awt.Color(0, 102, 102));
+        Jpanel_LichTrinh.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lbl_KhuyenMai.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        lbl_KhuyenMai.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_KhuyenMai.setText("Khuyến Mãi");
-        Jpanel_KhuyenMai.add(lbl_KhuyenMai, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 100, 29));
-        Jpanel_KhuyenMai.add(lbl_IconKhuyenMai, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 30, 30));
+        lbl_lichTrinh.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        lbl_lichTrinh.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_lichTrinh.setText("Lịch Trình");
+        Jpanel_LichTrinh.add(lbl_lichTrinh, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 100, 29));
+        Jpanel_LichTrinh.add(lbl_IconLichTrinh, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 30, 30));
 
-        Jpanel_Menu.add(Jpanel_KhuyenMai, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 580, 180, 50));
-
-        Jpanel_PhieuNhap.setBackground(new java.awt.Color(0, 102, 102));
-        Jpanel_PhieuNhap.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        lbl_PhieuNhap.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        lbl_PhieuNhap.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_PhieuNhap.setText("Phiếu Nhập");
-        Jpanel_PhieuNhap.add(lbl_PhieuNhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 100, 29));
-        Jpanel_PhieuNhap.add(lbl_IconPhieuNhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 30, 30));
-
-        Jpanel_Menu.add(Jpanel_PhieuNhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 530, 180, 50));
-
-        Jpanel_NhaCungCap.setBackground(new java.awt.Color(0, 102, 102));
-        Jpanel_NhaCungCap.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        lbl_NhaCungCap.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        lbl_NhaCungCap.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_NhaCungCap.setText("Nhà Cung Cấp");
-        Jpanel_NhaCungCap.add(lbl_NhaCungCap, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 100, 29));
-        Jpanel_NhaCungCap.add(lbl_IconNhaCungCap, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 30, 30));
-
-        Jpanel_Menu.add(Jpanel_NhaCungCap, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 480, 180, 50));
+        Jpanel_Menu.add(Jpanel_LichTrinh, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 480, 180, 50));
 
         Jpanel_NhanVien.setBackground(new java.awt.Color(0, 102, 102));
         Jpanel_NhanVien.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -664,17 +557,6 @@ public class TrangChu_GUI extends javax.swing.JFrame {
         );
 
         Jpanel_Menu.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
-
-        Jpanel_TaiKhoan.setBackground(new java.awt.Color(0, 102, 102));
-        Jpanel_TaiKhoan.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        lbl_TaiKhoan.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        lbl_TaiKhoan.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_TaiKhoan.setText("Tài Khoản");
-        Jpanel_TaiKhoan.add(lbl_TaiKhoan, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 100, 29));
-        Jpanel_TaiKhoan.add(lbl_IconTaiKhoan, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 30, 30));
-
-        Jpanel_Menu.add(Jpanel_TaiKhoan, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 630, 180, 50));
 
         Jpanel_QuanLyTau.setBackground(new java.awt.Color(0, 102, 102));
         Jpanel_QuanLyTau.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -852,31 +734,16 @@ public class TrangChu_GUI extends javax.swing.JFrame {
     private TrangChu_JPanel TrangChu_Panel;
 
     private BanVe_JPanel BanHang_Panel;
-//    private SanPham_JPanel SanPham_Panel;
     private QuanLyTau_JPanel QuanLyTau_Panel;
     private HoaDon_JPanel HoaDon_Panel;
     private TrangChu_JPanel DoiTra_Panel;
     private KhachHang_JPanel KhachHang_Panel;
     private TrangChu_JPanel ThongKe_Panel;
     private NhanVien_JPanel NhanVien_Panel;
-    private TrangChu_JPanel NhaCungCap_Panel;
-    private TrangChu_JPanel KhuyenMai_Panel;
-    private TrangChu_JPanel PhieuNhap_Panel;
-    private TrangChu_JPanel TaiKhoan_Panel;
-    private TrangChu_JPanel NhaSanXuat_Panel;
+    private NhaSanXuat_JPanel NhaSanXuat_Panel;
+    private LichTrinh_JPanel LichTrinh_Panel;
 //    private SanPham_JPanel SanPham_Panel;
 
-//    private BanHang_JPanel BanHang_Panel;
-//    private SanPham_JPanel SanPham_Panel;
-//    private HoaDon_JPanel HoaDon_Panel;
-//    private DoiTra_JPanel DoiTra_Panel;
-//    private KhachHang_JPanel KhachHang_Panel;
-//    private ThongKe_JPanel ThongKe_Panel;
-//    private NhanVien_JPanel NhanVien_Panel;
-//    private NhaCungCap_JPanel NhaCungCap_Panel;
-//    private KhuyenMai_JPanel KhuyenMai_Panel;
-//    private PhieuNhap_JPanel PhieuNhap_Panel;
-//    private TaiKhoan_JPanel TaiKhoan_Panel;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem JMenuItem_An;
@@ -889,15 +756,12 @@ public class TrangChu_GUI extends javax.swing.JFrame {
     private javax.swing.JPanel Jpanel_DoiTra;
     private javax.swing.JPanel Jpanel_HoaDon;
     private javax.swing.JPanel Jpanel_KhachHang;
-    private javax.swing.JPanel Jpanel_KhuyenMai;
+    private javax.swing.JPanel Jpanel_LichTrinh;
     private javax.swing.JPanel Jpanel_Main;
     private javax.swing.JPanel Jpanel_Menu;
-    private javax.swing.JPanel Jpanel_NhaCungCap;
     private javax.swing.JPanel Jpanel_NhaSanXuat;
     private javax.swing.JPanel Jpanel_NhanVien;
-    private javax.swing.JPanel Jpanel_PhieuNhap;
     private javax.swing.JPanel Jpanel_QuanLyTau;
-    private javax.swing.JPanel Jpanel_TaiKhoan;
     private javax.swing.JPanel Jpanel_ThongKe;
     private javax.swing.JPanel Jpanel_TrangChu;
     private javax.swing.JPanel Jpanel_Users;
@@ -914,26 +778,20 @@ public class TrangChu_GUI extends javax.swing.JFrame {
     private javax.swing.JLabel lbl_IconDoiTra;
     private javax.swing.JLabel lbl_IconHoaDon;
     private javax.swing.JLabel lbl_IconKhachHang;
-    private javax.swing.JLabel lbl_IconKhuyenMai;
-    private javax.swing.JLabel lbl_IconNhaCungCap;
+    private javax.swing.JLabel lbl_IconLichTrinh;
     private javax.swing.JLabel lbl_IconNhanVien;
     private javax.swing.JLabel lbl_IconNhom19;
-    private javax.swing.JLabel lbl_IconPhieuNhap;
     private javax.swing.JLabel lbl_IconQuanLyTau;
-    private javax.swing.JLabel lbl_IconTaiKhoan;
     private javax.swing.JLabel lbl_IconThongKe;
     private javax.swing.JLabel lbl_IconTimTau;
     private javax.swing.JLabel lbl_IconTrangChu;
     private javax.swing.JLabel lbl_KhachHang;
-    private javax.swing.JLabel lbl_KhuyenMai;
-    private javax.swing.JLabel lbl_NhaCungCap;
     private javax.swing.JLabel lbl_NhanVien;
     private javax.swing.JLabel lbl_Nhom19;
-    private javax.swing.JLabel lbl_PhieuNhap;
     private javax.swing.JLabel lbl_QuanLyTau;
-    private javax.swing.JLabel lbl_TaiKhoan;
     private javax.swing.JLabel lbl_ThongKe;
     private javax.swing.JLabel lbl_TrangChu;
     private javax.swing.JLabel lbl_Users;
+    private javax.swing.JLabel lbl_lichTrinh;
     // End of variables declaration//GEN-END:variables
 }

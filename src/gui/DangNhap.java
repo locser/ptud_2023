@@ -58,7 +58,7 @@ public class DangNhap extends javax.swing.JFrame {
         try {
             String taiKhoan = txt_TaiKhoan.getText().trim();
             String matKhau = new String(txt_MatKhau.getPassword());
-            
+//            
             if(taiKhoan.isEmpty() || matKhau.isEmpty()) {
                 txt_BaoLoi.setText("Vui lòng nhập đầy đủ thông tin!");
                 txt_TaiKhoan.requestFocus();
@@ -86,11 +86,6 @@ public class DangNhap extends javax.swing.JFrame {
                 txt_BaoLoi.setText("Tài khoản đã bị khóa!");
                 return;
             }
-            
-            // if(tk.getNhanVien() == null) {
-            //     txt_BaoLoi.setText("Tài khoản không gắn với nhân viên nào!");
-            //     return;
-            // }
 
             ToanCuc.setTen(nhanVien.getTen());
             ToanCuc.setMa(nhanVien.getMaNV());
@@ -105,17 +100,11 @@ public class DangNhap extends javax.swing.JFrame {
             ex.printStackTrace();
         }
 //        */
-//        try {
-//            String taiKhoan = txt_TaiKhoan.getText();
-//            char[] matKhau = txt_MatKhau.getPassword();
-//            String stringPass = new String(matKhau);
-//            String encodePass = MD5Encode.md5Encode(stringPass);
-//
-//            dao.NhanVien_dao nv_dao = new NhanVien_dao();
-//            NhanVienEntity nhanVien = nv_dao.dangNhap(taiKhoan, stringPass);
+
 
 //            NhanVienEntity nhanVien = new NhanVienEntity("123");
 //            nhanVien.setLoai(1);
+//            nhanVien.setTen("aaaaa");
 //            
 //            if (nhanVien == null) {
 //                txt_BaoLoi.setText("Thông tin tài khoản, mật khẩu không chính xác!");
@@ -130,15 +119,8 @@ public class DangNhap extends javax.swing.JFrame {
 ////                this.setVisible(false);
 //                dispose();
 //                gui.TrangChu_GUI trangChu_GUI = new TrangChu_GUI();
-////                trangChu_GUI.setVisible(true);
+//                trangChu_GUI.setVisible(true);
 //            }
-//        } catch (Exception ex) {
-//            ex.printStackTrace();
-//        }
-//        
-        // New simplified login logic
-//        dispose();
-//        new TrangChu_GUI().setVisible(true);
     }
 
     /**

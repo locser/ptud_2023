@@ -166,10 +166,6 @@ public class QuanLyTau_JPanel extends javax.swing.JPanel {
         duaDuLieuVaoComboBox(cbo_GaDi, dsGaTau, "TenGa");
         duaDuLieuVaoComboBox(cbo_GaDen, dsGaTau, "TenGa");
 
-//        duaDuLieuVaoComboBox(cbo_ChatLieu, chatLieu_bus.getAllCL(), "TenChatLieu");
-//        duaDuLieuVaoComboBox(cbo_ThuongHieu, thuongHieu_bus.getAllTH(), "TenThuongHieu");
-//        duaDuLieuVaoComboBox(cbo_KhuyenMai, ctkm_bus.getAllCTKMTheoLoaiKMVaTinhTrang("GGSP", "Còn"), "TenCTKM");
-
     }
 
     /**
