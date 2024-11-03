@@ -9,6 +9,7 @@ public class GheEntity {
     private ToaTauEntity toa;
     private int loai;
     private int trangThai;
+    private int gia;
     private Date ngayTao;
     private Date ngayCapNhat;
 
@@ -27,8 +28,13 @@ public class GheEntity {
         this.trangThai = trangThai;
         this.ngayTao = ngayTao;
         this.ngayCapNhat = ngayCapNhat;
+        this.maGhe = maGhe;
     }
     
+
+    public GheEntity() {
+        //TODO Auto-generated constructor stub
+    }
 
     public int getMaGhe() {
         return maGhe;
@@ -90,6 +96,14 @@ public class GheEntity {
     public void setNgayCapNhat(Date ngayCapNhat) {
         this.ngayCapNhat = ngayCapNhat;
     }
+
+    public int getGia() {
+        return gia;
+    }
+
+    public void setGia(int gia) {
+        this.gia = gia;
+        }
 
 	@Override
 	public int hashCode() {

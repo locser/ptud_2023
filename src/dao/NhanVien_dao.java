@@ -25,9 +25,15 @@ public class NhanVien_dao implements NhanVienInterface {
             statement.setString(1, taiKhoan);
             statement.setString(2, matKhau);
             ResultSet rs = statement.executeQuery();
-            NhanVienEntity nhanVien = null;
+            NhanVienEntity nhanVien = new NhanVienEntity()  ;
             if (rs.next()) {
-                nhanVien = EntityMapper.mapRowToEntity(rs, NhanVienEntity.class);
+//                nhanVien = EntityMapper.mapRowToEntity(rs, NhanVienEntity.class);
+                nhanVien.setMaNV(rs.getString("maNV"));
+                nhanVien.setTen(rs.getString("ten"));
+                nhanVien.setLoai(rs.getInt("loai"));
+                nhanVien.setGioiTinh(rs.getInt("gioiTinh") == 1 ? GioiTinhEnum.NAM : GioiTinhEnum.NU);
+                nhanVien.setEmail(rs.getString("email"));
+                nhanVien.setTrangThai(rs.getInt("trangThai"));
                 System.out.println(nhanVien.toString());
                 return nhanVien;
             } else {

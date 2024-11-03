@@ -64,6 +64,10 @@ public class TrangChu_GUI extends javax.swing.JFrame {
             Jpanel_TaiKhoan.setVisible(false);
             Jpanel_PhieuNhap.setVisible(false);
         }
+            Jpanel_NhaCungCap.setVisible(false);
+            Jpanel_KhuyenMai.setVisible(false);
+            Jpanel_TaiKhoan.setVisible(false);
+            Jpanel_PhieuNhap.setVisible(false);
         setSize(1366, 768);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -84,7 +88,7 @@ public class TrangChu_GUI extends javax.swing.JFrame {
         PhieuNhap_Panel = new TrangChu_JPanel();
         TaiKhoan_Panel = new TrangChu_JPanel();
         NhaCungCap_Panel = new TrangChu_JPanel();
-        NhaSanXuat_Panel = new NhaSanXuat_JPanel();
+        NhaSanXuat_Panel = new TrangChu_JPanel();
 
         URL image_home = TrangChu_GUI.class.getResource("/pic/icon/home.png");   
         ImageIcon img_home = new ImageIcon(image_home);
@@ -859,7 +863,7 @@ public class TrangChu_GUI extends javax.swing.JFrame {
     private TrangChu_JPanel KhuyenMai_Panel;
     private TrangChu_JPanel PhieuNhap_Panel;
     private TrangChu_JPanel TaiKhoan_Panel;
-    private NhaSanXuat_JPanel NhaSanXuat_Panel;
+    private TrangChu_JPanel NhaSanXuat_Panel;
 //    private SanPham_JPanel SanPham_Panel;
 
 //    private BanHang_JPanel BanHang_Panel;

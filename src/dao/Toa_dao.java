@@ -49,7 +49,118 @@ public class Toa_dao {
         return dsToaTau;
     }
 
-    
+//     public ToaTauEntity getToaTauByMaToa(String maToa) {
+//     ToaTauEntity toaTau = null; // Initialize the return variable
+//     try {
+//         Connection con = ConnectDB.getConnection();
+//         PreparedStatement ps = null;
+//         String sql = "SELECT maToa, ten, soGhe, trangThai, soDayGhe, soDay, loai, ngayTao, ngayCapNhat, maTau " +
+//                      "FROM banve.dbo.toa_tau WHERE maToa = ?";
+//         ps = con.prepareStatement(sql);
+//         ps.setString(1, maToa);
+//         ResultSet rs = ps.executeQuery();
+//         System.out.println("1");
+
+//         if (rs.next()) { // Check if a record was found
+//             String ten = rs.getString("ten");
+//             System.out.println("1");
+//             int trangThai = rs.getInt("trangThai");
+//                         System.out.println("2");
+
+//             int soGhe = rs.getInt("soGhe");
+//             int loai = rs.getInt("loai");
+//                         System.out.println("1");
+
+//             Date ngayTao = rs.getDate("ngayTao");
+//             Date ngayCapNhat = rs.getDate("ngayCapNhat");
+//                         System.out.println("1");
+
+//             String maTau = rs.getString("maTau");
+            
+//             // Create TauEntity using maTau
+//             TauEntity tau = new TauEntity(maTau);
+            
+//             // Create ToaTauEntity using retrieved values
+//             toaTau = new ToaTauEntity(maToa, ten, trangThai, soGhe, loai, ngayTao, ngayCapNhat, tau);
+//         }
+//     } catch (SQLException ex) {
+//         Logger.getLogger(Toa_dao.class.getName()).log(Level.SEVERE, null, ex);
+//     } catch (Exception e) {
+//         throw new RuntimeException(e);
+//     }
+//     return toaTau;
+// }
+
+public ToaTauEntity getToaTauByMaToa(String maToa) { // Changed to int
+    ToaTauEntity toaTau = null; // Initialize the return variable
+    try {
+        Connection con = ConnectDB.getConnection();
+        PreparedStatement ps = null;
+        String sql = "SELECT maToa, ten, soGhe, trangThai, soDayGhe, soDay, loai, ngayTao, ngayCapNhat, maTau " +
+                     "FROM banve.dbo.toa_tau WHERE maToa = ?";
+        ps = con.prepareStatement(sql);
+        ps.setString(1, maToa); // Set as int instead of string
+        ResultSet rs = ps.executeQuery();
+        
+        if (rs.next()) { // Check if a record was found
+            String ten = rs.getString("ten");
+            int trangThai = rs.getInt("trangThai");
+            int soGhe = rs.getInt("soGhe");
+            int loai = rs.getInt("loai");
+            Date ngayTao = rs.getDate("ngayTao");
+            Date ngayCapNhat = rs.getDate("ngayCapNhat");
+            String maTau = rs.getString("maTau");
+            String maToa1 = rs.getString("maToa");
+            
+            // Create TauEntity using maTau
+            TauEntity tau = new TauEntity(maTau);
+            
+            // Create ToaTauEntity using retrieved values
+            toaTau = new ToaTauEntity(maToa1, ten, soGhe, trangThai, loai, ngayTao, ngayCapNhat, tau);
+        }
+    } catch (SQLException ex) {
+        Logger.getLogger(Toa_dao.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (Exception e) {
+        throw new RuntimeException(e);
+    }
+    return toaTau;
+}
+
+
+public ToaTauEntity getToaTauByTenToa(String tenToa, TauEntity tau) {
+    ToaTauEntity toaTau = null; // Initialize the return variable
+    try {
+        Connection con = ConnectDB.getConnection();
+        PreparedStatement ps = null;
+        String sql = "SELECT maToa, ten, soGhe, trangThai, soDayGhe, soDay, loai, ngayTao, ngayCapNhat, maTau " +
+                     "FROM banve.dbo.toa_tau WHERE ten = ? and maTau = ?";
+        ps = con.prepareStatement(sql);
+        ps.setString(1, tenToa);
+        ps.setString(2, tau.getMaTau());
+        ResultSet rs = ps.executeQuery();
+        
+        if (rs.next()) { // Check if a record was found
+            String ten = rs.getString("ten");
+            int trangThai = rs.getInt("trangThai");
+            int soGhe = rs.getInt("soGhe");
+            int loai = rs.getInt("loai");
+            Date ngayTao = rs.getDate("ngayTao");
+            Date ngayCapNhat = rs.getDate("ngayCapNhat");
+            String maToa = rs.getString("maToa");
+
+            
+            // Create ToaTauEntity using retrieved values
+            toaTau = new ToaTauEntity(maToa, ten, trangThai, soGhe, loai, ngayTao, ngayCapNhat, tau);
+        }
+    } catch (SQLException ex) {
+        Logger.getLogger(Toa_dao.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (Exception e) {
+        throw new RuntimeException(e);
+    }
+    return toaTau;
+}
+
+
     public String layTenToaTheoMa(String maTau, String maToa) {
         String tenToa = null;
         try {
@@ -83,7 +194,7 @@ public class Toa_dao {
             
             Connection con = ConnectDB.getConnection();
             PreparedStatement ps = null;
-            String sql = "SELECT maToa FROM Toa WHERE ten = ? and maTau = ?";
+            String sql = "SELECT maToa FROM toa_tau WHERE ten = ? and maTau = ?";
             ps = con.prepareStatement(sql);
             ps.setString(1, tenToa);
             ps.setString(2, maTau);

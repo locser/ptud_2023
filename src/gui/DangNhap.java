@@ -4,6 +4,7 @@
  */
 package gui;
 
+import dao.NhanVien_dao;
 import dao.TaiKhoan_dao;
 import entity.NhanVienEntity;
 import entity.TaiKhoanEntity;
@@ -53,50 +54,58 @@ public class DangNhap extends javax.swing.JFrame {
 
     private void thucHienDangNhap() {
         // Commented out the original login logic
-        /*
+//        /*
         try {
             String taiKhoan = txt_TaiKhoan.getText().trim();
             String matKhau = new String(txt_MatKhau.getPassword());
             
             if(taiKhoan.isEmpty() || matKhau.isEmpty()) {
                 txt_BaoLoi.setText("Vui lòng nhập đầy đủ thông tin!");
+                txt_TaiKhoan.requestFocus();
                 return;
             }
 
-            if(!taiKhoan.matches("^[a-zA-Z0-9]{6,20}$")) {
-                txt_BaoLoi.setText("Tài khoản phải từ 6-20 ký tự và không chứa ký tự đặc biệt!");
-                return;
-            }
+//            if(!taiKhoan.matches("^[a-zA-Z0-9]{6,20}$")) {
+//                txt_BaoLoi.setText("Tài khoản phải từ 6-20 ký tự và không chứa ký tự đặc biệt!");
+//                return;
+//            }
 
-            String matKhauMaHoa = MD5Encode.md5Encode(matKhau);
+//            String matKhauMaHoa = MD5Encode.md5Encode(matKhau);
             
-            TaiKhoanEntity tk = tkDao.getTaiKhoan(taiKhoan, matKhauMaHoa);
+//            TaiKhoanEntity tk = tkDao.getTaiKhoan(taiKhoan, matKhauMaHoa);
+
+            NhanVien_dao nv_dao = new NhanVien_dao();
+            NhanVienEntity nhanVien = nv_dao.dangNhap(taiKhoan, matKhau);
             
-            if (tk == null) {
+            if (nhanVien == null) {
                 txt_BaoLoi.setText("Thông tin tài khoản hoặc mật khẩu không chính xác!");
                 return;
             }
             
-            if(tk.getTrangThai() == 0) {
+            if(nhanVien.getTrangThai() == 0) {
                 txt_BaoLoi.setText("Tài khoản đã bị khóa!");
                 return;
             }
             
-            if(tk.getNhanVien() == null) {
-                txt_BaoLoi.setText("Tài khoản không gắn với nhân viên nào!");
-                return;
-            }
+            // if(tk.getNhanVien() == null) {
+            //     txt_BaoLoi.setText("Tài khoản không gắn với nhân viên nào!");
+            //     return;
+            // }
 
-            ToanCuc.setTen(tk.getNhanVien().getTen());
-            ToanCuc.setMa(tk.getNhanVien().getMaNV());
-            ToanCuc.setLoai(tk.getNhanVien().getLoai());
-            ToanCuc.setSoDienThoai(tk.getNhanVien().getSoDienThoai());
+            ToanCuc.setTen(nhanVien.getTen());
+            ToanCuc.setMa(nhanVien.getMaNV());
+            ToanCuc.setLoai(nhanVien.getLoai());
+            ToanCuc.setSoDienThoai(nhanVien.getSoDienThoai());
+
+            dispose();
+            gui.TrangChu_GUI trangChu_GUI = new TrangChu_GUI();
+            trangChu_GUI.setVisible(true);
         } catch (Exception ex) {
             txt_BaoLoi.setText("Lỗi hệ thống: " + ex.getMessage());
             ex.printStackTrace();
         }
-        */
-        try {
+//        */
+//        try {
 //            String taiKhoan = txt_TaiKhoan.getText();
 //            char[] matKhau = txt_MatKhau.getPassword();
 //            String stringPass = new String(matKhau);
@@ -105,31 +114,31 @@ public class DangNhap extends javax.swing.JFrame {
 //            dao.NhanVien_dao nv_dao = new NhanVien_dao();
 //            NhanVienEntity nhanVien = nv_dao.dangNhap(taiKhoan, stringPass);
 
-            NhanVienEntity nhanVien = new NhanVienEntity("123");
-            nhanVien.setLoai(1);
-            
-            if (nhanVien == null) {
-                txt_BaoLoi.setText("Thông tin tài khoản, mật khẩu không chính xác!");
-            }else {
-                System.out.println(nhanVien.toString());                
-                System.out.println("đăng nhập thành công");
-
-                ToanCuc.setTen(nhanVien.getTen());
-                ToanCuc.setMa(nhanVien.getMaNV());
-                ToanCuc.setLoai(nhanVien.getLoai());
-                ToanCuc.setSoDienThoai(nhanVien.getSoDienThoai());
-//                this.setVisible(false);
-                dispose();
-                gui.TrangChu_GUI trangChu_GUI = new TrangChu_GUI();
-                trangChu_GUI.setVisible(true);
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        
+//            NhanVienEntity nhanVien = new NhanVienEntity("123");
+//            nhanVien.setLoai(1);
+//            
+//            if (nhanVien == null) {
+//                txt_BaoLoi.setText("Thông tin tài khoản, mật khẩu không chính xác!");
+//            }else {
+//                System.out.println(nhanVien.toString());                
+//                System.out.println("đăng nhập thành công");
+//
+//                ToanCuc.setTen(nhanVien.getTen());
+//                ToanCuc.setMa(nhanVien.getMaNV());
+//                ToanCuc.setLoai(nhanVien.getLoai());
+//                ToanCuc.setSoDienThoai(nhanVien.getSoDienThoai());
+////                this.setVisible(false);
+//                dispose();
+//                gui.TrangChu_GUI trangChu_GUI = new TrangChu_GUI();
+////                trangChu_GUI.setVisible(true);
+//            }
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//        }
+//        
         // New simplified login logic
-        dispose();
-        new TrangChu_GUI().setVisible(true);
+//        dispose();
+//        new TrangChu_GUI().setVisible(true);
     }
 
     /**

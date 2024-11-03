@@ -18,6 +18,15 @@ public class JavaApplication2 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+          ConnectDB connectDB = new ConnectDB();
+        try {
+            connectDB.connect();
+            System.out.println(ConnectDB.getInstance());
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        
         // TODO code application logic here
                 DangNhap dn = new DangNhap();
         dn.setVisible(true);
@@ -26,14 +35,7 @@ public class JavaApplication2 {
         dn.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         dn.setLocationRelativeTo(null);  // Đặt cửa sổ ở giữa màn hình
 
-        ConnectDB connectDB = new ConnectDB();
-        try {
-            connectDB.connect();
-            System.out.println(ConnectDB.getInstance());
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+      
 
     }
     

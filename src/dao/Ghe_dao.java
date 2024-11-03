@@ -20,7 +20,7 @@ public class Ghe_dao {
         ArrayList<GheEntity> dsGhe = new ArrayList<>();
         try {
             Connection con = ConnectDB.getConnection();
-            String sql = "SELECT maGhe, ten, loai, trangThai, ngayTao, ngayCapNhat, maToa " +
+            String sql = "SELECT maGhe, ten, loai, trangThai, ngayTao, ngayCapNhat, maToa, gia " +
                          "FROM banve.dbo.ghe WHERE maToa = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, maToa);
@@ -33,11 +33,13 @@ public class Ghe_dao {
                 Date ngayTao = rs.getDate("ngayTao");
                 Date ngayCapNhat = rs.getDate("ngayCapNhat");
                 String ten = rs.getString("ten");
+                int gia = rs.getInt("gia");
 
                 ToaTauEntity toa = new ToaTauEntity(maToa);
                 
 
                 GheEntity ghe = new GheEntity(maGhe,ten, loai, trangThai, ngayTao, ngayCapNhat, toa);
+                ghe.setGia(gia);
                 dsGhe.add(ghe);
             }
             rs.close();
@@ -75,13 +77,14 @@ public class Ghe_dao {
         boolean result = false;
         try {
             Connection con = ConnectDB.getConnection();
-            String sql = "INSERT INTO banve.dbo.ghe (ten, loai, trangThai, ngayTao, ngayCapNhat, maToa) " +
-                         "VALUES (?, ?, ?, getdate(), getdate(), ?)";
+            String sql = "INSERT INTO banve.dbo.ghe (ten, loai, trangThai, ngayTao, ngayCapNhat, maToa, gia) " +
+                         "VALUES (?, ?, ?, getdate(), getdate(), ?, ?)";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, ghe.getTen());
             ps.setInt(2, ghe.getLoai());
             ps.setInt(3, ghe.getTrangThai());
             ps.setInt(4, Integer.parseInt(ghe.getToa().getMaToa()) );
+            ps.setInt(5, ghe.getGia());
 
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected > 0) {
@@ -142,15 +145,36 @@ public class Ghe_dao {
         return exists;
     }
 
+    // kiểm tra tên ghế
+    public boolean kiemTraTenGhe(String tenGhe, String maToa) {
+        boolean exists = false;
+        try {
+            Connection con = ConnectDB.getConnection();
+            String sql = "SELECT COUNT(*) as soLuong FROM banve.dbo.ghe WHERE ten = ? AND maToa = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, tenGhe);
+            ps.setString(2, maToa);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next() && rs.getInt("soLuong") > 0) {
+                exists = true;
+            }
+            rs.close();
+            ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(Ghe_dao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return exists;
+    }
+
     // Change seat status
-    public boolean doiTrangThaiGhe(int maGhe, int maToa) {
+    public boolean doiTrangThaiGhe(String maGhe, int maToa) {
         boolean result = false;
         try {
             Connection con = ConnectDB.getConnection();
             String sql = "UPDATE banve.dbo.ghe SET trangThai = (CASE WHEN trangThai = 0 THEN 1 ELSE 0 END) " +
                          "WHERE maGhe = ? AND maToa = ?";
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, maGhe);
+            ps.setString(1, maGhe);
             ps.setInt(2, maToa);
 
             int rowsAffected = ps.executeUpdate();
@@ -165,18 +189,19 @@ public class Ghe_dao {
     }
 
         // check số lượng toa theo mã tau
-        public int laySoLuongToaTheoTenToa(int maToa) {
+        public int laySoLuongGheTheoMaToa(String maToa) {
             int soLuong = 0;
             try {
                 Connection con = ConnectDB.getConnection();
                 PreparedStatement ps = null;
-                String sql = "SELECT COUNT(*) FROM banve.dbo.toa_tau WHERE maToa = ?";
+                String sql = "SELECT COUNT(*) as soLuong FROM banve.dbo.toa_tau WHERE maToa = ?";
                 ps = con.prepareStatement(sql);
-                ps.setInt(1, maToa);
+                ps.setString(1, maToa);
                 ResultSet rs = ps.executeQuery();
     
                 if (rs.next()) {
-                    soLuong = rs.getInt(1);
+                    soLuong = rs.getInt("soLuong");
+                    System.out.println("soLuong " + soLuong);
                 }
     
                 ps.close();

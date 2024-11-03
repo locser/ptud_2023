@@ -93,6 +93,7 @@ public class QuanLyToa_JPanel extends javax.swing.JFrame {
         lbl_MaSanPham5 = new javax.swing.JLabel();
         txt_loai = new javax.swing.JTextField();
         btn_TaoToaTuDong = new javax.swing.JButton();
+        btn_LamMoi = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -138,7 +139,9 @@ public class QuanLyToa_JPanel extends javax.swing.JFrame {
         lbl_MaSanPham1.setPreferredSize(new java.awt.Dimension(85, 15));
 
         txt_trangThai.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        txt_trangThai.setEnabled(false);
         txt_trangThai.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        txt_MaToa.setEditable(false);
 
         lbl_MaSanPham2.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
         lbl_MaSanPham2.setText("Trạng thái");
@@ -210,11 +213,6 @@ public class QuanLyToa_JPanel extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable_danhSachToa);
         jTable_danhSachToa.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
-        jTable_danhSachToa.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                table_DanhSachToaMouseClicked(evt);
-            }
-        });
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -258,6 +256,19 @@ public class QuanLyToa_JPanel extends javax.swing.JFrame {
             }
         });
 
+        btn_LamMoi.setBackground(new java.awt.Color(0, 51, 51));
+        btn_LamMoi.setFont(new java.awt.Font("Times New Roman", 1, 15)); // NOI18N
+        btn_LamMoi.setForeground(java.awt.Color.white);
+        btn_LamMoi.setText("Làm mới");
+        btn_LamMoi.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_LamMoi.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+        btn_LamMoi.setPreferredSize(new java.awt.Dimension(90, 31));
+        btn_LamMoi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_LamMoiActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -287,7 +298,8 @@ public class QuanLyToa_JPanel extends javax.swing.JFrame {
                                                 .addGap(102, 102, 102)
                                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                     .addComponent(btn_TaoToaTuDong, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
-                                                    .addComponent(btn_DoiTrangThai, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                                    .addComponent(btn_DoiTrangThai, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                    .addComponent(btn_LamMoi, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)))
                                             .addGroup(jPanel1Layout.createSequentialGroup()
                                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                     .addComponent(txt_tenToa, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -332,7 +344,8 @@ public class QuanLyToa_JPanel extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txt_loai, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbl_MaSanPham5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lbl_MaSanPham5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_LamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(23, 23, 23)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -381,6 +394,11 @@ public class QuanLyToa_JPanel extends javax.swing.JFrame {
     private void btn_TaoToaTuDongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_TaoToaTuDongActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_TaoToaTuDongActionPerformed
+
+    private void btn_LamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LamMoiActionPerformed
+        // TODO add your handling code here:
+        lamMoi();
+    }//GEN-LAST:event_btn_LamMoiActionPerformed
 
     private void themToa() {
         try {
@@ -551,6 +569,7 @@ public class QuanLyToa_JPanel extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_CapNhat;
     private javax.swing.JButton btn_DoiTrangThai;
+    private javax.swing.JButton btn_LamMoi;
     private javax.swing.JButton btn_TaoToaTuDong;
     private javax.swing.JButton btn_Them;
     private javax.swing.JPanel jPanel1;
