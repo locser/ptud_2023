@@ -15,17 +15,16 @@ public class NhanVienEntity {
     private String email;
     private String soDienThoai;
     private String diaChi;
-    private int trangThai;
+    private TinhTrangNVEnum trangThai;
     private Date ngayTao;
     private Date ngayCapNhat;
 
-    private String taiKhoan;
-    private String matKhau;
-
    
 
+	
+
 	public NhanVienEntity(String maNV, String ten, int loai, GioiTinhEnum gioiTinh, String email, String soDienThoai,
-			String diaChi, int trangThai, Date ngayTao, Date ngayCapNhat, String taiKhoan, String matKhau) {
+			String diaChi, TinhTrangNVEnum trangThai, Date ngayTao, Date ngayCapNhat) {
 		super();
 		this.maNV = maNV;
 		this.ten = ten;
@@ -37,8 +36,6 @@ public class NhanVienEntity {
 		this.trangThai = trangThai;
 		this.ngayTao = ngayTao;
 		this.ngayCapNhat = ngayCapNhat;
-		this.taiKhoan = taiKhoan;
-		this.matKhau = matKhau;
 	}
 
 	public NhanVienEntity(String maNV) {
@@ -112,15 +109,16 @@ public class NhanVienEntity {
         this.loai = loai;
     }
 
-    public int getTrangThai() {
-        return trangThai;
-    }
+   
+    public TinhTrangNVEnum getTrangThai() {
+		return trangThai;
+	}
 
-    public void setTrangThai(int trangThai) {
-        this.trangThai = trangThai;
-    }
+	public void setTrangThai(TinhTrangNVEnum trangThai) {
+		this.trangThai = trangThai;
+	}
 
-    public Date getNgayTao() {
+	public Date getNgayTao() {
         return ngayTao;
     }
 
@@ -137,50 +135,8 @@ public class NhanVienEntity {
     }
 
     
-    public String getTaiKhoan() {
-		return taiKhoan;
-	}
 
-	public void setTaiKhoan(String taiKhoan) {
-		this.taiKhoan = taiKhoan;
-	}
-
-	public String getMatKhau() {
-        return matKhau;
-    }
-
-    public void setMatKhau(String matKhau) {
-        this.matKhau = matKhau;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 79 * hash + Objects.hashCode(this.maNV);
-        hash = 79 * hash + Objects.hashCode(this.soDienThoai);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final NhanVienEntity other = (NhanVienEntity) obj;
-
-        return Objects.equals(this.soDienThoai, other.soDienThoai);
-    }
-
-    public static int getAge(LocalDate currentDate, LocalDate birthDate) {
-        return currentDate.getYear() - birthDate.getYear();
-    }
-
+  
     @Override
     public String toString() {
         return "NhanVienEntity{" +
@@ -194,8 +150,25 @@ public class NhanVienEntity {
                 ", trangThai=" + trangThai +
                 ", ngayTao=" + ngayTao +
                 ", ngayCapNhat=" + ngayCapNhat +
-                ", taiKhoan='" + taiKhoan + '\'' +
-                ", matKhau='" + matKhau + '\'' +
+
                 '}';
     }
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(maNV);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		NhanVienEntity other = (NhanVienEntity) obj;
+		return Objects.equals(maNV, other.maNV);
+	}
+    
 }
