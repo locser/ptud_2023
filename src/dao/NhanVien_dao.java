@@ -3,17 +3,13 @@ package dao;
 import Interface.NhanVienInterface;
 import connectDB.ConnectDB;
 import entity.*;
-import util.EntityMapper;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class NhanVien_dao implements NhanVienInterface {
 
@@ -34,7 +30,7 @@ public class NhanVien_dao implements NhanVienInterface {
                 nhanVien.setLoai(rs.getInt("loai"));
                 nhanVien.setGioiTinh(rs.getInt("gioiTinh") == 1 ? GioiTinhEnum.NAM : GioiTinhEnum.NU);
                 nhanVien.setEmail(rs.getString("email"));
-                nhanVien.setTrangThai(rs.getInt("trangThai"));
+//                nhanVien.setTrangThai(TinhTrangNVEnum.valueOf(enumClass, sql)rs.getInt("trangThai"));
                 System.out.println(nhanVien.toString());
                 return nhanVien;
             } else {
@@ -47,19 +43,20 @@ public class NhanVien_dao implements NhanVienInterface {
         }
         return null;
     }
-    public ResultSet getResultSet(String StoreName)throws Exception {
-        ResultSet rs = null;
-        try {
-            String callStore;
-            callStore = "{Call " + StoreName +"}";
-            CallableStatement cs = this.con.prepareCall(callStore);
-            cs.executeQuery();
-            rs = cs.getResultSet();
-        } catch (Exception e) {
-            throw new Exception("Error get Store " + e.getMessage());
-        }
-        return rs;
-    }
+    
+//    public ResultSet getResultSet(String StoreName)throws Exception {
+//        ResultSet rs = null;
+//        try {
+//            String callStore;
+//            callStore = "{Call " + StoreName +"}";
+//            CallableStatement cs = this.con.prepareCall(callStore);
+//            cs.executeQuery();
+//            rs = cs.getResultSet();
+//        } catch (Exception e) {
+//            throw new Exception("Error get Store " + e.getMessage());
+//        }
+//        return rs;
+//    }
 
 //    public NhanVienEntity dangNhap(String taiKhoan, String matKhau) throws Exception {
 //        ConnectDB.getInstance().connect();
@@ -141,7 +138,7 @@ public class NhanVien_dao implements NhanVienInterface {
                 e.printStackTrace();
             }
         }
-        return nhanVien;
+        return nv;
     }
 
     @Override
@@ -171,7 +168,7 @@ public class NhanVien_dao implements NhanVienInterface {
         } finally {
             try {
                 if (statement != null) statement.close();
-                con.close();
+//                con.close();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -181,6 +178,7 @@ public class NhanVien_dao implements NhanVienInterface {
 
     @Override
     public boolean update(NhanVienEntity newNV) {
+        Connection con = ConnectDB.getConnection();
         PreparedStatement statement = null;
         String sql = "UPDATE nhan_vien SET ten = ?, loai = ?, gioiTinh = ?, email = ?, soDienThoai = ?, diaChi = ?, trangThai = ?, ngayCapNhat = ? WHERE maNV = ?";
         
@@ -221,6 +219,8 @@ public class NhanVien_dao implements NhanVienInterface {
     @Override
     public boolean insert(NhanVienEntity nv) {
         String sql = "INSERT INTO nhan_vien (maNV, ten, loai, gioiTinh, email, soDienThoai, diaChi, trangThai, ngayTao, ngayCapNhat) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                Connection con = ConnectDB.getConnection();
+
         try {
             PreparedStatement statement = con.prepareStatement(sql);
             statement.setString(1, nv.getMaNV());
@@ -246,6 +246,8 @@ public class NhanVien_dao implements NhanVienInterface {
         try {
             // Sử dụng PreparedStatement thay vì CallableStatement
             String sql = "SELECT * FROM nhan_vien";
+                    Connection con = ConnectDB.getConnection();
+
             PreparedStatement stmt = con.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
             
