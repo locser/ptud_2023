@@ -11,7 +11,7 @@ import java.util.Locale;
 
 /**
  *
- * @author Nguyen Huy Hoang
+ * @author ploc2
  */
 public class ConvertDoubleToMoney {
     private DecimalFormat formatter = new DecimalFormat("###,###,###");

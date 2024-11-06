@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author HUY
+ * @author ploc2
  */
 public interface TaiKhoanInterface {
     public boolean insert(TaiKhoanEntity tk);

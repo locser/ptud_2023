@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import Interface.KhachHang_Interface;
-import util.ConvertStringToEnum;
 
 public class KhachHang_dao implements KhachHang_Interface {
     private Connection con;
@@ -58,6 +57,8 @@ public class KhachHang_dao implements KhachHang_Interface {
                 khachHang.setNgayTao(rs.getDate("ngayTao"));
                 khachHang.setNgayCapNhat(rs.getDate("ngayCapNhat"));
             }
+        } catch (SQLException ex) {
+            Logger.getLogger(KhachHang_dao.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -223,6 +224,11 @@ public class KhachHang_dao implements KhachHang_Interface {
         }
         return kh;
 	}
+    @Override
+    public KhachHangEntity getKHTheoMa(String ma) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getKHTheoMa'");
+    }
 
 
 }

@@ -4,10 +4,6 @@
  */
 package gui;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import javax.swing.border.*;
 import bus.ChiTietDoiTra_bus;
 import bus.DoiTra_bus;
 import entity.ChiTietDoiTraEntity;
@@ -15,7 +11,6 @@ import entity.DoiTraEntity;
 import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
-import org.jdesktop.layout.GroupLayout;
 import util.ConvertDoubleToMoney;
 import util.ExportToPDF;
 
@@ -59,8 +54,8 @@ public class ThongTinDoiTra_GUI extends javax.swing.JFrame {
 //            
             ArrayList<ChiTietDoiTraEntity> ctdtList = ctdt_bus.getAllCTDTTheoMaDT(maDT);
             for (ChiTietDoiTraEntity ctdt : ctdtList) {
-                String[] data = {ctdt.getSanPham().getMaSP(), ctdt.getSanPham().getTenSP(), ctdt.getSanPham().getKichThuoc().toString(), ctdt.getSanPham().getMauSac().toString(), ctdt.getSoLuong()+"", convert.toMoney(ctdt.getGiaBan()), convert.toMoney(ctdt.getThanhTien())};
-                tableModel.addRow(data);
+//                String[] data = {ctdt.getSanPham().getMaSP(), ctdt.getSanPham().getTenSP(), ctdt.getSanPham().getKichThuoc().toString(), ctdt.getSanPham().getMauSac().toString(), ctdt.getSoLuong()+"", convert.toMoney(ctdt.getGiaBan()), convert.toMoney(ctdt.getThanhTien())};
+//                tableModel.addRow(data);
             }
         }
     }

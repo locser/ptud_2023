@@ -4,15 +4,15 @@ import java.util.Objects;
 
 public class ChiTietHoaDonEntity {
 	
-	private SanPhamEntity sanPham;
+	private Object ve;
 	private HoaDonEntity hoaDon;
 	private int soLuong;
         private double giaGoc;
         private double giaBan;
         private double thanhTien;
 
-        public ChiTietHoaDonEntity(SanPhamEntity sanPham, HoaDonEntity hoaDon, int soLuong, double giaGoc, double giaBan, double thanhTien) {
-            this.sanPham = sanPham;
+        public ChiTietHoaDonEntity(Object ve, HoaDonEntity hoaDon, int soLuong, double giaGoc, double giaBan, double thanhTien) {
+            this.ve = ve;
             this.hoaDon = hoaDon;
             this.soLuong = soLuong;
             this.giaGoc = giaGoc;
@@ -23,11 +23,11 @@ public class ChiTietHoaDonEntity {
 	public ChiTietHoaDonEntity() {
 	}
 
-	public SanPhamEntity getSanPham() {
-		return sanPham;
+	public Object getVe() {
+		return ve;
 	}
-	public void setSanPham(SanPhamEntity sanPham) {
-		this.sanPham = sanPham;
+	public void setVe(Object ve) {
+		this.ve = ve;
 	}
 	public HoaDonEntity getHoaDon() {
 		return hoaDon;
@@ -46,21 +46,24 @@ public class ChiTietHoaDonEntity {
             return giaGoc;
         }
 
-        public void setGiaGoc() {
-            this.giaGoc = sanPham.getDonGia() * 1.4;
-        }
+    public void setGiaGoc(double giaGoc) {
+        this.giaGoc = giaGoc;
+    }
+
+    public void setGiaBan(double giaBan) {
+        this.giaBan = giaBan;
+    }
+
+    public void setThanhTien(double thanhTien) {
+        this.thanhTien = thanhTien;
+    }
+
 
         public double getGiaBan() {
             return giaBan;
         }
 
-        public void setGiaBan() {
-            if(sanPham.getChuongTrinhKhuyenMai() != null) {
-                this.giaBan = this.giaGoc * (1 - (sanPham.getChuongTrinhKhuyenMai().getGiamGia() * 0.01));
-            } else {
-                this.giaBan = this.giaGoc;
-            }
-        }
+
 
         public double getThanhTien() {
             return thanhTien;
@@ -70,9 +73,10 @@ public class ChiTietHoaDonEntity {
             this.thanhTien = giaBan * soLuong;
         }
 
-        @Override
-        public String toString() {
-            return "ChiTietHoaDonEntity{" + "sanPham=" + sanPham + ", hoaDon=" + hoaDon + ", soLuong=" + soLuong + ", giaGoc=" + giaGoc + ", giaBan=" + giaBan + ", thanhTien=" + thanhTien + '}';
-        }
- 
+    @Override
+    public String toString() {
+        return "ChiTietHoaDonEntity{" + "ve=" + ve + ", hoaDon=" + hoaDon + ", soLuong=" + soLuong + ", giaGoc=" + giaGoc + ", giaBan=" + giaBan + ", thanhTien=" + thanhTien + '}';
+    }
+
+
 }

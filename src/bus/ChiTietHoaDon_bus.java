@@ -4,7 +4,6 @@ package bus;
 import Interface.ChiTietHoaDon_Interface;
 import dao.ChiTietHoaDon_dao;
 import entity.ChiTietHoaDonEntity;
-import entity.SanPhamEntity;
 import java.util.ArrayList;
 
 /**
@@ -63,13 +62,4 @@ public class ChiTietHoaDon_bus implements ChiTietHoaDon_Interface{
         return cthd_dao.getSoLuongCTHD(maSP);
     }
 
-    @Override
-    public ArrayList<SanPhamEntity> getSanPhamTheoMaSP(String maSP) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public ArrayList<SanPhamEntity> getSanPhamTheoMaHD(String maHD) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 }

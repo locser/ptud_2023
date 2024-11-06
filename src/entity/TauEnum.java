@@ -92,8 +92,39 @@ public class TauEnum {
             }
         }
     }
+    
+        public enum TrangThaiLichTrinh {
+        TAM_NGUNG,
+        DANG_SU_DUNG;
 
+        public static String convertTrangThaiToString(int tinhTrang) {
+            switch (tinhTrang) {
+                case 0:
+                    return "Tạm ngưng";
+                case 1:
+                    return "Đang sử dụng";
+                   
+                default:
+                    return "Tạm ngưng";
+            }
+        }
+    }
+        public enum LoaiLichTrinh {
+        MOT_CHIEU,
+        KHU_HOI;
 
+        public static String convertLoaiLichTrinhToString(int tinhTrang) {
+            switch (tinhTrang) {
+                case 0:
+                    return "Một chiều";
+                case 1:
+                    return "Khứ hồi";
+                 
+                default:
+                    return "Một chiều";
+            }
+        }
+    }
 
 
 }

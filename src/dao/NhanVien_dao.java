@@ -16,10 +16,36 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class NhanVien_dao implements NhanVienInterface {
-    private Connection con;
 
-    public NhanVien_dao() {
-        con = ConnectDB.getInstance().getConnection();
+    public NhanVienEntity dangNhap(String taiKhoan, String matKhau) throws Exception {
+        Connection con = ConnectDB.getConnection();
+        PreparedStatement statement = null;
+        try {
+            String sql = "SELECT * FROM nhan_vien WHERE taiKhoan = ? AND matKhau = ?";
+            statement = con.prepareStatement(sql);
+            statement.setString(1, taiKhoan);
+            statement.setString(2, matKhau);
+            ResultSet rs = statement.executeQuery();
+            NhanVienEntity nhanVien = new NhanVienEntity()  ;
+            if (rs.next()) {
+//                nhanVien = EntityMapper.mapRowToEntity(rs, NhanVienEntity.class);
+                nhanVien.setMaNV(rs.getString("maNV"));
+                nhanVien.setTen(rs.getString("ten"));
+                nhanVien.setLoai(rs.getInt("loai"));
+                nhanVien.setGioiTinh(rs.getInt("gioiTinh") == 1 ? GioiTinhEnum.NAM : GioiTinhEnum.NU);
+                nhanVien.setEmail(rs.getString("email"));
+                nhanVien.setTrangThai(rs.getInt("trangThai"));
+                System.out.println(nhanVien.toString());
+                return nhanVien;
+            } else {
+                System.out.println("Không tìm thấy kết quả.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (statement != null) statement.close();
+        }
+        return null;
     }
     public ResultSet getResultSet(String StoreName)throws Exception {
         ResultSet rs = null;
@@ -63,10 +89,11 @@ public class NhanVien_dao implements NhanVienInterface {
 
     @Override
     public Boolean checkNV(String email, String soDienThoai) {
-        
-        try (Connection con = ConnectDB.getConnection();
-             PreparedStatement statement = con.prepareStatement("SELECT 1 FROM banve.dbo.nhan_vien WHERE email = ? AND soDienThoai = ?")) {
-            
+        Connection con = ConnectDB.getConnection();
+        PreparedStatement statement = null;
+        try {
+            String sql = "SELECT * FROM nhan_vien WHERE email = ? AND dien_thoai = ?";
+            statement = con.prepareStatement(sql);
             statement.setString(1, email);
             statement.setString(2, soDienThoai);
             
@@ -84,7 +111,8 @@ public class NhanVien_dao implements NhanVienInterface {
 
     @Override
     public NhanVienEntity getNV(String soDienThoai) {
-        NhanVienEntity nv = null;
+        NhanVienEntity nv = new NhanVienEntity();
+        Connection con = ConnectDB.getConnection();
         PreparedStatement statement = null;
         try {
             statement = con.prepareStatement("SELECT * FROM nhan_vien WHERE soDienThoai = ?");
@@ -113,7 +141,7 @@ public class NhanVien_dao implements NhanVienInterface {
                 e.printStackTrace();
             }
         }
-        return nv;
+        return nhanVien;
     }
 
     @Override
@@ -121,6 +149,7 @@ public class NhanVien_dao implements NhanVienInterface {
         NhanVienEntity nv = null;
         PreparedStatement statement = null;
         try {
+            Connection con = ConnectDB.getConnection();
             statement = con.prepareStatement("SELECT * FROM nhan_vien WHERE maNV = ?");
             statement.setString(1, maNV);
             ResultSet rs = statement.executeQuery();

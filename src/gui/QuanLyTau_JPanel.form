@@ -499,9 +499,9 @@
               <Group type="102" attributes="0">
                   <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
                   <Component id="lbl_MaSanPham_Search" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="42" max="32767" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="txt_MaTau_Search" min="-2" pref="140" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                   <Component id="btn_TimKiem" min="-2" pref="120" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btn_LamMoi" min="-2" pref="120" max="-2" attributes="0"/>
@@ -510,38 +510,27 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btn_CapNhat" min="-2" pref="120" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="btn_KiemTraTonKho" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="btn_NhapExcel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btn_XuatExcel" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="btn_Luu" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="42" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="7" pref="7" max="-2" attributes="0"/>
-                          <Component id="lbl_MaSanPham_Search" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="3" pref="3" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="btn_NhapExcel" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="btn_XuatExcel" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="btn_KiemTraTonKho" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="btn_CapNhat" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="btn_Them" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="btn_LamMoi" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="btn_Luu" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="btn_TimKiem" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="txt_MaTau_Search" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                          </Group>
+                  <EmptySpace min="3" pref="3" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="lbl_MaSanPham_Search" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txt_MaTau_Search" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Group type="103" alignment="3" groupAlignment="3" attributes="0">
+                          <Component id="btn_NhapExcel" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="btn_XuatExcel" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="btn_CapNhat" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="btn_Them" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="btn_LamMoi" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="btn_TimKiem" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
@@ -676,24 +665,6 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_XuatExcelActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btn_KiemTraTonKho">
-          <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="33" green="33" red="0" type="rgb"/>
-            </Property>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Times New Roman" size="15" style="1"/>
-            </Property>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" id="white" palette="1" red="ff" type="palette"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Check t&#x1ed3;n kho"/>
-            <Property name="horizontalAlignment" type="int" value="10"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_KiemTraTonKhoActionPerformed"/>
-          </Events>
-        </Component>
         <Component class="javax.swing.JButton" name="btn_NhapExcel">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -710,24 +681,6 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_NhapExcelActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="btn_Luu">
-          <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="33" green="33" red="0" type="rgb"/>
-            </Property>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Times New Roman" size="15" style="1"/>
-            </Property>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" id="white" palette="1" red="ff" type="palette"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="L&#x1b0;u"/>
-            <Property name="horizontalAlignment" type="int" value="10"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_LuuActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
@@ -756,7 +709,7 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="15" max="32767" attributes="0"/>
                   <Component id="scroll_TableSanPham" min="-2" pref="1137" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
               </Group>

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Nguyen Huy Hoang
+ * @author ploc2
  */
 public class ChiTietDoiTra_bus implements ChiTietDoiTra_Interface{
     private ChiTietDoiTra_dao ctdt_dao = new ChiTietDoiTra_dao();

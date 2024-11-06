@@ -11,8 +11,8 @@ import java.util.ArrayList;
 
 /**
  *
- * @author HUY
- */
+ * @author ploc2
+ *  */
 public class TaiKhoan_bus implements TaiKhoanInterface{
     private final TaiKhoan_dao dao;
     

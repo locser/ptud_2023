@@ -2,26 +2,20 @@ package dao;
 
 import Interface.NhanVienInterface;
 import connectDB.ConnectDB;
-import entity.CaLamViecEnum;
-import entity.ChucVuEnum;
 import entity.GioiTinhEnum;
 import entity.NhanVienEntity;
-import entity.TaiKhoanEntity;
 import entity.TinhTrangNVEnum;
-import entity.TinhTrangTKEnum;
-import util.EntityMapper;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
  *
- * @author HUY
+ * @author ploc2
  */
 public class NhanVien_dao2 implements NhanVienInterface{
     ConnectDB connect = new ConnectDB();

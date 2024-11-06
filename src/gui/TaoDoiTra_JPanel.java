@@ -4,22 +4,13 @@
  */
 package gui;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import javax.swing.border.*;
-import bus.ChiTietDoiTra_bus;
 import bus.ChiTietHoaDon_bus;
 import bus.DoiTra_bus;
 import bus.HoaDon_bus;
-import bus.SanPham_bus;
 import entity.ChiTietDoiTraEntity;
 import entity.ChiTietHoaDonEntity;
-import entity.DoiTraEntity;
-import entity.HinhThucDoiTraEnum;
 import entity.HoaDonEntity;
 import entity.NhanVienEntity;
-import entity.SanPhamEntity;
 import java.awt.Image;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -36,10 +27,7 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableModel;
-import org.jdesktop.layout.GroupLayout;
-import org.jdesktop.layout.LayoutStyle;
 import util.ConvertDoubleToMoney;
-import util.ConvertStringToEnum;
 import util.GenerateID;
 import util.ToanCuc;
 
@@ -722,9 +710,9 @@ public class TaoDoiTra_JPanel extends javax.swing.JPanel {
             if(cthdList != null) {
                 tableModel_HoaDon.setRowCount(0);
                 for (ChiTietHoaDonEntity cthd : cthdList) {
-                    String[] data = {cthd.getSanPham().getMaSP(), cthd.getSanPham().getTenSP(), cthd.getSanPham().getKichThuoc().toString(), cthd.getSanPham().getMauSac().toString(), 
-                    cthd.getSoLuong()+"", convert.toMoney(cthd.getGiaGoc()), convert.toMoney(cthd.getGiaBan()), convert.toMoney(cthd.getThanhTien())};
-                    tableModel_HoaDon.addRow(data);
+//                    String[] data = {cthd.getSanPham().getMaSP(), cthd.getSanPham().getTenSP(), cthd.getSanPham().getKichThuoc().toString(), cthd.getSanPham().getMauSac().toString(), 
+//                    cthd.getSoLuong()+"", convert.toMoney(cthd.getGiaGoc()), convert.toMoney(cthd.getGiaBan()), convert.toMoney(cthd.getThanhTien())};
+//                    tableModel_HoaDon.addRow(data);
                 }
             }
         } else {
@@ -873,7 +861,7 @@ public class TaoDoiTra_JPanel extends javax.swing.JPanel {
         NhanVienEntity nv = new NhanVienEntity(maNV);
         Date thoiGian = Date.valueOf(LocalDate.now());
         
-        ConvertStringToEnum toEnum = new ConvertStringToEnum();
+//        ConvertStringToEnum toEnum = new ConvertStringToEnum();
         String hinhThuc = "Hoàn trả";
         if(radiobtn_DoiMoi.isSelected()) {
             hinhThuc = "Đổi mới";
@@ -885,7 +873,7 @@ public class TaoDoiTra_JPanel extends javax.swing.JPanel {
         ArrayList<ChiTietDoiTraEntity> ctdtList = new ArrayList<ChiTietDoiTraEntity>();
         for (int i = 0; i < tableModel_GioHang.getRowCount(); i++) {
             String maSP = tableModel_GioHang.getValueAt(i, 0).toString();
-            SanPhamEntity sanPham = new SanPhamEntity(maSP);
+//            SanPhamEntity sanPham = new SanPhamEntity(maSP);
             int soLuong = Integer.parseInt(tableModel_GioHang.getValueAt(i, 4).toString());
             double giaBan = convert.toDouble(tableModel_GioHang.getValueAt(i, 5).toString());
             double thanhTien = convert.toDouble(tableModel_GioHang.getValueAt(i, 6).toString());

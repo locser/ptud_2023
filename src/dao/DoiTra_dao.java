@@ -8,9 +8,6 @@ import Interface.DoiTra_Interface;
 import connectDB.ConnectDB;
 import entity.ChiTietDoiTraEntity;
 import entity.DoiTraEntity;
-import entity.HinhThucDoiTraEnum;
-import entity.HoaDonEntity;
-import entity.KhachHangEntity;
 import entity.NhanVienEntity;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,7 +17,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.ResultSet;
 import java.sql.Date;
-import util.ConvertStringToEnum;
 
 /**
  *
@@ -112,7 +108,6 @@ public class DoiTra_dao implements DoiTra_Interface{
                 String hinhThuc = rs.getString("hinhThucDoiTra");
                 double tongTien = rs.getDouble("tongTien");
                 
-                ConvertStringToEnum toEnum = new ConvertStringToEnum();
                 
 //                DoiTraEntity dt = new DoiTraEntity(maDT, hd, nv, toEnum.HinhThucDTToEnum(hinhThuc), thoiGian, tongTien);
 //                dtList.add(dt);
@@ -182,7 +177,6 @@ public class DoiTra_dao implements DoiTra_Interface{
 //                }
 //                hd.setKhachHang(kh);
                 
-                ConvertStringToEnum toEnum = new ConvertStringToEnum();
                 
 //                dt = new DoiTraEntity(maDT, hd, nv, toEnum.HinhThucDTToEnum(hinhThuc), thoiGian, tongTien);
             }
@@ -230,7 +224,6 @@ public class DoiTra_dao implements DoiTra_Interface{
                 String hinhThuc = rs.getString("hinhThucDoiTra");
                 double tongTien = rs.getDouble("tongTien");
                 
-                ConvertStringToEnum toEnum = new ConvertStringToEnum();
                 
 //                DoiTraEntity dt = new DoiTraEntity(maDT, hd, nv, toEnum.HinhThucDTToEnum(hinhThuc), thoiGian, tongTien);
                 
@@ -283,7 +276,6 @@ public class DoiTra_dao implements DoiTra_Interface{
                 String hinhThuc = rs.getString("hinhThucDoiTra");
                 double tongTien = rs.getDouble("tongTien");
                 
-                ConvertStringToEnum toEnum = new ConvertStringToEnum();
                 
 //                dt = new DoiTraEntity(maDT, hd, nv, toEnum.HinhThucDTToEnum(hinhThuc), thoiGian, tongTien);
             }

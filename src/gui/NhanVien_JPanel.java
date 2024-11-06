@@ -5,14 +5,9 @@
 package gui;
 
 import bus.NhanVien_bus;
-import dao.NhanVien_dao;
-import entity.CaLamViecEnum;
-import entity.ChucVuEnum;
 import entity.GioiTinhEnum;
 import entity.NhanVienEntity;
-import entity.TinhTrangNVEnum;
 import java.awt.Image;
-import java.awt.event.FocusEvent;
 import java.net.URL;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -26,7 +21,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.BadLocationException;
 import util.GenerateID;
@@ -718,6 +712,7 @@ public class NhanVien_JPanel extends javax.swing.JPanel {
 	            System.out.println("Added employee: " + nv.getMaNV() + " - " + nv.getTen());
 
 	        }
+									table_DanhSachNV.setModel(tableModel);
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	        JOptionPane.showMessageDialog(null, "Lỗi khi tải dữ liệu: " + e.getMessage());

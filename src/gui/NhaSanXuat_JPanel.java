@@ -22,7 +22,7 @@ public class NhaSanXuat_JPanel extends javax.swing.JPanel {
                 setVisible(true);
         setBounds(0, 0, 1186, 748);
         
-        URL image_TrangChu = TrangChu_JPanel.class.getResource("/pic/icon/hinhnenTrangChu.png");
+        URL image_TrangChu = TrangChu_JPanel.class.getResource("/pic/icon/thanh-vien-nhom.png");
         ImageIcon img_TrangChu = new ImageIcon(image_TrangChu);
         Image scaled_TrangChu = img_TrangChu.getImage().getScaledInstance(1186, 748, Image.SCALE_SMOOTH);
         img_TrangChu = new ImageIcon(scaled_TrangChu);
