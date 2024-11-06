@@ -36,7 +36,6 @@ public class KhachHang_dao implements KhachHang_Interface {
 //                    rs.getDate("ngayCapNhat")
 //                );
             }
-            connect.disconnect();
         } catch (SQLException ex) {
             Logger.getLogger(KhachHang_dao.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception e) {
@@ -60,7 +59,6 @@ public class KhachHang_dao implements KhachHang_Interface {
             statement.setDate(6, new java.sql.Date(System.currentTimeMillis())); // Cập nhật ngày hiện tại
             statement.setString(7, NewKH.getMaKH());
             n = statement.executeUpdate();
-            connect.disconnect();
         } catch (SQLException ex) {
             Logger.getLogger(KhachHang_dao.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception e) {
@@ -85,7 +83,6 @@ public class KhachHang_dao implements KhachHang_Interface {
             statement.setDate(7, new java.sql.Date(System.currentTimeMillis())); // Ngày tạo là ngày hiện tại
             statement.setDate(8, new java.sql.Date(System.currentTimeMillis())); // Ngày cập nhật là ngày hiện tại
             n = statement.executeUpdate();
-            connect.disconnect();
         } catch (SQLException ex) {
             Logger.getLogger(KhachHang_dao.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception e) {
@@ -99,7 +96,7 @@ public class KhachHang_dao implements KhachHang_Interface {
         ArrayList<KhachHangEntity> listKH = new ArrayList<>();
         try {
             connect.connect();
-            PreparedStatement statement = connect.getConnection().prepareStatement("SELECT * FROM KhachHang");
+            PreparedStatement statement = connect.getConnection().prepareStatement("SELECT * FROM hanh_khach");
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
 //                GioiTinhEnum gt = ConvertStringToEnum.GioiTinhtoEnum(rs.getString("gioiTinh"));
@@ -115,7 +112,6 @@ public class KhachHang_dao implements KhachHang_Interface {
 //                );
 //                listKH.add(khachHang);
             }
-            connect.disconnect();
         } catch (SQLException ex) {
             Logger.getLogger(KhachHang_dao.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception e) {
@@ -145,7 +141,6 @@ public class KhachHang_dao implements KhachHang_Interface {
 //                    rs.getDate("ngayCapNhat")
 //                );
             }
-            connect.disconnect();
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
@@ -176,7 +171,6 @@ public class KhachHang_dao implements KhachHang_Interface {
 //                    rs.getDate("ngayCapNhat")
 //                );
             }
-            connect.disconnect();
         } catch (SQLException ex) {
             Logger.getLogger(KhachHang_dao.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception e) {
