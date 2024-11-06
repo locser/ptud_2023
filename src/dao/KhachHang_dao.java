@@ -1,121 +1,162 @@
 package dao;
 
 import connectDB.ConnectDB;
+import entity.GioiTinhEnum;
 import entity.KhachHangEntity;
+import entity.NhanVienEntity;
+import entity.TinhTrangNVEnum;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.CallableStatement;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import Interface.KhachHang_Interface;
 
-
 public class KhachHang_dao implements KhachHang_Interface {
-    ConnectDB connect = new ConnectDB();
+    private Connection con;
 
+    public KhachHang_dao() {
+        con = ConnectDB.getInstance().getConnection();
+    }
+    public ResultSet getResultSet(String StoreName)throws Exception {
+        ResultSet rs = null;
+        try {
+            String callStore;
+            callStore = "{Call " + StoreName +"}";
+            CallableStatement cs = this.con.prepareCall(callStore);
+            cs.executeQuery();
+            rs = cs.getResultSet();
+        } catch (Exception e) {
+            throw new Exception("Error get Store " + e.getMessage());
+        }
+        return rs;
+    }
     @Override
     public KhachHangEntity findOne(String id) {
         KhachHangEntity khachHang = null;
-        ResultSet rs = null;
+        PreparedStatement statement = null;
+        
         try {
-            connect.connect();
-            PreparedStatement statement = connect.getConnection().prepareStatement("SELECT * FROM KhachHang WHERE maKH = ?");
+            statement = con.prepareStatement("SELECT * FROM hanh_khach WHERE maHK = ?");
             statement.setString(1, id);
-            rs = statement.executeQuery();
+            ResultSet rs = statement.executeQuery();
+            
             if (rs.next()) {
-//                GioiTinhEnum gt = ConvertStringToEnum.GioiTinhtoEnum(rs.getString("gioiTinh"));
-//                khachHang = new KhachHangEntity(
-//                    rs.getString("maKH"),
-//                    rs.getString("hoTen"),
-//                    "",
-//                    rs.getString("soDienThoai"),
-//                    rs.getString("diaChi"),
-//                    rs.getString("soCCCD"),
-//                    rs.getDate("ngayTao"),
-//                    rs.getDate("ngayCapNhat")
-//                );
+                khachHang = new KhachHangEntity();
+                khachHang.setMaKH(rs.getString("maHK"));
+                khachHang.setHoTen(rs.getString("ten"));
+                khachHang.setGioiTinh(GioiTinhEnum.values()[rs.getInt("gioiTinh")]);
+                khachHang.setSoDienThoai(rs.getString("soDienThoai"));
+                khachHang.setDiaChi(rs.getString("diaChi"));
+                khachHang.setSoCCCD(rs.getString("soCmnd"));
+                khachHang.setNgayTao(rs.getDate("ngayTao"));
+                khachHang.setNgayCapNhat(rs.getDate("ngayCapNhat"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(KhachHang_dao.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+        } finally {
+            try {
+                if (statement != null) statement.close();
+                con.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         return khachHang;
     }
 
     @Override
-    public boolean update(KhachHangEntity NewKH) {
-        String sql = "UPDATE KhachHang SET hoTen = ?, gioiTinh = ?, soDienThoai = ?, diaChi = ?, soCCCD = ?, ngayCapNhat = ? WHERE maKH = ?";
-        int n = 0;
+    public boolean update(KhachHangEntity newKH) {
+        PreparedStatement statement = null;
+        String sql = "UPDATE hanh_khach SET ten = ?, gioiTinh = ?, soDienThoai = ?, diaChi = ?, soCmnd = ?, ngayCapNhat = ? WHERE maHK = ?";
+        
         try {
-            connect.connect();
-            PreparedStatement statement = connect.getConnection().prepareStatement(sql);
-            statement.setString(1, NewKH.getHoTen());
-            statement.setString(2, NewKH.getGioiTinh().toString());
-            statement.setString(3, NewKH.getSoDienThoai());
-            statement.setString(4, NewKH.getDiaChi());
-            statement.setString(5, NewKH.getSoCCCD());
-            statement.setDate(6, new java.sql.Date(System.currentTimeMillis())); // Cập nhật ngày hiện tại
-            statement.setString(7, NewKH.getMaKH());
-            n = statement.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger(KhachHang_dao.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+            statement = con.prepareStatement(sql);
+            
+            // Set các tham số
+            statement.setString(1, newKH.getHoTen());
+            statement.setInt(2, newKH.getGioiTinh().ordinal());
+            statement.setString(3, newKH.getSoDienThoai());
+            statement.setString(4, newKH.getDiaChi());
+            statement.setString(5, newKH.getSoCCCD());
+            statement.setDate(6, new java.sql.Date(newKH.getNgayCapNhat().getTime()));
+            statement.setString(7, newKH.getMaKH());
+
+            
+            return statement.executeUpdate() > 0;
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            try {
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
-        return n > 0;
     }
 
     @Override
     public boolean insert(KhachHangEntity KH) {
-        int n = 0;
-        String sql = "INSERT INTO KhachHang(maKH, hoTen, gioiTinh, soDienThoai, diaChi, soCCCD, ngayTao, ngayCapNhat) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+        PreparedStatement statement = null;
+        String sql = "INSERT INTO hanh_khach(maHK, ten, gioiTinh, soDienThoai, diaChi, soCmnd, ngayTao, ngayCapNhat) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+        
         try {
-            connect.connect();
-            PreparedStatement statement = connect.getConnection().prepareStatement(sql);
+            statement = con.prepareStatement(sql);
             statement.setString(1, KH.getMaKH());
             statement.setString(2, KH.getHoTen());
-            statement.setString(3, KH.getGioiTinh().toString());
+            statement.setInt(3, KH.getGioiTinh().ordinal());
             statement.setString(4, KH.getSoDienThoai());
             statement.setString(5, KH.getDiaChi());
             statement.setString(6, KH.getSoCCCD());
-            statement.setDate(7, new java.sql.Date(System.currentTimeMillis())); // Ngày tạo là ngày hiện tại
-            statement.setDate(8, new java.sql.Date(System.currentTimeMillis())); // Ngày cập nhật là ngày hiện tại
-            n = statement.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger(KhachHang_dao.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+            statement.setDate(7, new java.sql.Date(KH.getNgayTao().getTime()));
+            statement.setDate(8, new java.sql.Date(KH.getNgayCapNhat().getTime()));
+            
+            return statement.executeUpdate() > 0;
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
         }
-        return n > 0;
     }
 
     @Override
     public ArrayList<KhachHangEntity> findAll() {
         ArrayList<KhachHangEntity> listKH = new ArrayList<>();
+        
         try {
-            connect.connect();
-            PreparedStatement statement = connect.getConnection().prepareStatement("SELECT * FROM hanh_khach");
+        	PreparedStatement statement = con.prepareStatement("SELECT * FROM hanh_khach");
             ResultSet rs = statement.executeQuery();
+            
             while (rs.next()) {
-//                GioiTinhEnum gt = ConvertStringToEnum.GioiTinhtoEnum(rs.getString("gioiTinh"));
-//                KhachHangEntity khachHang = new KhachHangEntity(
-//                    rs.getString("maKH"),
-//                    rs.getString("hoTen"),
-//                    gt,
-//                    rs.getString("soDienThoai"),
-//                    rs.getString("diaChi"),
-//                    rs.getString("soCCCD"),
-//                    rs.getDate("ngayTao"),
-//                    rs.getDate("ngayCapNhat")
-//                );
-//                listKH.add(khachHang);
+                KhachHangEntity khachHang = new KhachHangEntity();
+                khachHang.setMaKH(rs.getString("maHK"));
+                khachHang.setHoTen(rs.getString("ten"));
+                khachHang.setGioiTinh(GioiTinhEnum.values()[rs.getInt("gioiTinh")]);
+                khachHang.setSoDienThoai(rs.getString("soDienThoai"));
+                khachHang.setDiaChi(rs.getString("diaChi"));
+                khachHang.setSoCCCD(rs.getString("soCmnd"));
+                khachHang.setNgayTao(rs.getDate("ngayTao"));
+                khachHang.setNgayCapNhat(rs.getDate("ngayCapNhat"));
+                listKH.add(khachHang);
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(KhachHang_dao.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+            System.out.println("Số lượng nhân viên: " + listKH.size());
+            for (KhachHangEntity khachHang : listKH) {
+                System.out.println(khachHang.toString());
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return listKH;
     }
@@ -123,64 +164,71 @@ public class KhachHang_dao implements KhachHang_Interface {
     @Override
     public KhachHangEntity timKiemTheoSDT(String sdt) {
         KhachHangEntity khachHang = null;
+        PreparedStatement statement = null;
+        
         try {
-            connect.connect();
-            PreparedStatement statement = connect.getConnection().prepareStatement("SELECT * FROM KhachHang WHERE soDienThoai = ?");
+            statement = con.prepareStatement("SELECT * FROM hanh_khach WHERE soDienThoai = ?");
             statement.setString(1, sdt);
             ResultSet rs = statement.executeQuery();
+            
             if (rs.next()) {
-//                GioiTinhEnum gt = ConvertStringToEnum.GioiTinhtoEnum(rs.getString("gioiTinh"));
-//                khachHang = new KhachHangEntity(
-//                    rs.getString("maKH"),
-//                    rs.getString("hoTen"),
-//                    gt,
-//                    rs.getString("soDienThoai"),
-//                    rs.getString("diaChi"),
-//                    rs.getString("soCCCD"),
-//                    rs.getDate("ngayTao"),
-//                    rs.getDate("ngayCapNhat")
-//                );
+                khachHang = new KhachHangEntity();
+                khachHang.setMaKH(rs.getString("maHK"));
+                khachHang.setHoTen(rs.getString("ten"));
+                khachHang.setGioiTinh(GioiTinhEnum.values()[rs.getInt("gioiTinh")]);
+                khachHang.setSoDienThoai(rs.getString("soDienThoai"));
+                khachHang.setDiaChi(rs.getString("diaChi"));
+                khachHang.setSoCCCD(rs.getString("soCmnd"));
+                khachHang.setNgayTao(rs.getDate("ngayTao"));
+                khachHang.setNgayCapNhat(rs.getDate("ngayCapNhat"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            return null;
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } finally {
+            try {
+                if (statement != null) statement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return khachHang;
     }
-
-    @Override
-    public KhachHangEntity getKHTheoMa(String ma) {
-        KhachHangEntity khachHang = null;
+	@Override
+	public KhachHangEntity getKhachHang(String soDienThoai) {
+		KhachHangEntity kh = null;
+        PreparedStatement statement = null;
         try {
-            connect.connect();
-            PreparedStatement statement = connect.getConnection().prepareStatement("SELECT * FROM KhachHang WHERE maKH = ?");
-            statement.setString(1, ma);
+            statement = con.prepareStatement("SELECT * FROM hanh_khach WHERE soDienThoai = ?");
+            statement.setString(1, soDienThoai);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
-//                GioiTinhEnum gt = ConvertStringToEnum.GioiTinhtoEnum(rs.getString("gioiTinh"));
-//                khachHang = new KhachHangEntity(
-//                    rs.getString("maKH"),
-//                    rs.getString("hoTen"),
-//                    gt,
-//                    rs.getString("soDienThoai"),
-//                    rs.getString("diaChi"),
-//                    rs.getString("soCCCD"),
-//                    rs.getDate("ngayTao"),
-//                    rs.getDate("ngayCapNhat")
-//                );
+            	kh = new KhachHangEntity();
+            	kh.setMaKH(rs.getString(1));
+            	kh.setHoTen(rs.getString(2));
+            	kh.setGioiTinh(GioiTinhEnum.values()[rs.getInt(3)]);
+            	kh.setSoDienThoai(rs.getString(4));
+            	kh.setDiaChi(rs.getString(5));
+            	kh.setSoCCCD(rs.getString(6));
+            	kh.setNgayTao(rs.getDate(7));
+            	kh.setNgayCapNhat(rs.getDate(8));
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(KhachHang_dao.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+        } finally {
+            try {
+                if (statement != null) statement.close();
+                con.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-        return khachHang;
+        return kh;
+	}
+    @Override
+    public KhachHangEntity getKHTheoMa(String ma) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getKHTheoMa'");
     }
 
-    @Override
-    public KhachHangEntity getKhachHang(String maKH) {
-        return getKHTheoMa(maKH);
-    }
+
 }

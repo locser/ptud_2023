@@ -18,6 +18,8 @@ public class KhachHangEntity {
     private String soCCCD;
     private Date ngayTao;
     private Date ngayCapNhat;
+    
+    
 	public KhachHangEntity(String maKH, String hoTen, GioiTinhEnum gioiTinh, String soDienThoai, String diaChi,
 			String soCCCD, Date ngayTao, Date ngayCapNhat) {
 		super();
@@ -30,6 +32,17 @@ public class KhachHangEntity {
 		this.ngayTao = ngayTao;
 		this.ngayCapNhat = ngayCapNhat;
 	}
+	
+	public KhachHangEntity(String maKH) {
+		super();
+		this.maKH = maKH;
+	}
+	
+
+	public KhachHangEntity() {
+		super();
+	}
+
 	public String getMaKH() {
 		return maKH;
 	}
@@ -101,32 +114,11 @@ public class KhachHangEntity {
         return Objects.equals(this.soDienThoai, other.soDienThoai);
     }
 
-    public static int getAge(Date currentDate, Date birthDate) {
-        Calendar calendarCurrent = Calendar.getInstance();
-        calendarCurrent.setTime(currentDate);
-
-        Calendar calendarBirth = Calendar.getInstance();
-        calendarBirth.setTime(birthDate);
-
-        int years = calendarCurrent.get(Calendar.YEAR) - calendarBirth.get(Calendar.YEAR);
-
-        if (calendarBirth.get(Calendar.MONTH) > calendarCurrent.get(Calendar.MONTH)
-                || (calendarBirth.get(Calendar.MONTH) == calendarCurrent.get(Calendar.MONTH)
-                && calendarBirth.get(Calendar.DAY_OF_MONTH) > calendarCurrent.get(Calendar.DAY_OF_MONTH))) {
-            years--;
-        }
-
-        return years;
-    }
 	@Override
 	public String toString() {
 		return "KhachHangEntity [maKH=" + maKH + ", hoTen=" + hoTen + ", gioiTinh=" + gioiTinh + ", soDienThoai="
 				+ soDienThoai + ", diaChi=" + diaChi + ", soCCCD=" + soCCCD + ", ngayTao=" + ngayTao + ", ngayCapNhat="
 				+ ngayCapNhat + "]";
-	}
-	public String getEmail() {
-		// TODO Auto-generated method stub
-		return null;
 	}
     
 }
