@@ -13,11 +13,7 @@ public interface KhachHang_Interface {
     boolean update(KhachHangEntity updateKH);
     boolean insert(KhachHangEntity insertKH);
     ArrayList<KhachHangEntity> findAll();
-//    int count(String id);
     
-    // Nguyen Huy Hoang
     public KhachHangEntity timKiemTheoSDT(String sdt);
-    // Đinh Nguyên Chung
-    public KhachHangEntity getKHTheoMa(String ma);
 	KhachHangEntity getKhachHang(String maKH);
 }

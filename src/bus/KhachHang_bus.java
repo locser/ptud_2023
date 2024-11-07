@@ -12,7 +12,7 @@ import Interface.KhachHang_Interface;
 
 /**
  *
- * @author ploc2
+ * @author Hoan
  */
 public class KhachHang_bus implements KhachHang_Interface {
     KhachHang_dao khachHangDAO = new KhachHang_dao();
@@ -37,22 +37,17 @@ public class KhachHang_bus implements KhachHang_Interface {
     public ArrayList<KhachHangEntity> findAll() {
         return khachHangDAO.findAll();
     }
-
+//
 //    @Override
 //    public int count(String id) {
 //        return khachHangDAO.count(id);
 //    }
     
-    // Nguyen Huy Hoang
     @Override
     public KhachHangEntity timKiemTheoSDT(String sdt) {
         return khachHangDAO.timKiemTheoSDT(sdt);
     }
 
-    @Override
-    public KhachHangEntity getKHTheoMa(String ma) {
-       return khachHangDAO.getKHTheoMa(ma);
-    }
 
     @Override
     public KhachHangEntity getKhachHang(String maKH) {

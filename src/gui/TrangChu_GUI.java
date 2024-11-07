@@ -67,7 +67,7 @@ public class TrangChu_GUI extends javax.swing.JFrame {
         ThongKe_Panel = new TrangChu_JPanel();
         KhachHang_Panel = new KhachHang_JPanel();
         NhanVien_Panel = new NhanVien_JPanel();
-        NhaSanXuat_Panel = new NhaSanXuat_JPanel();
+//        NhaSanXuat_Panel = new NhaSanXuat_JPanel();
         LichTrinh_Panel = new LichTrinh_JPanel();
 
         URL image_home = TrangChu_GUI.class.getResource("/pic/icon/home.png");   
@@ -158,7 +158,7 @@ public class TrangChu_GUI extends javax.swing.JFrame {
         Jpanel_Main.add(KhachHang_Panel);
         Jpanel_Main.add(NhanVien_Panel);
         Jpanel_Main.add(LichTrinh_Panel);
-        Jpanel_Main.add(NhaSanXuat_Panel);
+//        Jpanel_Main.add(NhaSanXuat_Panel);
         
 
         // Gán panleTrangChu background

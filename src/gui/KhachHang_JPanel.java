@@ -512,6 +512,10 @@ public class KhachHang_JPanel extends javax.swing.JPanel {
 	        JOptionPane.showMessageDialog(this, "Số điện thoại phải có 10 ký số và thuộc quốc gia Việt Nam!");
 	        return false;
 	    }
+//	    if (!cccd.matches("\\d{12}")) {
+//	        JOptionPane.showMessageDialog(this, "Số CCCD phải có đúng 12 chữ số!");
+//	        return false;
+//	    }
 
 	    // Kiểm tra địa chỉ
 	    if (diaChi.length() > 50) {
@@ -519,11 +523,6 @@ public class KhachHang_JPanel extends javax.swing.JPanel {
 	        return false;
 	    }
 
-	    // Kiểm tra CCCD - Chỉ kiểm tra đơn giản là 12 chữ số
-//	    if (!cccd.matches("\\d{12}")) {
-//	        JOptionPane.showMessageDialog(this, "Số CCCD phải có đúng 12 chữ số!");
-//	        return false;
-//	    }
 
 	    return true;
 	}
@@ -618,7 +617,7 @@ public class KhachHang_JPanel extends javax.swing.JPanel {
 	    tableModel.setRowCount(0);
 	    tableModel.addRow(new Object[]{
 	        kh.getMaKH(), 
-	        kh.getHoTen(),  
+	        kh.getHoTen(), 
 	        kh.getGioiTinh().toString(), 
 	        kh.getSoDienThoai(), 
 	        kh.getDiaChi(),
