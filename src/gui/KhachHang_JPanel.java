@@ -76,8 +76,7 @@ public class KhachHang_JPanel extends javax.swing.JPanel {
 
 	private void loadData() {
 		try {
-			String[] columnNames = { "Mã KH", "Họ tên", "Giới tính", "Số điện thoại", "Địa chỉ", "Số CCCD", "Ngày tạo",
-					"Ngày cập nhật" };
+			String[] columnNames = { "Mã KH", "Họ tên", "Giới tính", "Số điện thoại", "Số CCCD", "Địa Chỉ", "Ngày tạo","Ngày cập nhật" };
 			tableModel = new DefaultTableModel(columnNames, 0);
 			table_KhachHang.setModel(tableModel);
 
@@ -386,6 +385,7 @@ public class KhachHang_JPanel extends javax.swing.JPanel {
 			public void mouseClicked(java.awt.event.MouseEvent evt) {
 				btn_CapNhatMouseClicked(evt);
 			}
+
 		});
 		btn_CapNhat.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -436,95 +436,86 @@ public class KhachHang_JPanel extends javax.swing.JPanel {
 	}// GEN-LAST:event_txt_NhapSDTActionPerformed
 
 	private void btn_ThemActionPerformed(java.awt.event.ActionEvent evt) {
-	    try {
-	        if (checkInput()) {
-	            GioiTinhEnum gt = null;
-	            if (rad_Nam.isSelected()) gt = GioiTinhEnum.NAM;
-	            else if (rad_Nu.isSelected()) gt = GioiTinhEnum.NU;
-	            else gt = GioiTinhEnum.KHAC;
+		try {
+			if (checkInput()) {
+				GioiTinhEnum gt = null;
+				if (rad_Nam.isSelected()) gt = GioiTinhEnum.NAM;
+				else if (rad_Nu.isSelected()) gt = GioiTinhEnum.NU;
+				else gt = GioiTinhEnum.KHAC;
 
-	            KhachHangEntity kh = new KhachHangEntity();
-	            kh.setMaKH(GenerateID.sinhMa("KH"));
-	            kh.setHoTen(txt_HoTen.getText().trim());
-	            kh.setGioiTinh(gt);
-	            kh.setSoDienThoai(txt_SDT.getText().trim());
-	            kh.setDiaChi(txt_DiaChi.getText().trim());
-	            kh.setSoCCCD(txt_CCCD.getText().trim()); // Thêm CCCD
-	            kh.setNgayTao(new java.util.Date());
-	            kh.setNgayCapNhat(new java.util.Date());
+				KhachHangEntity kh = new KhachHangEntity();
+				kh.setMaKH(GenerateID.sinhMa("KH"));
+				kh.setHoTen(txt_HoTen.getText().trim());
+				kh.setGioiTinh(gt);
+				kh.setSoDienThoai(txt_SDT.getText().trim());
+				kh.setDiaChi(txt_DiaChi.getText().trim());
+				kh.setSoCCCD(txt_CCCD.getText().trim());
+				kh.setNgayTao(new java.util.Date());
+				kh.setNgayCapNhat(new java.util.Date());
 
-	            if (bus.insert(kh)) {
-	                tableModel.addRow(new Object[]{
-	                    kh.getMaKH(), 
-	                    kh.getHoTen(), 
-	                    kh.getGioiTinh().toString(), 
-	                    kh.getSoDienThoai(), 
-	                    kh.getDiaChi(),
-	                    kh.getSoCCCD(),
-	                    kh.getNgayTao(),
-	                    kh.getNgayCapNhat()
-	                });
-	                refresh();
-	                JOptionPane.showMessageDialog(this, "Thêm khách hàng thành công!");
-	            } else {
-	                JOptionPane.showMessageDialog(this, "Thêm thất bại! Số điện thoại hoặc CCCD đã tồn tại!");
-	            }
-	        }
-	    } catch (BadLocationException ex) {
-	        Logger.getLogger(KhachHang_JPanel.class.getName()).log(Level.SEVERE, null, ex);
-	    }
+				if (bus.insert(kh)) {
+					tableModel.addRow(new Object[]{
+						kh.getMaKH(), 
+						kh.getHoTen(), 
+						kh.getGioiTinh().toString(), 
+						kh.getSoDienThoai(), 
+						kh.getDiaChi(),
+						kh.getSoCCCD(),
+						kh.getNgayTao(),
+						kh.getNgayCapNhat()
+					});
+					refresh();
+					JOptionPane.showMessageDialog(this, "Thêm khách hàng thành công!");
+				} else {
+					JOptionPane.showMessageDialog(this, "Thêm thất bại! Số điện thoại hoặc CCCD đã tồn tại!");
+				}
+			}
+		} catch (BadLocationException ex) {
+			Logger.getLogger(KhachHang_JPanel.class.getName()).log(Level.SEVERE, null, ex);
+		}
 	}
 
 	public void refresh() {
-	    txt_MaKH.setText("");
-	    txt_HoTen.setText("");
-	    txt_DiaChi.setText("");
-	    txt_SDT.setText("");
-	    txt_CCCD.setText(""); // Clear CCCD
-	    txt_NhapSDT.setText("");
-	    btg.clearSelection();
-	    rad_Nam.setSelected(true);
-	    loadData();
-	    btn_Them.setEnabled(true);
+		txt_MaKH.setText("");
+		txt_HoTen.setText("");
+		txt_DiaChi.setText("");
+		txt_SDT.setText("");
+		txt_CCCD.setText("");
+		txt_NhapSDT.setText("");
+		btg.clearSelection();
+		rad_Nam.setSelected(true);
+		loadData();
+		btn_Them.setEnabled(true);
 	}
 
 	public boolean checkInput() throws BadLocationException {
-	    String hoTen = txt_HoTen.getText().trim();
-	    String SDT = txt_SDT.getText().trim();
-	    String diaChi = txt_DiaChi.getText().trim();
-	    String cccd = txt_CCCD.getText().trim();
+		String hoTen = txt_HoTen.getText().trim();
+		String SDT = txt_SDT.getText().trim();
+		String diaChi = txt_DiaChi.getText().trim();
+		String cccd = txt_CCCD.getText().trim();
 
-	    // Kiểm tra rỗng
-	    if (hoTen.isBlank() || SDT.isBlank() || diaChi.isBlank() || cccd.isBlank() || 
-	        (!rad_Nam.isSelected() && !rad_Nu.isSelected() && !rad_Khac.isSelected())) {
-	        JOptionPane.showMessageDialog(this, "Tất cả thông tin không được rỗng!");
-	        return false;
-	    }
+		if (hoTen.isBlank() || SDT.isBlank() || diaChi.isBlank() || cccd.isBlank() || 
+			(!rad_Nam.isSelected() && !rad_Nu.isSelected() && !rad_Khac.isSelected())) {
+			JOptionPane.showMessageDialog(this, "Tất cả thông tin không được rỗng!");
+			return false;
+		}
 
-	    // Kiểm tra họ tên
-	    if (!hoTen.matches("^[A-ZÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ][a-zàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]*(?:[ ][A-ZÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ][a-zàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]*)*$")) {
-	        JOptionPane.showMessageDialog(this, "Họ tên phải viết hoa chữ cái đầu và phải có khoảng trắng giữa các cụm!");
-	        return false;
-	    }
+		if (!hoTen.matches("^[A-ZÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ][a-zàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]*(?:[ ][A-ZÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ][a-zàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]*)*$")) {
+			JOptionPane.showMessageDialog(this, "Họ tên phải viết hoa chữ cái đầu và phải có khoảng trắng giữa các cụm!");
+			return false;
+		}
 
-	    // Kiểm tra số điện thoại
-	    if (!SDT.matches("^(0|84)[1-9]\\d{8}$")) {
-	        JOptionPane.showMessageDialog(this, "Số điện thoại phải có 10 ký số và thuộc quốc gia Việt Nam!");
-	        return false;
-	    }
-//	    if (!cccd.matches("\\d{12}")) {
-//	        JOptionPane.showMessageDialog(this, "Số CCCD phải có đúng 12 chữ số!");
-//	        return false;
-//	    }
+		if (!SDT.matches("^(0|84)[1-9]\\d{8}$")) {
+			JOptionPane.showMessageDialog(this, "Số điện thoại phải có 10 ký số và thuộc quốc gia Việt Nam!");
+			return false;
+		}
 
-	    // Kiểm tra địa chỉ
-	    if (diaChi.length() > 50) {
-	        JOptionPane.showMessageDialog(this, "Địa chỉ tối đa 50 kí tự!");
-	        return false;
-	    }
+		if (diaChi.length() > 50) {
+			JOptionPane.showMessageDialog(this, "Địa chỉ tối đa 50 kí tự!");
+			return false;
+		}
 
-
-	    return true;
+		return true;
 	}
 
 	private void btn_CapNhatActionPerformed(java.awt.event.ActionEvent evt) {
@@ -549,13 +540,14 @@ public class KhachHang_JPanel extends javax.swing.JPanel {
 				kh.setGioiTinh(gt);
 				kh.setSoDienThoai(txt_SDT.getText());
 				kh.setDiaChi(txt_DiaChi.getText());
+				kh.setSoCCCD(txt_CCCD.getText());
 				kh.setNgayCapNhat(new java.util.Date());
 
 				if (bus.update(kh)) {
 					refresh();
 					JOptionPane.showMessageDialog(this, "Cập nhật thông tin khách hàng thành công!");
 				} else {
-					JOptionPane.showMessageDialog(this, "Cập nhật thất bại! Số điện thoại đã tồn tại!");
+					JOptionPane.showMessageDialog(this, "Cập nhật thất bại! Số điện thoại hoặc CCCD đã tồn tại!");
 				}
 			}
 		} catch (BadLocationException ex) {
@@ -563,83 +555,80 @@ public class KhachHang_JPanel extends javax.swing.JPanel {
 		}
 	}
 
-	private void btn_LamMoiActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btn_LamMoiActionPerformed
-		// TODO add your handling code here:
-	}// GEN-LAST:event_btn_LamMoiActionPerformed
-
-	private void table_KhachHangMouseClicked(java.awt.event.MouseEvent evt) {
-	    int rowSelected = table_KhachHang.getSelectedRow();
-	    txt_MaKH.setText(tableModel.getValueAt(rowSelected, 0).toString());
-	    txt_HoTen.setText(tableModel.getValueAt(rowSelected, 1).toString());
-	    String gender = tableModel.getValueAt(rowSelected, 2).toString();
-	    switch (gender) {
-	        case "NAM" -> rad_Nam.setSelected(true);
-	        case "NU" -> rad_Nu.setSelected(true);
-	        default -> rad_Khac.setSelected(true);
-	    }
-	    txt_SDT.setText(tableModel.getValueAt(rowSelected, 3).toString());
-	    txt_DiaChi.setText(tableModel.getValueAt(rowSelected, 4).toString());
-	    txt_CCCD.setText(tableModel.getValueAt(rowSelected, 5).toString()); // Hiển thị CCCD
-	    btn_Them.setEnabled(false);
+	private void btn_LamMoiActionPerformed(java.awt.event.ActionEvent evt) {
+		refresh();
+		btn_Them.setEnabled(true);
 	}
 
+	private void table_KhachHangMouseClicked(java.awt.event.MouseEvent evt) {
+		int rowSelected = table_KhachHang.getSelectedRow();
+		txt_MaKH.setText(tableModel.getValueAt(rowSelected, 0).toString());
+		txt_HoTen.setText(tableModel.getValueAt(rowSelected, 1).toString());
+		String gender = tableModel.getValueAt(rowSelected, 2).toString();
+		switch (gender) {
+			case "NAM" -> rad_Nam.setSelected(true);
+			case "NU" -> rad_Nu.setSelected(true);
+			default -> rad_Khac.setSelected(true);
+		}
+		txt_SDT.setText(tableModel.getValueAt(rowSelected, 3).toString());
+		txt_DiaChi.setText(tableModel.getValueAt(rowSelected, 4).toString());
+		txt_CCCD.setText(tableModel.getValueAt(rowSelected, 5).toString());
+		btn_Them.setEnabled(false);
+	}
 
-	private void btn_CapNhatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_CapNhatMouseClicked
-        
-    }// GEN-LAST:event_btn_CapNhatMouseClicked
+	private void btn_TimKiemActionPerformed(java.awt.event.ActionEvent evt) {
+		String sdt = txt_NhapSDT.getText().trim();
+		if (sdt.isEmpty()) {
+			JOptionPane.showMessageDialog(this, "Vui lòng nhập số điện thoại cần tìm!");
+			return;
+		}
 
-	private void btn_TimKiemMouseClicked(java.awt.event.MouseEvent evt) {
-	    String sdt = txt_NhapSDT.getText().trim();
-	    if (sdt.isEmpty()) {
-	        JOptionPane.showMessageDialog(this, "Vui lòng nhập số điện thoại cần tìm!");
-	        return;
-	    }
+		KhachHangEntity kh = bus.timKiemTheoSDT(sdt);
+		if (kh == null) {
+			JOptionPane.showMessageDialog(this, "Không tìm thấy khách hàng với số điện thoại này!");
+			return;
+		}
 
-	    KhachHangEntity kh = bus.timKiemTheoSDT(sdt);
-	    if (kh == null) {
-	        JOptionPane.showMessageDialog(this, "Không tìm thấy khách hàng với số điện thoại này!");
-	        return;
-	    }
+		txt_MaKH.setText(kh.getMaKH());
+		txt_HoTen.setText(kh.getHoTen());
+		switch (kh.getGioiTinh()) {
+			case NAM -> rad_Nam.setSelected(true);
+			case NU -> rad_Nu.setSelected(true);
+			default -> rad_Khac.setSelected(true);
+		}
+		txt_SDT.setText(kh.getSoDienThoai());
+		txt_DiaChi.setText(kh.getDiaChi());
+		txt_CCCD.setText(kh.getSoCCCD());
 
-	    // Hiển thị thông tin khách hàng
-	    txt_MaKH.setText(kh.getMaKH());
-	    txt_HoTen.setText(kh.getHoTen());
-	    switch (kh.getGioiTinh()) {
-	        case NAM -> rad_Nam.setSelected(true);
-	        case NU -> rad_Nu.setSelected(true);
-	        default -> rad_Khac.setSelected(true);
-	    }
-	    txt_SDT.setText(kh.getSoDienThoai());
-	    txt_DiaChi.setText(kh.getDiaChi());
-	    txt_CCCD.setText(kh.getSoCCCD()); // Hiển thị CCCD
-
-	    // Cập nhật bảng
-	    tableModel.setRowCount(0);
-	    tableModel.addRow(new Object[]{
-	        kh.getMaKH(), 
-	        kh.getHoTen(), 
-	        kh.getGioiTinh().toString(), 
-	        kh.getSoDienThoai(), 
-	        kh.getDiaChi(),
-	        kh.getSoCCCD(),
-	        kh.getNgayTao(),
-	        kh.getNgayCapNhat()
-	    });
+		tableModel.setRowCount(0);
+		tableModel.addRow(new Object[]{
+			kh.getMaKH(), 
+			kh.getHoTen(), 
+			kh.getGioiTinh().toString(), 
+			kh.getSoDienThoai(), 
+			kh.getDiaChi(),
+			kh.getSoCCCD(),
+			kh.getNgayTao(),
+			kh.getNgayCapNhat()
+		});
 	}
     private void btn_LamMoiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_LamMoiMouseClicked
         refresh();
         btn_Them.setEnabled(true);
     }//GEN-LAST:event_btn_LamMoiMouseClicked
 
-    private void btn_TimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_TimKiemActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_TimKiemActionPerformed
-
     private void txt_CCCDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_CCCDActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_CCCDActionPerformed
 
-
+	private void btn_TimKiemMouseClicked(MouseEvent evt) {
+		// TODO Auto-generated method stub
+		
+	}
+	private void btn_CapNhatMouseClicked(MouseEvent evt) {
+		// TODO Auto-generated method stub
+		
+	}
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_CapNhat;
     private javax.swing.JButton btn_LamMoi;
