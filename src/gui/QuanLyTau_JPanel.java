@@ -35,7 +35,6 @@ import util.ToanCuc;
 public class QuanLyTau_JPanel extends javax.swing.JPanel {
 
     private String duongDanAnh = null;
-    private SanPham_bus sp_bus;
     private Tau_dao tau_dao;
     private Ga_dao ga_dao;
 
@@ -55,7 +54,6 @@ public class QuanLyTau_JPanel extends javax.swing.JPanel {
             "Mã", "Tên", "Loại tàu", "Ga đi", "Ga đến", "Trạng thái", "Số toa", "Đơn giá", "Nhân viên", "Ngày tạo", "Ngày cập nhật"
         }, 0);
 
-        sp_bus = new SanPham_bus();
         tau_dao = new Tau_dao();
         ga_dao = new Ga_dao();
         
@@ -414,16 +412,17 @@ public class QuanLyTau_JPanel extends javax.swing.JPanel {
             panel_ThaoTacLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_ThaoTacLayout.createSequentialGroup()
                 .addGap(3, 3, 3)
-                .addGroup(panel_ThaoTacLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbl_MaSanPham_Search)
-                    .addComponent(txt_MaTau_Search, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(panel_ThaoTacLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panel_ThaoTacLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btn_NhapExcel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btn_XuatExcel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btn_CapNhat, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btn_Them, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btn_LamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btn_TimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btn_TimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panel_ThaoTacLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lbl_MaSanPham_Search)
+                        .addComponent(txt_MaTau_Search, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(8, 8, 8))
         );
 

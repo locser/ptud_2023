@@ -8,10 +8,8 @@ import bus.NhanVien_bus;
 import entity.GioiTinhEnum;
 import entity.NhanVienEntity;
 import java.awt.Image;
+import java.awt.event.MouseEvent;
 import java.net.URL;
-import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -73,7 +71,12 @@ public class NhanVien_JPanel extends javax.swing.JPanel {
 
 		table_DanhSachNV.setDefaultEditor(Object.class, null);
 	}
-
+        
+	private void btn_TimKiemMouseClicked(MouseEvent evt) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'btn_TimKiemMouseClicked'");
+	}
+	
 	/**
 	 * This method is called from within the constructor to initialize the form.
 	 * WARNING: Do NOT modify this code. The content of this method is always
@@ -382,7 +385,9 @@ public class NhanVien_JPanel extends javax.swing.JPanel {
 		btn_TimKiem.addMouseListener(new java.awt.event.MouseAdapter() {
 			public void mouseClicked(java.awt.event.MouseEvent evt) {
 				btn_TimKiemMouseClicked(evt);
-			}
+							}
+				
+
 		});
 		btn_TimKiem.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -536,7 +541,7 @@ public class NhanVien_JPanel extends javax.swing.JPanel {
 	            nv.setSoDienThoai(txt_SDT.getText());
 	            nv.setDiaChi(txt_DiaChi.getText());
 	            nv.setLoai(cbo_ChucVu.getSelectedIndex());
-	            nv.setTrangThai(TinhTrangNVEnum.values()[cbo_TinhTrang.getSelectedIndex()]);
+//	            nv.setTrangThai(TinhTrangNVEnum.values()[cbo_TinhTrang.getSelectedIndex()]);
 	            
 	            // Lấy ngày tạo từ date chooser
 	            nv.setNgayTao(txt_date.getDate());
@@ -619,7 +624,7 @@ public class NhanVien_JPanel extends javax.swing.JPanel {
 	        nv.setSoDienThoai(txt_SDT.getText());
 	        nv.setDiaChi(txt_DiaChi.getText());
 	        nv.setLoai(cbo_ChucVu.getSelectedIndex());
-	        nv.setTrangThai(TinhTrangNVEnum.values()[cbo_TinhTrang.getSelectedIndex()]);
+//	        nv.setTrangThai(TinhTrangNVEnum.values()[cbo_TinhTrang.getSelectedIndex()]);
 	        
 	        // Set ngày cập nhật
 	        Date currentDate = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());

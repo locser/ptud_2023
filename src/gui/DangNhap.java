@@ -7,13 +7,11 @@ package gui;
 import dao.NhanVien_dao;
 import dao.TaiKhoan_dao;
 import entity.NhanVienEntity;
-import entity.TaiKhoanEntity;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.net.URL;
 import javax.swing.*;
-import util.MD5Encode;
 import util.ToanCuc;
 
 /**
@@ -42,7 +40,7 @@ public class DangNhap extends javax.swing.JFrame {
         
         btn_DangNhap.addActionListener(dangNhapAction);
         
-        tkDao = new TaiKhoan_dao();
+//        tkDao = new TaiKhoan_dao();
     }
     
     Action dangNhapAction = new AbstractAction("Đăng Nhập") {
@@ -82,10 +80,10 @@ public class DangNhap extends javax.swing.JFrame {
                 return;
             }
             
-            if(nhanVien.getTrangThai() == 0) {
-                txt_BaoLoi.setText("Tài khoản đã bị khóa!");
-                return;
-            }
+//            if(nhanVien.getTrangThai() == 0) {
+//                txt_BaoLoi.setText("Tài khoản đã bị khóa!");
+//                return;
+//            }
 
             ToanCuc.setTen(nhanVien.getTen());
             ToanCuc.setMa(nhanVien.getMaNV());
@@ -93,8 +91,13 @@ public class DangNhap extends javax.swing.JFrame {
             ToanCuc.setSoDienThoai(nhanVien.getSoDienThoai());
 
             dispose();
-            gui.TrangChu_GUI trangChu_GUI = new TrangChu_GUI();
-            trangChu_GUI.setVisible(true);
+//            gui.TrangChu_GUI trangChu_GUI = new TrangChu_GUI();
+//            trangChu_GUI.setVisible(true);
+            
+            DatVe_JFrame dateVe = new DatVe_JFrame(null);
+            dateVe.setVisible(true);
+
+        
         } catch (Exception ex) {
             txt_BaoLoi.setText("Lỗi hệ thống: " + ex.getMessage());
             ex.printStackTrace();

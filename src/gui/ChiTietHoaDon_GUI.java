@@ -39,7 +39,6 @@ public class ChiTietHoaDon_GUI extends javax.swing.JFrame {
     }
     private final ChiTietHoaDon_bus cthdbus;
     private DefaultTableModel model;
-    private SanPham_bus spbus;
     private HoaDon_JPanel HDPanel;
     private KhachHang_bus khbus;
     private HoaDon_bus hdbus;
