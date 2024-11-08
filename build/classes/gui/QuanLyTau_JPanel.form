@@ -521,16 +521,18 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <EmptySpace min="3" pref="3" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="lbl_MaSanPham_Search" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txt_MaTau_Search" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                      <Group type="103" alignment="3" groupAlignment="3" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                           <Component id="btn_NhapExcel" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                           <Component id="btn_XuatExcel" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                           <Component id="btn_CapNhat" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                           <Component id="btn_Them" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                           <Component id="btn_LamMoi" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                           <Component id="btn_TimKiem" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lbl_MaSanPham_Search" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txt_MaTau_Search" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>

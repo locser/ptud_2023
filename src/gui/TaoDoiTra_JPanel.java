@@ -42,7 +42,6 @@ public class TaoDoiTra_JPanel extends javax.swing.JPanel {
      */
     private HoaDon_bus hd_bus = new HoaDon_bus();
     private ChiTietHoaDon_bus cthd_bus = new ChiTietHoaDon_bus();
-    private SanPham_bus sp_bus = new SanPham_bus();
     private DefaultTableModel tableModel_HoaDon;
     private DefaultTableModel tableModel_GioHang;
     private GenerateID generateID = new GenerateID();

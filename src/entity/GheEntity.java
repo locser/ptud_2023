@@ -36,6 +36,12 @@ public class GheEntity {
         //TODO Auto-generated constructor stub
     }
 
+    public GheEntity(int maGhe) {
+        this.maGhe = maGhe;
+    }
+    
+    
+
     public int getMaGhe() {
         return maGhe;
     }
