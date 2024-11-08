@@ -33,7 +33,7 @@ import util.ConvertDoubleToMoney;
 
 public class ThongKeNVKH_Panel extends javax.swing.JPanel {
 
-    private final ThongKe_bus tkbus;
+    private ThongKe_bus tkbus;
     private DefaultTableModel model;
     private BarRenderer renderer;
     private String sort = "desc";
