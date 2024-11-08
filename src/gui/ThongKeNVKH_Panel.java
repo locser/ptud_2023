@@ -3,10 +3,13 @@ package gui;
 import bus.ThongKe_bus;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Locale;
+
+import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -50,19 +53,118 @@ public class ThongKeNVKH_Panel extends javax.swing.JPanel {
 
     public ThongKeNVKH_Panel() {
         initComponents();
+        setupPanel();
+        setupData();
+        
+        // Set size and visibility
+        setSize(1183, 710);
+        setVisible(true);
+        
+        // Initialize business logic
+        tkbus = new ThongKe_bus();
+        
+        // Load initial data
+        DocDuLieuLenTable();
+        createChart();
+        
+        // Validate and repaint
+        validate();
+        repaint();
+    }
+
+    private void setupPanel() {
         setBounds(0, 0, 1183, 710);
         setVisible(true);
+        
+        // Setup giao diện
+        jPanel5.setBackground(new Color(0, 128, 128));
+        jLabel1.setForeground(Color.WHITE);
+        
+        // Setup table
+        jTable.setDefaultEditor(Object.class, null);
+        jTable.setRowHeight(25);
+        jTable.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 12));
+        jTable.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        
+        // Setup chart panel
+        paneldoanhso.setLayout(new BorderLayout());
+        paneldoanhso.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        
+        // Setup radio buttons
+        ButtonGroup bgType = new ButtonGroup();
+        bgType.add(rdo_bdc1);
+        bgType.add(rdo_bdd2);
+        
+        ButtonGroup bgTime = new ButtonGroup();
+        bgTime.add(rdo_staticticsByMonth);
+        bgTime.add(rdo_staticticByYear);
+        
+        // Setup month chooser
+        monthChooser.setLocale(new Locale("Vi", "VN"));
+    }
+
+    private void setupData() {
         tkbus = new ThongKe_bus();
         DocDuLieuLenTable();
-        charAt();
-        ButtonGroup bg = new ButtonGroup();
-        bg.add(rdo_bdc1);
-        bg.add(rdo_bdd2);
-        ButtonGroup bgStatictic = new ButtonGroup();
-        bgStatictic.add(rdo_staticticsByMonth);
-        bgStatictic.add(rdo_staticticByYear);
-        monthChooser.setLocale(new Locale("Vi", "VN"));
-        jTable.setDefaultEditor(Object.class, null);
+        createChart();
+    }
+    
+
+    private void createChart() {
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        
+        try {
+            int rowCount = jTable.getRowCount();
+            renderer = new BarRenderer();
+            
+            for (int i = 0; i < rowCount; i++) {
+                double value = convert.toDouble(model.getValueAt(i, 2).toString());
+                String label = sort.equals("desc") ? "Doanh thu bán hàng" : "Tổng tiền mua hàng";
+                String category = model.getValueAt(i, 0).toString();
+                
+                dataset.setValue(value, label, category);
+                renderer.setSeriesPaint(i, new Color(0, 128, 128));
+            }
+            
+            String title = getChartTitle();
+            String xLabel = sort.equals("desc") ? "Mã nhân viên" : "Mã khách hàng";
+            String yLabel = sort.equals("desc") ? "Doanh thu (triệu VNĐ)" : "Tiền mua (triệu VNĐ)";
+
+            JFreeChart chart = ChartFactory.createBarChart(
+                title, xLabel, yLabel, 
+                dataset, PlotOrientation.VERTICAL, 
+                false, true, false
+            );
+
+            // Customize chart
+            CategoryPlot plot = chart.getCategoryPlot();
+            plot.setBackgroundPaint(Color.WHITE);
+            plot.setRangeGridlinePaint(Color.GRAY);
+            
+            renderer.setBarPainter(new StandardBarPainter());
+            renderer.setDrawBarOutline(true);
+            renderer.setItemMargin(0.1);
+            
+            plot.setRenderer(renderer);
+
+            // Add chart to panel
+            ChartPanel chartPanel = new ChartPanel(chart);
+            paneldoanhso.removeAll();
+            paneldoanhso.add(chartPanel, BorderLayout.CENTER);
+            paneldoanhso.validate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String getChartTitle() {
+        String period = rdo_staticticsByMonth.isSelected() 
+            ? " tháng " + (monthChooser.getMonth() + 1) + " năm " + spin_nam.getYear()
+            : " năm " + spin_nam.getYear();
+            
+        return sort.equals("desc")
+            ? "Top 5 nhân viên đạt doanh thu cao nhất" + period
+            : "Top 5 khách hàng có tổng tiền mua nhiều nhất" + period;
     }
 
     public void XoaAllData() {
@@ -147,107 +249,6 @@ public class ThongKeNVKH_Panel extends javax.swing.JPanel {
         }
     }
 
-     public void charAt() {
-        DefaultCategoryDataset barchardata = new DefaultCategoryDataset();
-        
-        try {
-            int countRow = jTable.getRowCount();
-            renderer = new BarRenderer();
-            for (int i = 0; i < countRow; i++) {
-                double value = convert.toDouble(model.getValueAt(i, 2)+"");
-                barchardata.setValue(value, "Doanh thu bán hàng", model.getValueAt(i, 0).toString());
-                renderer.setSeriesPaint(i, Color.BLUE);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        String title = "Top 5 nhân viên đạt doanh thu bán hàng cao nhất";
-        if (sort == "desc") {
-            if (rdo_staticticsByMonth.isSelected()) {
-                title = "Top 5 nhân viên đạt doanh thu bán hàng cao nhất tháng " + (monthChooser.getMonth() + 1) + " năm " + spin_nam.getYear();
-            }
-            else title = "Top 5 nhân viên đạt doanh thu bán hàng cao nhất" + " năm " + spin_nam.getYear();
-        } else {
-            if (rdo_staticticsByMonth.isSelected()) {
-                title = "Top 5 khách hàng có tổng tiền mua hàng nhiều nhất nhất tháng " + (monthChooser.getMonth() + 1) + " năm " + spin_nam.getYear();
-            }
-            else title = "Top 5 khách hàng có tổng tiền mua hàng nhiều nhất" + " năm " + spin_nam.getYear();
-        }
-        JFreeChart barchart = ChartFactory.createBarChart(title, "Mã nhân viên", "Doanh thu (triệu VNĐ)", barchardata, PlotOrientation.VERTICAL, false, true, false);
-
-        CategoryPlot barchst = barchart.getCategoryPlot();
-        barchst.setRangeCrosshairPaint(Color.BLUE);
-
-        // Customization for BarChart
-        CategoryAxis xAxis = barchst.getDomainAxis();
-        xAxis.setLowerMargin(0.02);
-        xAxis.setUpperMargin(0.02);
-
-        NumberAxis yAxis = (NumberAxis) barchst.getRangeAxis();
-        yAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
-
-        renderer.setBarPainter(new StandardBarPainter());
-
-        // Set renderer for the plot
-        barchst.setRenderer(renderer);
-
-        ChartPanel barPanel = new ChartPanel(barchart);
-        paneldoanhso.removeAll();
-        paneldoanhso.setLayout(new BorderLayout());
-        paneldoanhso.add(barPanel, BorderLayout.CENTER);
-        paneldoanhso.validate();
-    }
-    
-    public void charAtDuplicattion() {
-        DefaultCategoryDataset barchardata = new DefaultCategoryDataset();
-        try {
-            int countRow = jTable.getRowCount();
-            renderer = new BarRenderer();
-            for (int i = 0; i < countRow; i++) {
-                double value = convert.toDouble(model.getValueAt(i, 2)+"");
-                barchardata.setValue(value, "Tông tiền mua hàng", model.getValueAt(i, 0).toString());
-                renderer.setSeriesPaint(i, Color.BLUE);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        String title = "Top 5 nhân viên đạt doanh thu bán hàng cao nhất";
-       if (sort == "desc") {
-            if (rdo_staticticsByMonth.isSelected()) {
-                title = "Top 5 nhân viên đạt doanh thu bán hàng cao nhất tháng " + (monthChooser.getMonth() + 1) + " năm " + spin_nam.getYear();
-            }
-            else title = "Top 5 nhân viên đạt doanh thu bán hàng cao nhất" + " năm " + spin_nam.getYear();
-        } else {
-            if (rdo_staticticsByMonth.isSelected()) {
-                title = "Top 5 khách hàng có tổng tiền mua hàng nhiều nhất nhất tháng " + (monthChooser.getMonth() + 1) + " năm " + spin_nam.getYear();
-            }
-            else title = "Top 5 khách hàng có tổng tiền mua hàng nhiều nhất" + " năm " + spin_nam.getYear();
-        }
-        JFreeChart barchart = ChartFactory.createBarChart(title, "Mã kháchh hàng", "Tiền mua (triệu VNĐ)", barchardata, PlotOrientation.VERTICAL, false, true, false);
-
-        CategoryPlot barchst = barchart.getCategoryPlot();
-        barchst.setRangeCrosshairPaint(Color.BLUE);
-
-        // Customization for BarChart
-        CategoryAxis xAxis = barchst.getDomainAxis();
-        xAxis.setLowerMargin(0.02);
-        xAxis.setUpperMargin(0.02);
-
-        NumberAxis yAxis = (NumberAxis) barchst.getRangeAxis();
-        yAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
-
-        renderer.setBarPainter(new StandardBarPainter());
-
-        // Set renderer for the plot
-        barchst.setRenderer(renderer);
-
-        ChartPanel barPanel = new ChartPanel(barchart);
-        paneldoanhso.removeAll();
-        paneldoanhso.setLayout(new BorderLayout());
-        paneldoanhso.add(barPanel, BorderLayout.CENTER);
-        paneldoanhso.validate();
-    }
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -274,7 +275,6 @@ public class ThongKeNVKH_Panel extends javax.swing.JPanel {
 
         jPanel5.setBackground(new java.awt.Color(187, 205, 197));
         jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel5.setPreferredSize(new java.awt.Dimension(1168, 110));
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
@@ -408,12 +408,12 @@ public class ThongKeNVKH_Panel extends javax.swing.JPanel {
         if (sort.equals("desc")) {
             XoaAllData();
             DocDuLieuLenTable();
-            charAt();
+            createChart();
         }
         else {
             XoaAllData();
             DocDuLieuLenTableDuplication();
-            charAtDuplicattion();
+            createChart();
         }
         
 
@@ -423,12 +423,12 @@ public class ThongKeNVKH_Panel extends javax.swing.JPanel {
         if (sort.equals("desc")) {
             XoaAllData();
             DocDuLieuLenTable();
-            charAt();
+            createChart();
         }
         else {
             XoaAllData();
             DocDuLieuLenTableDuplication();
-            charAtDuplicattion();
+            createChart();
         }
     }//GEN-LAST:event_rdo_staticticsByMonthActionPerformed
 
@@ -436,12 +436,12 @@ public class ThongKeNVKH_Panel extends javax.swing.JPanel {
         if (sort.equals("desc")) {
             XoaAllData();
             DocDuLieuLenTable();
-            charAt();
+            createChart();
         }
         else {
             XoaAllData();
             DocDuLieuLenTableDuplication();
-            charAtDuplicattion();
+            createChart();
         }
 //        createLineChart();
     }//GEN-LAST:event_rdo_staticticByYearActionPerformed
@@ -450,7 +450,7 @@ public class ThongKeNVKH_Panel extends javax.swing.JPanel {
         // TODO add your handling code here:
         XoaAllData();
         DocDuLieuLenTable();
-        charAtDuplicattion();
+        createChart();
     }//GEN-LAST:event_spin_namPropertyChange
 
     private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
@@ -503,14 +503,14 @@ public class ThongKeNVKH_Panel extends javax.swing.JPanel {
         sort = "desc";
         XoaAllData();
         DocDuLieuLenTable();
-        charAt();
+        createChart();
     }//GEN-LAST:event_rdo_bdc1ActionPerformed
 
     private void rdo_bdd2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdo_bdd2ActionPerformed
         sort = "asc";
         XoaAllData();
         DocDuLieuLenTableDuplication();
-        charAtDuplicattion();
+        createChart();
     }//GEN-LAST:event_rdo_bdd2ActionPerformed
 
 

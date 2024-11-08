@@ -4,7 +4,6 @@
  */
 package gui;
 
-import dao.NhanVien_dao;
 import dao.TaiKhoan_dao;
 import entity.NhanVienEntity;
 import java.awt.*;
@@ -27,103 +26,130 @@ public class DangNhap extends javax.swing.JFrame {
      */
     public DangNhap() {
         initComponents();
-        
-        URL image_home = TrangChu_GUI.class.getResource("/pic/icon/anh-tau-1.png");   
+
+        URL image_home = TrangChu_GUI.class.getResource("/pic/icon/anh-tau-1.png");
         ImageIcon img_home = new ImageIcon(image_home);
         Image scaled_home = img_home.getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH);
         img_home = new ImageIcon(scaled_home);
-        jLabel4.setIcon(img_home);    
-        
+        jLabel4.setIcon(img_home);
+
         KeyStroke enterKey = KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0);
         btn_DangNhap.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(enterKey, "enterPressed");
         btn_DangNhap.getActionMap().put("enterPressed", dangNhapAction);
-        
+
         btn_DangNhap.addActionListener(dangNhapAction);
-        
-//        tkDao = new TaiKhoan_dao();
+
+        // tkDao = new TaiKhoan_dao();
     }
-    
+
     Action dangNhapAction = new AbstractAction("Đăng Nhập") {
         @Override
         public void actionPerformed(ActionEvent e) {
-           thucHienDangNhap();
+            thucHienDangNhap();
         }
     };
 
     private void thucHienDangNhap() {
         // Commented out the original login logic
-//        /*
+        /*
+         * try {
+         * String taiKhoan = txt_TaiKhoan.getText().trim();
+         * String matKhau = new String(txt_MatKhau.getPassword());
+         * 
+         * if(taiKhoan.isEmpty() || matKhau.isEmpty()) {
+         * txt_BaoLoi.setText("Vui lòng nhập đầy đủ thông tin!");
+         * return;
+         * }
+         * 
+         * if(!taiKhoan.matches("^[a-zA-Z0-9]{6,20}$")) {
+         * txt_BaoLoi.
+         * setText("Tài khoản phải từ 6-20 ký tự và không chứa ký tự đặc biệt!");
+         * return;
+         * }
+         * 
+         * String matKhauMaHoa = MD5Encode.md5Encode(matKhau);
+         * 
+         * TaiKhoanEntity tk = tkDao.getTaiKhoan(taiKhoan, matKhauMaHoa);
+         * 
+         * if (tk == null) {
+         * txt_BaoLoi.setText("Thông tin tài khoản hoặc mật khẩu không chính xác!");
+         * return;
+         * }
+         * 
+         * <<<<<<< HEAD
+         * // if(nhanVien.getTrangThai() == 0) {
+         * // txt_BaoLoi.setText("Tài khoản đã bị khóa!");
+         * // return;
+         * // }
+         * 
+         * ToanCuc.setTen(nhanVien.getTen());
+         * ToanCuc.setMa(nhanVien.getMaNV());
+         * ToanCuc.setLoai(nhanVien.getLoai());
+         * ToanCuc.setSoDienThoai(nhanVien.getSoDienThoai());
+         * 
+         * dispose();
+         * // gui.TrangChu_GUI trangChu_GUI = new TrangChu_GUI();
+         * // trangChu_GUI.setVisible(true);
+         * 
+         * DatVe_JFrame dateVe = new DatVe_JFrame(null);
+         * dateVe.setVisible(true);
+         * 
+         * 
+         * =======
+         * if(tk.getTrangThai() == 0) {
+         * txt_BaoLoi.setText("Tài khoản đã bị khóa!");
+         * return;
+         * }
+         * 
+         * if(tk.getNhanVien() == null) {
+         * txt_BaoLoi.setText("Tài khoản không gắn với nhân viên nào!");
+         * return;
+         * }
+         * 
+         * ToanCuc.setTen(tk.getNhanVien().getTen());
+         * ToanCuc.setMa(tk.getNhanVien().getMaNV());
+         * ToanCuc.setLoai(tk.getNhanVien().getLoai());
+         * ToanCuc.setSoDienThoai(tk.getNhanVien().getSoDienThoai());
+         * >>>>>>> origin/HOAN123
+         * } catch (Exception ex) {
+         * txt_BaoLoi.setText("Lỗi hệ thống: " + ex.getMessage());
+         * ex.printStackTrace();
+         * }
+         */
         try {
-            String taiKhoan = txt_TaiKhoan.getText().trim();
-            String matKhau = new String(txt_MatKhau.getPassword());
-//            
-            if(taiKhoan.isEmpty() || matKhau.isEmpty()) {
-                txt_BaoLoi.setText("Vui lòng nhập đầy đủ thông tin!");
-                txt_TaiKhoan.requestFocus();
-                return;
-            }
+            // String taiKhoan = txt_TaiKhoan.getText();
+            // char[] matKhau = txt_MatKhau.getPassword();
+            // String stringPass = new String(matKhau);
+            // String encodePass = MD5Encode.md5Encode(stringPass);
+            //
+            // dao.NhanVien_dao nv_dao = new NhanVien_dao();
+            // NhanVienEntity nhanVien = nv_dao.dangNhap(taiKhoan, stringPass);
 
-//            if(!taiKhoan.matches("^[a-zA-Z0-9]{6,20}$")) {
-//                txt_BaoLoi.setText("Tài khoản phải từ 6-20 ký tự và không chứa ký tự đặc biệt!");
-//                return;
-//            }
+            NhanVienEntity nhanVien = new NhanVienEntity("123");
+            nhanVien.setLoai(1);
 
-//            String matKhauMaHoa = MD5Encode.md5Encode(matKhau);
-            
-//            TaiKhoanEntity tk = tkDao.getTaiKhoan(taiKhoan, matKhauMaHoa);
-
-            NhanVien_dao nv_dao = new NhanVien_dao();
-            NhanVienEntity nhanVien = nv_dao.dangNhap(taiKhoan, matKhau);
-            
             if (nhanVien == null) {
-                txt_BaoLoi.setText("Thông tin tài khoản hoặc mật khẩu không chính xác!");
-                return;
+                txt_BaoLoi.setText("Thông tin tài khoản, mật khẩu không chính xác!");
+            } else {
+                System.out.println(nhanVien.toString());
+                System.out.println("đăng nhập thành công");
+
+                ToanCuc.setTen(nhanVien.getTen());
+                ToanCuc.setMa(nhanVien.getMaNV());
+                ToanCuc.setLoai(nhanVien.getLoai());
+                ToanCuc.setSoDienThoai(nhanVien.getSoDienThoai());
+                // this.setVisible(false);
+                dispose();
+                gui.TrangChu_GUI trangChu_GUI = new TrangChu_GUI();
+                // trangChu_GUI.setVisible(true);
             }
-            
-//            if(nhanVien.getTrangThai() == 0) {
-//                txt_BaoLoi.setText("Tài khoản đã bị khóa!");
-//                return;
-//            }
-
-            ToanCuc.setTen(nhanVien.getTen());
-            ToanCuc.setMa(nhanVien.getMaNV());
-            ToanCuc.setLoai(nhanVien.getLoai());
-            ToanCuc.setSoDienThoai(nhanVien.getSoDienThoai());
-
-            dispose();
-//            gui.TrangChu_GUI trangChu_GUI = new TrangChu_GUI();
-//            trangChu_GUI.setVisible(true);
-            
-            DatVe_JFrame dateVe = new DatVe_JFrame(null);
-            dateVe.setVisible(true);
-
-        
         } catch (Exception ex) {
-            txt_BaoLoi.setText("Lỗi hệ thống: " + ex.getMessage());
             ex.printStackTrace();
         }
-//        */
 
-
-//            NhanVienEntity nhanVien = new NhanVienEntity("123");
-//            nhanVien.setLoai(1);
-//            nhanVien.setTen("aaaaa");
-//            
-//            if (nhanVien == null) {
-//                txt_BaoLoi.setText("Thông tin tài khoản, mật khẩu không chính xác!");
-//            }else {
-//                System.out.println(nhanVien.toString());                
-//                System.out.println("đăng nhập thành công");
-//
-//                ToanCuc.setTen(nhanVien.getTen());
-//                ToanCuc.setMa(nhanVien.getMaNV());
-//                ToanCuc.setLoai(nhanVien.getLoai());
-//                ToanCuc.setSoDienThoai(nhanVien.getSoDienThoai());
-////                this.setVisible(false);
-//                dispose();
-//                gui.TrangChu_GUI trangChu_GUI = new TrangChu_GUI();
-//                trangChu_GUI.setVisible(true);
-//            }
+        // New simplified login logic
+        dispose();
+        new TrangChu_GUI().setVisible(true);
     }
 
     /**
@@ -132,7 +158,8 @@ public class DangNhap extends javax.swing.JFrame {
      * regenerated by the Form Editor.
      */
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jPanel2 = new javax.swing.JPanel();
@@ -165,23 +192,24 @@ public class DangNhap extends javax.swing.JFrame {
         javax.swing.GroupLayout RightLayout = new javax.swing.GroupLayout(Right);
         Right.setLayout(RightLayout);
         RightLayout.setHorizontalGroup(
-            RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(RightLayout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(37, Short.MAX_VALUE))
-        );
+                RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(RightLayout.createSequentialGroup()
+                                .addGap(39, 39, 39)
+                                .addGroup(RightLayout
+                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addContainerGap(37, Short.MAX_VALUE)));
         RightLayout.setVerticalGroup(
-            RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(RightLayout.createSequentialGroup()
-                .addGap(150, 150, 150)
-                .addComponent(jLabel6)
-                .addGap(44, 44, 44)
-                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
-                .addGap(115, 115, 115))
-        );
+                RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(RightLayout.createSequentialGroup()
+                                .addGap(150, 150, 150)
+                                .addComponent(jLabel6)
+                                .addGap(44, 44, 44)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
+                                .addGap(115, 115, 115)));
 
         jPanel2.add(Right);
         Right.setBounds(0, 0, 400, 500);
@@ -238,41 +266,47 @@ public class DangNhap extends javax.swing.JFrame {
         javax.swing.GroupLayout LeftLayout = new javax.swing.GroupLayout(Left);
         Left.setLayout(LeftLayout);
         LeftLayout.setHorizontalGroup(
-            LeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, LeftLayout.createSequentialGroup()
-                .addContainerGap(109, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(106, 106, 106))
-            .addGroup(LeftLayout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addGroup(LeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txt_BaoLoi, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_TaiKhoan)
-                    .addComponent(txt_MatKhau)
-                    .addComponent(btn_DangNhap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+                LeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, LeftLayout.createSequentialGroup()
+                                .addContainerGap(109, Short.MAX_VALUE)
+                                .addComponent(jLabel1)
+                                .addGap(106, 106, 106))
+                        .addGroup(LeftLayout.createSequentialGroup()
+                                .addGap(30, 30, 30)
+                                .addGroup(
+                                        LeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(txt_BaoLoi, javax.swing.GroupLayout.PREFERRED_SIZE, 343,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(txt_TaiKhoan)
+                                                .addComponent(txt_MatKhau)
+                                                .addComponent(btn_DangNhap, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
         LeftLayout.setVerticalGroup(
-            LeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(LeftLayout.createSequentialGroup()
-                .addGap(57, 57, 57)
-                .addComponent(jLabel1)
-                .addGap(34, 34, 34)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txt_TaiKhoan, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txt_MatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
-                .addComponent(txt_BaoLoi, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_DangNhap, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(110, Short.MAX_VALUE))
-        );
+                LeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(LeftLayout.createSequentialGroup()
+                                .addGap(57, 57, 57)
+                                .addComponent(jLabel1)
+                                .addGap(34, 34, 34)
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txt_TaiKhoan, javax.swing.GroupLayout.PREFERRED_SIZE, 40,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txt_MatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, 40,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(5, 5, 5)
+                                .addComponent(txt_BaoLoi, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btn_DangNhap, javax.swing.GroupLayout.PREFERRED_SIZE, 36,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(110, Short.MAX_VALUE)));
 
         txt_BaoLoi.getAccessibleContext().setAccessibleName("");
 
@@ -282,39 +316,43 @@ public class DangNhap extends javax.swing.JFrame {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btn_DangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_DangNhapActionPerformed
+    private void btn_DangNhapActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btn_DangNhapActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btn_DangNhapActionPerformed
+    }// GEN-LAST:event_btn_DangNhapActionPerformed
 
-    private void txt_TaiKhoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_TaiKhoanActionPerformed
+    private void txt_TaiKhoanActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_txt_TaiKhoanActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_TaiKhoanActionPerformed
+    }// GEN-LAST:event_txt_TaiKhoanActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+        // <editor-fold defaultstate="collapsed" desc=" Look and feel setting code
+        // (optional) ">
+        /*
+         * If Nimbus (introduced in Java SE 6) is not available, stay with the default
+         * look and feel.
+         * For details see
+         * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -323,10 +361,11 @@ public class DangNhap extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+                | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(DangNhap.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
+        // </editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {

@@ -3,94 +3,70 @@ package dao;
 import Interface.NhanVienInterface;
 import connectDB.ConnectDB;
 import entity.*;
+import util.EntityMapper;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class NhanVien_dao implements NhanVienInterface {
+    private Connection con;
 
-    public NhanVienEntity dangNhap(String taiKhoan, String matKhau) throws Exception {
-        Connection con = ConnectDB.getConnection();
-        PreparedStatement statement = null;
-        try {
-            String sql = "SELECT * FROM nhan_vien WHERE taiKhoan = ? AND matKhau = ?";
-            statement = con.prepareStatement(sql);
-            statement.setString(1, taiKhoan);
-            statement.setString(2, matKhau);
-            ResultSet rs = statement.executeQuery();
-            NhanVienEntity nhanVien = new NhanVienEntity()  ;
-            if (rs.next()) {
-//                nhanVien = EntityMapper.mapRowToEntity(rs, NhanVienEntity.class);
-                nhanVien.setMaNV(rs.getString("maNV"));
-                nhanVien.setTen(rs.getString("ten"));
-                nhanVien.setLoai(rs.getInt("loai"));
-                nhanVien.setGioiTinh(rs.getInt("gioiTinh") == 1 ? GioiTinhEnum.NAM : GioiTinhEnum.NU);
-                nhanVien.setEmail(rs.getString("email"));
-//                nhanVien.setTrangThai(TinhTrangNVEnum.valueOf(enumClass, sql)rs.getInt("trangThai"));
-                System.out.println(nhanVien.toString());
-                return nhanVien;
-            } else {
-                System.out.println("Không tìm thấy kết quả.");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (statement != null) statement.close();
-        }
-        return null;
+    public NhanVien_dao() {
+        con = ConnectDB.getInstance().getConnection();
     }
-    
-//    public ResultSet getResultSet(String StoreName)throws Exception {
-//        ResultSet rs = null;
-//        try {
-//            String callStore;
-//            callStore = "{Call " + StoreName +"}";
-//            CallableStatement cs = this.con.prepareCall(callStore);
-//            cs.executeQuery();
-//            rs = cs.getResultSet();
-//        } catch (Exception e) {
-//            throw new Exception("Error get Store " + e.getMessage());
-//        }
-//        return rs;
-//    }
+    public ResultSet getResultSet(String StoreName)throws Exception {
+        ResultSet rs = null;
+        try {
+            String callStore;
+            callStore = "{Call " + StoreName +"}";
+            CallableStatement cs = this.con.prepareCall(callStore);
+            cs.executeQuery();
+            rs = cs.getResultSet();
+        } catch (Exception e) {
+            throw new Exception("Error get Store " + e.getMessage());
+        }
+        return rs;
+    }
 
-//    public NhanVienEntity dangNhap(String taiKhoan, String matKhau) throws Exception {
-//        ConnectDB.getInstance().connect();
-//        Connection con = ConnectDB.getConnection();
-//        PreparedStatement statement = null;
-//        try {
-//            String sql = "SELECT * FROM nhan_vien WHERE taiKhoan = ? AND matKhau = ?";
-//            statement = con.prepareStatement(sql);
-//            statement.setString(1, taiKhoan);
-//            statement.setString(2, matKhau);
-//            ResultSet rs = statement.executeQuery();
-//            NhanVienEntity nhanVien = null;
-//            if (rs.next()) {
-//                nhanVien = EntityMapper.mapRowToEntity(rs, NhanVienEntity.class);
-//                System.out.println(nhanVien.toString());
-//                return nhanVien;
-//            } else {
-//                System.out.println("Không tìm thấy kết quả.");
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        } finally {
-//            if (statement != null) statement.close();
-//        }
-//        return null;
-//    }
+//   public NhanVienEntity dangNhap(String taiKhoan, String matKhau) throws Exception {
+//       ConnectDB.getInstance().connect();
+//       Connection con = ConnectDB.getConnection();
+//       PreparedStatement statement = null;
+//       try {
+//           String sql = "SELECT * FROM nhan_vien WHERE taiKhoan = ? AND matKhau = ?";
+//           statement = con.prepareStatement(sql);
+//           statement.setString(1, taiKhoan);
+//           statement.setString(2, matKhau);
+//           ResultSet rs = statement.executeQuery();
+//           NhanVienEntity nhanVien = null;
+//           if (rs.next()) {
+//               nhanVien = EntityMapper.mapRowToEntity(rs, NhanVienEntity.class);
+//               System.out.println(nhanVien.toString());
+//               return nhanVien;
+//           } else {
+//               System.out.println("Không tìm thấy kết quả.");
+//           }
+//       } catch (Exception e) {
+//           e.printStackTrace();
+//       } finally {
+//           if (statement != null) statement.close();
+//       }
+//       return null;
+//   }
 
     @Override
     public Boolean checkNV(String email, String soDienThoai) {
-        Connection con = ConnectDB.getConnection();
-        PreparedStatement statement = null;
-        try {
-            String sql = "SELECT * FROM nhan_vien WHERE email = ? AND dien_thoai = ?";
-            statement = con.prepareStatement(sql);
+        
+        try (Connection con = ConnectDB.getConnection();
+             PreparedStatement statement = con.prepareStatement("SELECT 1 FROM banve.dbo.nhan_vien WHERE email = ? AND soDienThoai = ?")) {
+            
             statement.setString(1, email);
             statement.setString(2, soDienThoai);
             
@@ -108,8 +84,7 @@ public class NhanVien_dao implements NhanVienInterface {
 
     @Override
     public NhanVienEntity getNV(String soDienThoai) {
-        NhanVienEntity nv = new NhanVienEntity();
-        Connection con = ConnectDB.getConnection();
+        NhanVienEntity nv = null;
         PreparedStatement statement = null;
         try {
             statement = con.prepareStatement("SELECT * FROM nhan_vien WHERE soDienThoai = ?");
@@ -146,7 +121,6 @@ public class NhanVien_dao implements NhanVienInterface {
         NhanVienEntity nv = null;
         PreparedStatement statement = null;
         try {
-            Connection con = ConnectDB.getConnection();
             statement = con.prepareStatement("SELECT * FROM nhan_vien WHERE maNV = ?");
             statement.setString(1, maNV);
             ResultSet rs = statement.executeQuery();
@@ -168,7 +142,7 @@ public class NhanVien_dao implements NhanVienInterface {
         } finally {
             try {
                 if (statement != null) statement.close();
-//                con.close();
+                con.close();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -178,7 +152,6 @@ public class NhanVien_dao implements NhanVienInterface {
 
     @Override
     public boolean update(NhanVienEntity newNV) {
-        Connection con = ConnectDB.getConnection();
         PreparedStatement statement = null;
         String sql = "UPDATE nhan_vien SET ten = ?, loai = ?, gioiTinh = ?, email = ?, soDienThoai = ?, diaChi = ?, trangThai = ?, ngayCapNhat = ? WHERE maNV = ?";
         
@@ -219,18 +192,16 @@ public class NhanVien_dao implements NhanVienInterface {
     @Override
     public boolean insert(NhanVienEntity nv) {
         String sql = "INSERT INTO nhan_vien (maNV, ten, loai, gioiTinh, email, soDienThoai, diaChi, trangThai, ngayTao, ngayCapNhat) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-                Connection con = ConnectDB.getConnection();
-
         try {
             PreparedStatement statement = con.prepareStatement(sql);
             statement.setString(1, nv.getMaNV());
             statement.setString(2, nv.getTen());
             statement.setInt(3, nv.getLoai());
-            statement.setInt(4, nv.getGioiTinh().ordinal()); // Chuyển enum thành số
+            statement.setInt(4, nv.getGioiTinh().ordinal()); 
             statement.setString(5, nv.getEmail());
             statement.setString(6, nv.getSoDienThoai());
             statement.setString(7, nv.getDiaChi());
-            statement.setInt(8, nv.getTrangThai().ordinal()); // Chuyển enum thành số
+            statement.setInt(8, nv.getTrangThai().ordinal());
             statement.setDate(9, new java.sql.Date(nv.getNgayTao().getTime()));
             statement.setDate(10, new java.sql.Date(nv.getNgayCapNhat().getTime()));
             
@@ -246,8 +217,6 @@ public class NhanVien_dao implements NhanVienInterface {
         try {
             // Sử dụng PreparedStatement thay vì CallableStatement
             String sql = "SELECT * FROM nhan_vien";
-                    Connection con = ConnectDB.getConnection();
-
             PreparedStatement stmt = con.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
             
@@ -256,19 +225,13 @@ public class NhanVien_dao implements NhanVienInterface {
                 nv.setMaNV(rs.getString("maNV"));
                 nv.setTen(rs.getString("ten"));
                 nv.setLoai(rs.getInt("loai"));
-                
-                // Chuyển đổi giới tính từ số sang enum
                 int gioiTinh = rs.getInt("gioiTinh");
                 nv.setGioiTinh(GioiTinhEnum.values()[gioiTinh]);
-                
                 nv.setEmail(rs.getString("email"));
                 nv.setSoDienThoai(rs.getString("soDienThoai"));
                 nv.setDiaChi(rs.getString("diaChi"));
-                
-                // Chuyển đổi trạng thái từ số sang enum
                 int trangThai = rs.getInt("trangThai");
                 nv.setTrangThai(TinhTrangNVEnum.values()[trangThai]);
-                
                 nv.setNgayTao(rs.getDate("ngayTao"));
                 nv.setNgayCapNhat(rs.getDate("ngayCapNhat"));
                 
@@ -285,5 +248,9 @@ public class NhanVien_dao implements NhanVienInterface {
             e.printStackTrace();
         }
         return listNV;
+    }
+
+    public NhanVienEntity dangNhap(String taiKhoan, String matKhau) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
