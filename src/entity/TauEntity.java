@@ -15,12 +15,49 @@ public class TauEntity {
 	private Date ngayTao;
 	private Date ngayCapNhat;
 	private NhanVienEntity nhanVien;
-	public TauEntity(String maTau, String tenTau, GaTauEntity gaDi, GaTauEntity gaDen, int soToa, int loai, int trangThai, Date ngayTao, Date ngayCapNhat) {
+
+	private int soLuongGheTrong;
+	private int soLuongDaDat;
+
+    public TauEntity(String maTau, String tenTau, GaTauEntity gaDi, GaTauEntity gaDen, Date thoiGianChay, int soToa, int loai, int trangThai, Date ngayTao, Date ngayCapNhat, NhanVienEntity nhanVien, int soLuongGheTrong, int soLuongDaDat) {
+        this.maTau = maTau;
+        this.tenTau = tenTau;
+        this.gaDi = gaDi;
+        this.gaDen = gaDen;
+        this.thoiGianChay = thoiGianChay;
+        this.soToa = soToa;
+        this.loai = loai;
+        this.trangThai = trangThai;
+        this.ngayTao = ngayTao;
+        this.ngayCapNhat = ngayCapNhat;
+        this.nhanVien = nhanVien;
+        this.soLuongGheTrong = soLuongGheTrong;
+        this.soLuongDaDat = soLuongDaDat;
+    }
+
+    public int getSoLuongGheTrong() {
+        return soLuongGheTrong;
+    }
+
+    public void setSoLuongGheTrong(int soLuongGheTrong) {
+        this.soLuongGheTrong = soLuongGheTrong;
+    }
+
+    public int getSoLuongDaDat() {
+        return soLuongDaDat;
+    }
+
+    public void setSoLuongDaDat(int soLuongDaDat) {
+        this.soLuongDaDat = soLuongDaDat;
+    }
+
+	public TauEntity(String maTau, String tenTau, GaTauEntity gaDi, GaTauEntity gaDen, int soToa, int loai, int trangThai,
+			Date ngayTao, Date ngayCapNhat) {
 		this.maTau = maTau;
 		this.tenTau = tenTau;
 		this.gaDi = gaDi;
 		this.gaDen = gaDen;
-//		this.thoiGianChay = thoiGianChay;
+		// this.thoiGianChay = thoiGianChay;
 		this.soToa = soToa;
 		this.loai = loai;
 		this.trangThai = trangThai;
@@ -29,7 +66,7 @@ public class TauEntity {
 	}
 
 	public TauEntity(String maTau, String tenTau, GaTauEntity gaDi, GaTauEntity gaDen, int soToa, int loai,
-					 int trangThai, Date ngayTao, Date ngayCapNhat, NhanVienEntity nhanVien) {
+			int trangThai, Date ngayTao, Date ngayCapNhat, NhanVienEntity nhanVien) {
 		this.maTau = maTau;
 		this.tenTau = tenTau;
 		this.gaDi = gaDi;
@@ -39,11 +76,11 @@ public class TauEntity {
 		this.trangThai = trangThai;
 		this.ngayTao = ngayTao;
 		this.ngayCapNhat = ngayCapNhat;
-		this.nhanVien =  nhanVien;
+		this.nhanVien = nhanVien;
 	}
 
 	public TauEntity(String maTau, String tenTau, GaTauEntity gaDi, GaTauEntity gaDen, int soToa, int loai,
-					 int trangThai, NhanVienEntity nhanVien) {
+			int trangThai, NhanVienEntity nhanVien) {
 		this.maTau = maTau;
 		this.tenTau = tenTau;
 		this.gaDi = gaDi;
@@ -51,9 +88,8 @@ public class TauEntity {
 		this.soToa = soToa;
 		this.loai = loai;
 		this.trangThai = trangThai;
-		this.nhanVien =  nhanVien;
+		this.nhanVien = nhanVien;
 	}
-
 
 	public TauEntity(String maTau2) {
 		this.maTau = maTau2;
@@ -64,14 +100,14 @@ public class TauEntity {
 		this.tenTau = tenTau;
 		this.soToa = soToa;
 
-
 	}
 
-    public TauEntity() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+	public TauEntity() {
+		throw new UnsupportedOperationException("Not supported yet."); // Generated from
+																																																																	// nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+	}
 
- public String getMaTau() {
+	public String getMaTau() {
 		return maTau;
 	}
 

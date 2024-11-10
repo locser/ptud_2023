@@ -78,20 +78,20 @@ public class DoanhSo_JPanel extends javax.swing.JPanel {
         String nam = String.valueOf(spin_nam.getValue());
         String thangNam = month + layHaiSoCuoiNam(nam);
         System.out.println(thangNam);
-        ArrayList<Object[]> ds = tkbus.getListThongKeDoanhSoTheoThangNam(thangNam, sort);
-        for (Object[] tk : ds) {
+//        ArrayList<Object[]> ds = tkbus.getListThongKeDoanhSoTheoThangNam(thangNam, sort);
+//        for (Object[] tk : ds) {
 //            System.out.println("Thong ke " + ds);
-            model.addRow(tk);
-        }
+//            model.addRow(tk);
+//        }
     }
 
     public void DocDuLieuLenTableTheoYear() {
         String nam = String.valueOf(spin_nam.getValue());
         String nam2So = layHaiSoCuoiNam(nam);
-        ArrayList<Object[]> ds = tkbus.getListThongKeDoanhSoTheoNam(nam2So, sort);
-        for (Object[] tk : ds) {
-            model.addRow(tk);
-        }
+//        ArrayList<Object[]> ds = tkbus.getListThongKeDoanhSoTheoNam(nam2So, sort);
+//        for (Object[] tk : ds) {
+//            model.addRow(tk);
+//        }
     }
 
     private void xuatExcelTable() {

@@ -12,6 +12,24 @@ public class GheEntity {
     private int gia;
     private Date ngayTao;
     private Date ngayCapNhat;
+    private int trangThaiHienTai;
+    private int soGhe;
+
+    public int getSoGhe() {
+        return soGhe;
+    }
+
+    public void setSoGhe(int soGhe) {
+        this.soGhe = soGhe;
+    }
+
+    public int getTrangThaiHienTai() {
+        return trangThaiHienTai;
+    }
+
+    public void setTrangThaiHienTai(int trangThaiHienTai) {
+        this.trangThaiHienTai = trangThaiHienTai;
+    }
 
     public GheEntity(int maGhe, String ten, String maToa, int loai, int trangThai, ToaTauEntity toa) {
         this.maGhe = maGhe;
@@ -21,7 +39,7 @@ public class GheEntity {
         this.trangThai = trangThai;
     }
 
-    public GheEntity(int maGhe, String ten, int loai, int trangThai, Date ngayTao, Date ngayCapNhat, ToaTauEntity toa ) {
+    public GheEntity(int maGhe, String ten, int loai, int trangThai, Date ngayTao, Date ngayCapNhat, ToaTauEntity toa) {
         this.ten = ten;
         this.toa = toa;
         this.loai = loai;
@@ -30,17 +48,14 @@ public class GheEntity {
         this.ngayCapNhat = ngayCapNhat;
         this.maGhe = maGhe;
     }
-    
 
     public GheEntity() {
-        //TODO Auto-generated constructor stub
+        // TODO Auto-generated constructor stub
     }
 
     public GheEntity(int maGhe) {
         this.maGhe = maGhe;
     }
-    
-    
 
     public int getMaGhe() {
         return maGhe;
@@ -84,7 +99,8 @@ public class GheEntity {
 
     @Override
     public String toString() {
-        return "GheEntity{" + "maGhe=" + maGhe + ", toa=" + toa + ", loai=" + loai + ", trangThai=" + trangThai + ", ngayTao=" + ngayTao + ", ngayCapNhat=" + ngayCapNhat + '}';
+        return "GheEntity{" + "maGhe=" + maGhe + ", toa=" + toa + ", loai=" + loai + ", trangThai=" + trangThai
+                + ", ngayTao=" + ngayTao + ", ngayCapNhat=" + ngayCapNhat + '}';
     }
 
     public Date getNgayTao() {
@@ -109,23 +125,23 @@ public class GheEntity {
 
     public void setGia(int gia) {
         this.gia = gia;
-        }
+    }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(maGhe);
-	}
+    @Override
+    public int hashCode() {
+        return Objects.hash(maGhe);
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		GheEntity other = (GheEntity) obj;
-		return Objects.equals(maGhe, other.maGhe);
-	}
-    
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        GheEntity other = (GheEntity) obj;
+        return Objects.equals(maGhe, other.maGhe);
+    }
+
 }

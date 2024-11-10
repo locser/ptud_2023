@@ -123,7 +123,6 @@ public class ToaTauEntity {
                 ", soGhe=" + soGhe +
                 ", loai='" + loai + '\'' +
                 ", trangThai=" + trangThai +
-                ", maTau='" + tau.toString() + '\'' +
                 '}';
     }
 

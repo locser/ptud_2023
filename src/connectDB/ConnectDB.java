@@ -20,9 +20,9 @@ public class ConnectDB {
 
 		try {
 
-			String url = "jdbc:sqlserver://Localhost:1433;databaseName=banve;encrypt=true;trustServerCertificate=true;loginTimeout=30";
+			String url = "jdbc:sqlserver://localhost:1433;databaseName=banve;encrypt=true;trustServerCertificate=true;loginTimeout=30";
 			String user = "sa";
-			String password = "sapassword";
+			String password = "Password1@";
 			con = DriverManager.getConnection(url, user, password);
 
 			System.out.println("Kết nối thành công!");

@@ -11,8 +11,10 @@ public class HoaDonEntity {
     private int trangThai;
     private Date ngayTao;
     private Date ngayCapNhat;
+    private NhanVienEntity nhanVien;
 
-    public HoaDonEntity(String maHD, KhachHangEntity maKH, double tongTien, String phuongThucThanhToan, int trangThai, Date ngayTao, Date ngayCapNhat) {
+    public HoaDonEntity(String maHD, KhachHangEntity maKH, double tongTien, String phuongThucThanhToan, int trangThai,
+            Date ngayTao, Date ngayCapNhat) {
         this.maHD = maHD;
         this.maKH = maKH;
         this.tongTien = tongTien;
@@ -20,6 +22,18 @@ public class HoaDonEntity {
         this.trangThai = trangThai;
         this.ngayTao = ngayTao;
         this.ngayCapNhat = ngayCapNhat;
+    }
+
+    public void setNhanVien(NhanVienEntity nhanVien) {
+        this.nhanVien = nhanVien;
+    }
+
+    public NhanVienEntity getNhanVien() {
+        return nhanVien;
+    }
+
+    public HoaDonEntity() {
+        // TODO Auto-generated constructor stub
     }
 
     public String getMaHD() {
@@ -91,21 +105,21 @@ public class HoaDonEntity {
                 '}';
     }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(maHD);
-	}
+    @Override
+    public int hashCode() {
+        return Objects.hash(maHD);
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		HoaDonEntity other = (HoaDonEntity) obj;
-		return Objects.equals(maHD, other.maHD);
-	}
-    
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        HoaDonEntity other = (HoaDonEntity) obj;
+        return Objects.equals(maHD, other.maHD);
+    }
+
 }

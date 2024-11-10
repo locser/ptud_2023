@@ -66,23 +66,23 @@ public class DoanhThu_JPanel extends javax.swing.JPanel {
     }
 
     public void DocDuLieuLenTable() {
-        String month = String.valueOf(monthChooser.getMonth()+1);
-        String nam = String.valueOf(spin_nam.getValue());
-        System.out.println("Tháng " + month + nam);
-        ArrayList<Object[]> ds = tkbus.getListDoanhThuTheoThangvaNam(month, nam);
-        if(ds.isEmpty()){
+//        String month = String.valueOf(monthChooser.getMonth()+1);
+//        String nam = String.valueOf(spin_nam.getValue());
+//        System.out.println("Tháng " + month + nam);
+//        ArrayList<Object[]> ds = tkbus.getListDoanhThuTheoThangvaNam(month, nam);
+//        if(ds.isEmpty()){
 //            JOptionPane.showMessageDialog(null, "Doanh thu trong tháng/ năm này chưa có !");
-            Date datenow = new Date();
-            monthChooser.setMonth(datenow.getMonth());
-            spin_nam.setYear(datenow.getYear() + 1900);
+//            Date datenow = new Date();
+//            monthChooser.setMonth(datenow.getMonth());
+//            spin_nam.setYear(datenow.getYear() + 1900);
            
-        }
-        else for (Object[] tk : ds) {
+//        }
+//        else for (Object[] tk : ds) {
 //            System.out.println("Thong ke " + tk);
-            model.addRow(tk);
-        ChuyenDuLieuSoTrongTableThanhVND();
-        TongDoanhThu();
-        }
+//            model.addRow(tk);
+//        ChuyenDuLieuSoTrongTableThanhVND();
+//        TongDoanhThu();
+//        }
 
         
     }
@@ -398,26 +398,26 @@ public class DoanhThu_JPanel extends javax.swing.JPanel {
          String month = String.valueOf(monthChooser.getMonth() + 1);
         String nam = String.valueOf(spin_nam.getValue());
         System.out.println("Tháng " + month + nam);
-        ArrayList<Object[]> ds = tkbus.getListDoanhThuTheoThangvaNam(month, nam);
-        if(ds.isEmpty()){
-            int i=1;
-           if(i!=1) JOptionPane.showMessageDialog(null, "Doanh thu trong tháng/ năm này chưa có !");
-           i++;
-            Date datenow = new Date();
-            monthChooser.setMonth(datenow.getMonth());
-            spin_nam.setYear(datenow.getYear() + 1900);
-           
-        }
-        else for (Object[] tk : ds) {
-//            System.out.println("Thong ke " + tk);
-            model.addRow(tk);
-        ChuyenDuLieuSoTrongTableThanhVND();
-        TongDoanhThu();
-        }
-        if (rdo_bdc.isSelected())
-            charAt(tieude,trucX,trucY);
-        else
-            createLineChart(tieude,trucX,trucY);
+//        ArrayList<Object[]> ds = tkbus.getListDoanhThuTheoThangvaNam(month, nam);
+//        if(ds.isEmpty()){
+//            int i=1;
+//           if(i!=1) JOptionPane.showMessageDialog(null, "Doanh thu trong tháng/ năm này chưa có !");
+//           i++;
+//            Date datenow = new Date();
+//            monthChooser.setMonth(datenow.getMonth());
+//            spin_nam.setYear(datenow.getYear() + 1900);
+//           
+//        }
+//        else for (Object[] tk : ds) {
+////            System.out.println("Thong ke " + tk);
+//            model.addRow(tk);
+//        ChuyenDuLieuSoTrongTableThanhVND();
+//        TongDoanhThu();
+//        }
+//        if (rdo_bdc.isSelected())
+//            charAt(tieude,trucX,trucY);
+//        else
+//            createLineChart(tieude,trucX,trucY);
     }//GEN-LAST:event_monthChooserPropertyChange
 
     private void btn_dtnamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_dtnamActionPerformed
@@ -427,26 +427,26 @@ public class DoanhThu_JPanel extends javax.swing.JPanel {
         trucY = "Doanh Thu";
         String nam = String.valueOf(spin_nam.getValue());
        
-        ArrayList<Object[]> ds = tkbus.getListDoanhThuTrongNam(nam);
-        if (ds != null) {
-            XoaAllData();
-            for (Object[] tk : ds) {
-                model.addRow(tk);
-            }
-             ChuyenDuLieuSoTrongTableThanhVND();
-            if (rdo_bdc.isSelected()) {
-               charAt(tieude,trucX,trucY);
-            } else {
-                createLineChart(tieude,trucX,trucY);
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Doanh Thu trong năm " + nam + " không có dữ liệu");
-             Date datenow = new Date();
-            monthChooser.setMonth(datenow.getMonth());
-            spin_nam.setYear(datenow.getYear() + 1900);
-        }
-        
-        TongDoanhThu();
+//        ArrayList<Object[]> ds = tkbus.getListDoanhThuTrongNam(nam);
+//        if (ds != null) {
+//            XoaAllData();
+//            for (Object[] tk : ds) {
+//                model.addRow(tk);
+//            }
+//             ChuyenDuLieuSoTrongTableThanhVND();
+//            if (rdo_bdc.isSelected()) {
+//               charAt(tieude,trucX,trucY);
+//            } else {
+//                createLineChart(tieude,trucX,trucY);
+//            }
+//        } else {
+//            JOptionPane.showMessageDialog(null, "Doanh Thu trong năm " + nam + " không có dữ liệu");
+//             Date datenow = new Date();
+//            monthChooser.setMonth(datenow.getMonth());
+//            spin_nam.setYear(datenow.getYear() + 1900);
+//        }
+//        
+//        TongDoanhThu();
 
     }//GEN-LAST:event_btn_dtnamActionPerformed
 
@@ -539,27 +539,27 @@ public class DoanhThu_JPanel extends javax.swing.JPanel {
             String month = String.valueOf(monthChooser.getMonth() + 1);
         String nam = String.valueOf(spin_nam.getValue());
         System.out.println("Tháng " + month + nam);
-        ArrayList<Object[]> ds = tkbus.getListDoanhThuTheoThangvaNam(month, nam);
-        if(ds.isEmpty()){
-            int i =1;
-           if(i!=1) JOptionPane.showMessageDialog(null, "Doanh thu trong tháng/ năm này chưa có !");
-            i++;
-            Date datenow = new Date();
-            monthChooser.setMonth(datenow.getMonth());
-            spin_nam.setYear(datenow.getYear() + 1900);
-           
-        }
-        else for (Object[] tk : ds) {
-//            System.out.println("Thong ke " + tk);
-            model.addRow(tk);
-        ChuyenDuLieuSoTrongTableThanhVND();
-        TongDoanhThu();
-        }
-          if (rdo_bdc.isSelected()) {
-         charAt(tieude,trucX,trucY);
-        } else {
-            createLineChart(tieude,trucX,trucY);
-        }
+//        ArrayList<Object[]> ds = tkbus.getListDoanhThuTheoThangvaNam(month, nam);
+//        if(ds.isEmpty()){
+//            int i =1;
+//           if(i!=1) JOptionPane.showMessageDialog(null, "Doanh thu trong tháng/ năm này chưa có !");
+//            i++;
+//            Date datenow = new Date();
+//            monthChooser.setMonth(datenow.getMonth());
+//            spin_nam.setYear(datenow.getYear() + 1900);
+//           
+//        }
+//        else for (Object[] tk : ds) {
+////            System.out.println("Thong ke " + tk);
+//            model.addRow(tk);
+//        ChuyenDuLieuSoTrongTableThanhVND();
+//        TongDoanhThu();
+//        }
+//          if (rdo_bdc.isSelected()) {
+//         charAt(tieude,trucX,trucY);
+//        } else {
+//            createLineChart(tieude,trucX,trucY);
+//        }
     }//GEN-LAST:event_spin_namPropertyChange
 
     private void btnLamMoiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLamMoiMouseClicked
@@ -583,25 +583,25 @@ public class DoanhThu_JPanel extends javax.swing.JPanel {
            String month = String.valueOf(monthChooser.getMonth() + 1);
         String nam = String.valueOf(spin_nam.getValue());
         System.out.println("Tháng " + month + nam);
-        ArrayList<Object[]> ds = tkbus.getListDoanhThuBySort(month, nam);
-        if(ds.isEmpty()){
-            JOptionPane.showMessageDialog(null, "Doanh thu trong tháng/ năm này chưa có !");
-            Date datenow = new Date();
-            monthChooser.setMonth(datenow.getMonth());
-            spin_nam.setYear(datenow.getYear() + 1900);
-           
-        }
-        else for (Object[] tk : ds) {
-//            System.out.println("Thong ke " + tk);
-            model.addRow(tk);
-        ChuyenDuLieuSoTrongTableThanhVND();
-        TongDoanhThu();  
-        }
-        if (rdo_bdc.isSelected()) {
-         charAt(tieude,trucX,trucY);
-        } else {
-            createLineChart(tieude,trucX,trucY);
-        }
+//        ArrayList<Object[]> ds = tkbus.getListDoanhThuBySort(month, nam);
+//        if(ds.isEmpty()){
+//            JOptionPane.showMessageDialog(null, "Doanh thu trong tháng/ năm này chưa có !");
+//            Date datenow = new Date();
+//            monthChooser.setMonth(datenow.getMonth());
+//            spin_nam.setYear(datenow.getYear() + 1900);
+//           
+//        }
+//        else for (Object[] tk : ds) {
+////            System.out.println("Thong ke " + tk);
+//            model.addRow(tk);
+//        ChuyenDuLieuSoTrongTableThanhVND();
+//        TongDoanhThu();  
+//        }
+//        if (rdo_bdc.isSelected()) {
+//         charAt(tieude,trucX,trucY);
+//        } else {
+//            createLineChart(tieude,trucX,trucY);
+//        }
     }//GEN-LAST:event_btn_TopDTMouseClicked
 
 

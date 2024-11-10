@@ -8,7 +8,6 @@ import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 import entity.GheEntity;
@@ -25,58 +24,51 @@ public class TrainSeatPanel extends JPanel {
     private int soGhe = 0;
     private GheEntity ghe;
     private Color mauDangChon = new Color(153, 255, 51);
-    private Color mauMacDinh = new Color(244, 244, 244);
-    private Color mauGheDaDat = new Color(255, 153, 153);
-    // private Color mauGheDaDat = new Color(255, 153, 153);
+    private Color mauMacDinh = Color.GRAY;
+    private Color mauGheDaDat = Color.RED;
+    private Color mauGhe = Color.BLACK;
 
     public TrainSeatPanel(GheEntity ghe, int soGhe) {
         this.soGhe = soGhe;
         this.ghe = ghe;
         initComponents();
 
-        // // Tạo hiệu ứng hover (optional)
-        // addMouseListener(new MouseAdapter() {
-        // @Override
-        // public void mouseEntered(MouseEvent e) {
-        // batMauNut();
-        // }
-        //
-        // @Override
-        // public void mouseExited(MouseEvent e) {
-        // resetMauNut();
-        // }
-        // });
-
-        // // Tạo hiệu ứng hover (optional)
-        // jLabel_Ghe.addMouseListener(new MouseAdapter() {
-        // @Override
-        // public void mouseEntered(MouseEvent e) {
-        // batMauNut();
-        // }
-        //
-        // @Override
-        // public void mouseExited(MouseEvent e) {
-        // resetMauNut();
-        //
-        // }
-        // });
         jLabel_Ghe.setText(soGhe + "");
+
+        this.mauGhe = setMauGhe();
+        setBackground(this.mauGhe);
+
+        if (ghe != null) {
+            // set tooltip giá vé
+            String tooltip = "Giá vé: " + ghe.getGia() + " VND";
+            jLabel_Ghe.setToolTipText(tooltip);
+            ghe.setSoGhe(soGhe);
+
+        }
+
 
         jLabel_Ghe.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 // Nếu ghế hiện tại đang được chọn
-                if (ToanCuc.getGheHienTai() != null && ToanCuc.getGheHienTai().equals(ghe)) {
+                if (ghe == null || ghe.getTrangThaiHienTai() == 1) {
+                    return;
+                }
+
+                if (ToanCuc.getGheHienTai() == null) {
+                    setBackground(Color.GREEN);
+                    ToanCuc.setGheHienTai(ghe); // Lưu thông tin ghế hiện tại
+                    ToanCuc.setjLabelGheHienTai(jLabel_Ghe); // Cập nhật jLabel hiện tại
+
+                    return;
+                }
+                if (ToanCuc.getGheHienTai().equals(ghe)) { // ToanCuc.getGheHienTai() != null &&
                     // Bỏ chọn ghế, đổi màu thành xám
                     setBackground(Color.lightGray);
-                    System.out.println("Bỏ chọn ghế: " + (ghe == null ? "null" : ghe.toString()));
                     ToanCuc.setGheHienTai(null); // Cập nhật ghế hiện tại thành null
                     ToanCuc.setjLabelGheHienTai(null); // Đặt jLabel hiện tại thành null
+                    return;
                 } else {
-                    // Nếu có ghế đang được chọn, đổi màu chúng về xám
-                    if (ToanCuc.getjLabelGheHienTai() != null) {
-                        ToanCuc.getjLabelGheHienTai().setBackground(Color.lightGray);
-                    }
 
                     // Đánh dấu ghế hiện tại là đã chọn
                     setBackground(Color.GREEN);
@@ -84,21 +76,30 @@ public class TrainSeatPanel extends JPanel {
                     ToanCuc.setjLabelGheHienTai(jLabel_Ghe); // Cập nhật jLabel hiện tại
 
                     System.out.println("Ghế được chọn: " + (ghe == null ? "null" : ghe.toString()));
+                    return;
+
                 }
             }
         });
 
     }
 
-    private void resetMauNut() {
-        setBackground(mauMacDinh);
-        jLabel_Ghe.setBackground(new Color(244, 244, 244));
-    }
+    private Color setMauGhe() {
+        if (ghe == null) {
+            return this.mauGhe;
+        } else {
+            int trangThai = ghe.getTrangThaiHienTai();
 
-    private void batMauNut() {
+            if (trangThai == 1) {
+                this.mauGhe = mauGheDaDat;
+            } else if (trangThai == 0) {
+                this.mauGhe = mauMacDinh;
+            } else {
+                this.mauGhe = Color.GRAY; // Default to gray if status is unexpected
+            }
+        }
 
-        setBackground(mauDangChon);
-        jLabel_Ghe.setBackground(mauDangChon);
+        return this.mauGhe;
     }
 
     public int getSoGhe() {
@@ -116,8 +117,7 @@ public class TrainSeatPanel extends JPanel {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // <editor-fold defaultstate="collapsed" desc="Generated
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
@@ -135,13 +135,11 @@ public class TrainSeatPanel extends JPanel {
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
+                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 0, Short.MAX_VALUE));
         jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
+                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 0, Short.MAX_VALUE));
 
         jLabel_Ghe.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel_Ghe.setText("jLabel1");
@@ -154,18 +152,20 @@ public class TrainSeatPanel extends JPanel {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel_Ghe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel_Ghe, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap()));
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel_Ghe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel_Ghe, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

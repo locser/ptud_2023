@@ -4,20 +4,44 @@ package util;
 import javax.swing.JPanel;
 
 import entity.GheEntity;
+import entity.LichTrinhEntity;
 import entity.ToaTauEntity;
+import entity.VeEntity;
 import entity.TauEntity;
 import java.util.ArrayList;
 import javax.swing.JLabel;
 
 public class ToanCuc {
-    private static String ma = "";
-    private static String ten = "";
+    private static String ma = "123";
+    private static String ten = "123";
     private static int loai = 0;
     private static String soDienThoai = "";
 
     private static GheEntity gheHienTai = null;
-    
+
     private static ArrayList<GheEntity> danhSachGheHienTai = new ArrayList<>();
+
+    private static ArrayList<VeEntity> danhSachVeHienTai = new ArrayList<>();
+
+    private static LichTrinhEntity lichTrinh = null;
+
+    private static double tongTien = 0;
+
+    public static double getTongTien() {
+        return tongTien;
+    }
+
+    public static void setTongTien(double tongTien) {
+        ToanCuc.tongTien = tongTien;
+    }
+
+    public static LichTrinhEntity getLichTrinh() {
+        return lichTrinh;
+    }
+
+    public static void setLichTrinh(LichTrinhEntity lichTrinh) {
+        ToanCuc.lichTrinh = lichTrinh;
+    }
 
     public static ArrayList<GheEntity> getDanhSachGheHienTai() {
         return danhSachGheHienTai;
@@ -26,21 +50,47 @@ public class ToanCuc {
     public static void setDanhSachGheHienTai(ArrayList<GheEntity> danhSachGheHienTai) {
         ToanCuc.danhSachGheHienTai = danhSachGheHienTai;
     }
-    
+
     public static void themGheDanhSachGheHienTai(GheEntity ghe) {
         ToanCuc.danhSachGheHienTai.add(ghe);
     }
-    
+
+    public static ArrayList<VeEntity> getDanhSachVeHienTai() {
+        return danhSachVeHienTai;
+    }
+
+    public static void setDanhSachVeHienTai(ArrayList<VeEntity> danhSachVeHienTai) {
+        ToanCuc.danhSachVeHienTai = danhSachVeHienTai;
+    }
+
+    public static void themVeDanhSachVeHienTai(VeEntity ve) {
+        ToanCuc.danhSachVeHienTai.add(ve);
+    }
+
+    public static void xoaVeDanhSachVeHienTai(VeEntity ve) {
+        ToanCuc.danhSachVeHienTai.remove(ve);
+    }
+
+    // check ghế có trong danh sách hiện tại chưua
+    public static boolean checkGheDanhSachGheHienTai(GheEntity ghe) {
+        for (GheEntity g : ToanCuc.danhSachGheHienTai) {
+            if (g.getMaGhe() == ghe.getMaGhe()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static void xoaGheDanhSachGheHienTai(GheEntity ghe) {
         ToanCuc.danhSachGheHienTai.remove(ghe);
     }
-    
+
     private static TauEntity tauHienTai = null;
 
     private static ToaTauEntity toaHienTai = null;
 
     private static JPanel panelGheHienTai;
-    
+
     private static JLabel jLabelGheHienTai;
 
     public static JLabel getjLabelGheHienTai() {
@@ -50,7 +100,6 @@ public class ToanCuc {
     public static void setjLabelGheHienTai(JLabel jLabelGheHienTai) {
         ToanCuc.jLabelGheHienTai = jLabelGheHienTai;
     }
-
 
     private static int gioiTinh = 0;
 
@@ -68,7 +117,6 @@ public class ToanCuc {
     public static void setPanelGheHienTai(JPanel panelGheHienTai) {
         ToanCuc.panelGheHienTai = panelGheHienTai;
     }
-
 
     public static void setTauHienTai(TauEntity tauHienTai) {
         ToanCuc.tauHienTai = tauHienTai;
@@ -130,6 +178,6 @@ public class ToanCuc {
     }
 
     public static void setGioiTinh(int gioiTinh) {
-        gioiTinh = gioiTinh;
+        ToanCuc.gioiTinh = gioiTinh;
     }
 }

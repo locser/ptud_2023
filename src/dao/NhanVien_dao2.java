@@ -17,11 +17,9 @@ import java.util.logging.Logger;
  *
  * @author ploc2
  */
-public class NhanVien_dao2 implements NhanVienInterface{
+public class NhanVien_dao2 implements NhanVienInterface {
     ConnectDB connect = new ConnectDB();
-    
 
-        
     @Override
     public Boolean checkNV(String email, String soDienThoai) {
         ConnectDB.getInstance();
@@ -35,7 +33,7 @@ public class NhanVien_dao2 implements NhanVienInterface{
             statement.setString(2, soDienThoai);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-               return true;
+                return true;
             }
 
         } catch (Exception e) {
@@ -49,10 +47,11 @@ public class NhanVien_dao2 implements NhanVienInterface{
             }
         }
         return false;
-      
+
     }
+
     @Override
-    public NhanVienEntity getNV( String soDienThoai) {
+    public NhanVienEntity getNV(String soDienThoai) {
         NhanVienEntity nv = new NhanVienEntity();
         ConnectDB.getInstance();
         Connection con = ConnectDB.getConnection();
@@ -64,8 +63,8 @@ public class NhanVien_dao2 implements NhanVienInterface{
             statement.setString(1, soDienThoai);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-               
-              GioiTinhEnum gt = null;
+
+                GioiTinhEnum gt = null;
                 gt = switch (rs.getString("gioiTinh")) {
                     case "Nam" -> GioiTinhEnum.NAM;
                     case "Nữ" -> GioiTinhEnum.NU;
@@ -84,13 +83,15 @@ public class NhanVien_dao2 implements NhanVienInterface{
         }
         return nv;
     }
+
     @Override
     public NhanVienEntity findOne(String id) {
         NhanVienEntity nhanVien = null;
         ResultSet rs = null;
         try {
             connect.connect();
-            PreparedStatement statement = connect.getConnection().prepareStatement("SELECT * FROM NhanVien WHERE soDienThoai = ?");
+            PreparedStatement statement = connect.getConnection()
+                    .prepareStatement("SELECT * FROM NhanVien WHERE soDienThoai = ?");
             statement.setString(1, id);
             rs = statement.executeQuery();
             while (rs.next()) {
@@ -108,9 +109,7 @@ public class NhanVien_dao2 implements NhanVienInterface{
                 };
                 nhanVien = new NhanVienEntity();
             }
-            
-            connect.disconnect();
-            
+
         } catch (Exception ex) {
             Logger.getLogger(KhachHang_dao.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -120,23 +119,23 @@ public class NhanVien_dao2 implements NhanVienInterface{
     @Override
     public boolean update(NhanVienEntity NewNV) {
         StringBuilder sql = new StringBuilder("UPDATE NhanVien SET hoTen = ?, gioiTinh = ?,");
-        sql.append(" ngaySinh = ?, email = ?, soDienThoai = ?, diaChi = ?, chucVu = ?, tinhTrang = ?, caLamViec = ? WHERE maNV = ?");
+        sql.append(
+                " ngaySinh = ?, email = ?, soDienThoai = ?, diaChi = ?, chucVu = ?, tinhTrang = ?, caLamViec = ? WHERE maNV = ?");
         int n = 0;
         try {
             connect.connect();
             PreparedStatement statement = connect.getConnection().prepareStatement(sql.toString());
-//            statement.setString(1, NewNV.getHoTen());
-//            statement.setString(2, NewNV.getGioiTinh().toString());
-//            statement.setString(3, NewNV.getNgaySinh().toString());
-//            statement.setString(4, NewNV.getEmail());
-//            statement.setString(5, NewNV.getSoDienThoai());
-//            statement.setString(6, NewNV.getDiaChi());
-//            statement.setString(7, NewNV.getChucVu().toString());
-//            statement.setString(8, NewNV.getTinhTrang().toString());
-//            statement.setString(9, NewNV.getCaLamViec().toString());
-//            statement.setString(10, NewNV.getMaNV());
+            // statement.setString(1, NewNV.getHoTen());
+            // statement.setString(2, NewNV.getGioiTinh().toString());
+            // statement.setString(3, NewNV.getNgaySinh().toString());
+            // statement.setString(4, NewNV.getEmail());
+            // statement.setString(5, NewNV.getSoDienThoai());
+            // statement.setString(6, NewNV.getDiaChi());
+            // statement.setString(7, NewNV.getChucVu().toString());
+            // statement.setString(8, NewNV.getTinhTrang().toString());
+            // statement.setString(9, NewNV.getCaLamViec().toString());
+            // statement.setString(10, NewNV.getMaNV());
             n = statement.executeUpdate();
-            connect.disconnect();
         } catch (Exception ex) {
             Logger.getLogger(KhachHang_dao.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -144,36 +143,40 @@ public class NhanVien_dao2 implements NhanVienInterface{
     }
 
     @Override
-    public boolean insert(NhanVienEntity NV ) {
-//        TaiKhoan_dao tkDao = new TaiKhoan_dao();
-//        int n = 0;
-//        if(tkDao.insert(new TaiKhoanEntity(NV.getSoDienThoai(), "1111", null, TinhTrangTKEnum.DANG_HOAT_DONG))) {
-//            StringBuilder sql = new StringBuilder("INSERT INTO NhanVien(maNV, hoTen, gioiTinh, ngaySinh, email, soDienThoai, diaChi, chucVu, tinhTrang, caLamViec)");
-//            sql.append(" VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-//        try {
-//            connect.connect();
-//            PreparedStatement statement = connect.getConnection().prepareStatement(sql.toString());
-////            statement.setString(1, NV.getMaNV());
-////            statement.setString(2, NV.getHoTen());
-////            statement.setString(3, NV.getGioiTinh().toString());
-////            statement.setString(4, NV.getNgaySinh().toString());
-////            statement.setString(5, NV.getEmail());
-////            statement.setString(6, NV.getSoDienThoai());
-////            statement.setString(7, NV.getDiaChi());
-////            statement.setString(8, NV.getChucVu().toString());
-////            statement.setString(9, NV.getTinhTrang().toString());
-////            statement.setString(10, NV.getCaLamViec().toString());
-//            n = statement.executeUpdate();
-//            
-//            connect.disconnect();
-//            } catch (Exception ex) {
-//                Logger.getLogger(KhachHang_dao.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-//        
-//        return  n > 0;
+    public boolean insert(NhanVienEntity NV) {
+        // TaiKhoan_dao tkDao = new TaiKhoan_dao();
+        // int n = 0;
+        // if(tkDao.insert(new TaiKhoanEntity(NV.getSoDienThoai(), "1111", null,
+        // TinhTrangTKEnum.DANG_HOAT_DONG))) {
+        // StringBuilder sql = new StringBuilder("INSERT INTO NhanVien(maNV, hoTen,
+        // gioiTinh, ngaySinh, email, soDienThoai, diaChi, chucVu, tinhTrang,
+        // caLamViec)");
+        // sql.append(" VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        // try {
+        // connect.connect();
+        // PreparedStatement statement =
+        // connect.getConnection().prepareStatement(sql.toString());
+        //// statement.setString(1, NV.getMaNV());
+        //// statement.setString(2, NV.getHoTen());
+        //// statement.setString(3, NV.getGioiTinh().toString());
+        //// statement.setString(4, NV.getNgaySinh().toString());
+        //// statement.setString(5, NV.getEmail());
+        //// statement.setString(6, NV.getSoDienThoai());
+        //// statement.setString(7, NV.getDiaChi());
+        //// statement.setString(8, NV.getChucVu().toString());
+        //// statement.setString(9, NV.getTinhTrang().toString());
+        //// statement.setString(10, NV.getCaLamViec().toString());
+        // n = statement.executeUpdate();
+        //
+        // connect.disconnect();
+        // } catch (Exception ex) {
+        // Logger.getLogger(KhachHang_dao.class.getName()).log(Level.SEVERE, null, ex);
+        // }
+        // }
+        //
+        // return n > 0;
 
-return false;
+        return false;
     }
 
     @Override
@@ -198,11 +201,10 @@ return false;
                     default -> TinhTrangNVEnum.NGHIPHEP;
                 };
                 nhanVien = new NhanVienEntity();
-                if (!listKH.contains(nhanVien)) listKH.add(nhanVien);
+                if (!listKH.contains(nhanVien))
+                    listKH.add(nhanVien);
             }
-            connect.disconnect();
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             Logger.getLogger(KhachHang_dao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return listKH;

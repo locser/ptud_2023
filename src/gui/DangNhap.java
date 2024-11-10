@@ -76,11 +76,6 @@ public class DangNhap extends javax.swing.JFrame {
          * return;
          * }
          * 
-         * <<<<<<< HEAD
-         * // if(nhanVien.getTrangThai() == 0) {
-         * // txt_BaoLoi.setText("Tài khoản đã bị khóa!");
-         * // return;
-         * // }
          * 
          * ToanCuc.setTen(nhanVien.getTen());
          * ToanCuc.setMa(nhanVien.getMaNV());
@@ -90,31 +85,6 @@ public class DangNhap extends javax.swing.JFrame {
          * dispose();
          * // gui.TrangChu_GUI trangChu_GUI = new TrangChu_GUI();
          * // trangChu_GUI.setVisible(true);
-         * 
-         * DatVe_JFrame dateVe = new DatVe_JFrame(null);
-         * dateVe.setVisible(true);
-         * 
-         * 
-         * =======
-         * if(tk.getTrangThai() == 0) {
-         * txt_BaoLoi.setText("Tài khoản đã bị khóa!");
-         * return;
-         * }
-         * 
-         * if(tk.getNhanVien() == null) {
-         * txt_BaoLoi.setText("Tài khoản không gắn với nhân viên nào!");
-         * return;
-         * }
-         * 
-         * ToanCuc.setTen(tk.getNhanVien().getTen());
-         * ToanCuc.setMa(tk.getNhanVien().getMaNV());
-         * ToanCuc.setLoai(tk.getNhanVien().getLoai());
-         * ToanCuc.setSoDienThoai(tk.getNhanVien().getSoDienThoai());
-         * >>>>>>> origin/HOAN123
-         * } catch (Exception ex) {
-         * txt_BaoLoi.setText("Lỗi hệ thống: " + ex.getMessage());
-         * ex.printStackTrace();
-         * }
          */
         try {
             // String taiKhoan = txt_TaiKhoan.getText();
@@ -128,21 +98,17 @@ public class DangNhap extends javax.swing.JFrame {
             NhanVienEntity nhanVien = new NhanVienEntity("123");
             nhanVien.setLoai(1);
 
-            if (nhanVien == null) {
-                txt_BaoLoi.setText("Thông tin tài khoản, mật khẩu không chính xác!");
-            } else {
-                System.out.println(nhanVien.toString());
-                System.out.println("đăng nhập thành công");
+            System.out.println(nhanVien.toString());
+            System.out.println("đăng nhập thành công");
 
-                ToanCuc.setTen(nhanVien.getTen());
-                ToanCuc.setMa(nhanVien.getMaNV());
-                ToanCuc.setLoai(nhanVien.getLoai());
-                ToanCuc.setSoDienThoai(nhanVien.getSoDienThoai());
-                // this.setVisible(false);
-                dispose();
-                gui.TrangChu_GUI trangChu_GUI = new TrangChu_GUI();
-                // trangChu_GUI.setVisible(true);
-            }
+            ToanCuc.setTen(nhanVien.getTen());
+            ToanCuc.setMa(nhanVien.getMaNV());
+            ToanCuc.setLoai(nhanVien.getLoai());
+            ToanCuc.setSoDienThoai(nhanVien.getSoDienThoai());
+            // this.setVisible(false);
+            dispose();
+            gui.TrangChu_GUI trangChu_GUI = new TrangChu_GUI();
+            // trangChu_GUI.setVisible(true);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

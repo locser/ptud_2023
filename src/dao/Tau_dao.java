@@ -21,8 +21,6 @@ import java.util.logging.Logger;
  */
 public class Tau_dao {
 
-
-
     public ArrayList<TauEntity> getAllTau() {
         ArrayList<TauEntity> dsTau = new ArrayList<TauEntity>();
         try {
@@ -75,7 +73,8 @@ public class Tau_dao {
 
                 // Tạo đối tượng TauEntity với thông tin từ ResultSet
 
-                TauEntity tau = new TauEntity(maTau, ten, gaDi, gaDen, soToa, loai, trangThai, ngayTao, ngayCapNhat, nhanVien);
+                TauEntity tau = new TauEntity(maTau, ten, gaDi, gaDen, soToa, loai, trangThai, ngayTao, ngayCapNhat,
+                        nhanVien);
                 dsTau.add(tau);
             }
 
@@ -87,7 +86,90 @@ public class Tau_dao {
         return dsTau;
     }
 
-        public ArrayList<TauEntity> getAllTauDangHoatDong() {
+    public ArrayList<TauEntity> getAllTauDatVe(String dsMaTau) {
+        System.out.println("dassssssss" + dsMaTau);
+        ArrayList<TauEntity> dsTau = new ArrayList<TauEntity>();
+        try {
+            Connection con = ConnectDB.getConnection();
+            String sql = "SELECT \n" +
+                    "    t.maTau,\n" +
+                    "    t.ten,\n" +
+                    "    t.gaDi,\n" +
+                    "    t.gaDen,\n" +
+                    "    t.soToa,\n" +
+                    "    t.loai,\n" +
+                    "    t.trangThai,\n" +
+                    "    t.ngayTao,\n" +
+                    "    t.ngayCapNhat,\n" +
+                    "    t.maNV,\n" +
+                    "    COUNT(g.maGhe) AS TongSoGhe,\n" +
+                    "    SUM(CASE WHEN g.trangThai = 1 THEN 1 ELSE 0 END) AS GheDaDat,\n" +
+                    "    SUM(CASE WHEN g.trangThai = 0 THEN 1 ELSE 0 END) AS GheTrong\n" +
+                    "FROM \n" +
+                    "    banve.dbo.tau t\n" +
+                    "LEFT JOIN \n" +
+                    "    banve.dbo.toa_tau tt ON t.maTau = tt.maTau\n" +
+                    "LEFT JOIN \n" +
+                    "    banve.dbo.ghe g ON tt.maToa = g.maToa \n" +
+                    "WHERE \n" +
+                    "    t.maTau IN (" + dsMaTau + ")" + // -- replace with your actual train IDs\n" +
+                    "GROUP BY \n" +
+                    "    t.maTau,\n" +
+                    "    t.ten,\n" +
+                    "    t.gaDi,\n" +
+                    "    t.gaDen,\n" +
+                    "    t.soToa,\n" +
+                    "    t.loai,\n" +
+                    "    t.trangThai,\n" +
+                    "    t.ngayTao,\n" +
+                    "    t.ngayCapNhat,\n" +
+                    "    t.maNV;";
+            
+            PreparedStatement ps = con.prepareStatement(sql);
+            
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                String maTau = rs.getString("maTau");
+                String ten = rs.getString("ten");
+                int soToa = rs.getInt("soToa");
+                int loai = rs.getInt("loai");
+                int trangThai = rs.getInt("trangThai");
+                Date ngayTao = rs.getDate("ngayTao");
+                Date ngayCapNhat = rs.getDate("ngayCapNhat");
+                String maNV = rs.getString("maNV");
+                String maGaDi = rs.getString("gaDi");
+                String maGaDen = rs.getString("gaDen");
+
+                int GheDaDat = rs.getInt("GheDaDat");
+                int GheTrong = rs.getInt("GheTrong");
+                int TongSoGhe = rs.getInt("TongSoGhe");
+
+                GaTauEntity gaDi = new GaTauEntity(maGaDi);
+                GaTauEntity gaDen = new GaTauEntity(maGaDen );
+
+                NhanVienEntity nhanVien = new NhanVienEntity(maNV);
+
+                // Tạo đối tượng TauEntity với thông tin từ ResultSet
+
+                TauEntity tau = new TauEntity(maTau, ten, gaDi, gaDen, soToa, loai, trangThai, ngayTao, ngayCapNhat,
+                        nhanVien);
+
+                tau.setSoLuongGheTrong(GheTrong);
+                tau.setSoLuongDaDat(GheDaDat);
+
+                dsTau.add(tau);
+            }
+
+            ps.close();
+            rs.close();
+        } catch (Exception ex) {
+            Logger.getLogger(Tau_dao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return dsTau;
+    }
+
+    public ArrayList<TauEntity> getAllTauDangHoatDong() {
         ArrayList<TauEntity> dsTau = new ArrayList<TauEntity>();
         try {
             Connection con = ConnectDB.getConnection();
@@ -139,7 +221,8 @@ public class Tau_dao {
 
                 // Tạo đối tượng TauEntity với thông tin từ ResultSet
 
-                TauEntity tau = new TauEntity(maTau, ten, gaDi, gaDen, soToa, loai, trangThai, ngayTao, ngayCapNhat, nhanVien);
+                TauEntity tau = new TauEntity(maTau, ten, gaDi, gaDen, soToa, loai, trangThai, ngayTao, ngayCapNhat,
+                        nhanVien);
                 dsTau.add(tau);
             }
 
@@ -150,8 +233,6 @@ public class Tau_dao {
         }
         return dsTau;
     }
-
-
 
     public boolean themTau(TauEntity sp) {
         try {
@@ -174,21 +255,19 @@ public class Tau_dao {
             ps.setInt(5, sp.getLoai());
             ps.setInt(6, sp.getTrangThai());
             ps.setString(7, sp.getNhanVien().getMaNV());
-            ps.setString(8,  sp.getMaTau());
+            ps.setString(8, sp.getMaTau());
 
             // Thực thi câu lệnh SQL và đóng kết nối
             int check = ps.executeUpdate();
             ps.close();
 
-            return check > 0;  // Trả về 'true' nếu thêm thành công
+            return check > 0; // Trả về 'true' nếu thêm thành công
 
         } catch (Exception ex) {
             Logger.getLogger(Tau_dao.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return false;  // Trả về 'false' nếu có lỗi
+        return false; // Trả về 'false' nếu có lỗi
     }
-
-
 
     public ArrayList<TauEntity> timTau(String ma) {
         ArrayList<TauEntity> dsTau = new ArrayList<TauEntity>();
@@ -240,13 +319,13 @@ public class Tau_dao {
                 String maNhanVien = rs.getString("maNhanVien"); // New field
                 String tenNhanVien = rs.getString("tenNhanVien"); // New field
 
-
                 GaTauEntity gaDi = new GaTauEntity(maGaDi, tenGaDi);
                 GaTauEntity gaDen = new GaTauEntity(maGaDen, tenGaDen);
 
                 NhanVienEntity nhanVien = new NhanVienEntity(maNhanVien, tenNhanVien);
                 // Creating TauEntity with new data fields
-                TauEntity tau = new TauEntity(maTau, tenTau, gaDi, gaDen, soToa, loai, trangThai, ngayTao, ngayCapNhat, nhanVien);
+                TauEntity tau = new TauEntity(maTau, tenTau, gaDi, gaDen, soToa, loai, trangThai, ngayTao, ngayCapNhat,
+                        nhanVien);
                 dsTau.add(tau);
             }
             ps.close();
@@ -256,7 +335,6 @@ public class Tau_dao {
         }
         return dsTau;
     }
-
 
     public boolean capNhatTau(TauEntity sp) {
         try {
@@ -288,8 +366,6 @@ public class Tau_dao {
         }
     }
 
-
-    
     public ArrayList<TauEntity> kiemTraTonKho() {
         ArrayList<TauEntity> dsSP = new ArrayList<TauEntity>();
         try {
@@ -299,7 +375,6 @@ public class Tau_dao {
         return dsSP;
     }
 
-    
     public boolean capNhatSoLuongTonSauKhiTaoHD(String maTau, int soLuong) {
         PreparedStatement statement = null;
         try {
@@ -329,7 +404,6 @@ public class Tau_dao {
         }
     }
 
-    
     public int laySoLuongTonKhoTheomaTau(String maTau) {
         int soLuongHienTai = 0;
         try {
@@ -350,7 +424,6 @@ public class Tau_dao {
         return soLuongHienTai;
     }
 
-    
     public boolean capNhatSoLuong(String maTau, int soLuongNhap) {
         try {
             Connection con = ConnectDB.getConnection();
@@ -368,7 +441,6 @@ public class Tau_dao {
         }
     }
 
-    
     public boolean kiemTraMaTauTonTai(String maTau) {
         try {
             Connection con = ConnectDB.getConnection();
@@ -389,8 +461,5 @@ public class Tau_dao {
         }
         return false;
     }
-
-    
-
 
 }

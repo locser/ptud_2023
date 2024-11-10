@@ -18,6 +18,16 @@ public class KhachHangEntity {
     private String soCCCD;
     private Date ngayTao;
     private Date ngayCapNhat;
+				private int tuoi;
+
+    public int getTuoi() {
+        return tuoi;
+    }
+
+    public void setTuoi(int tuoi) {
+        this.tuoi = tuoi;
+    }
+				
     
     
 	public KhachHangEntity(String maKH, String hoTen, GioiTinhEnum gioiTinh, String soDienThoai, String diaChi,

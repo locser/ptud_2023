@@ -32,9 +32,11 @@ public class KhachHang_JPanel extends javax.swing.JPanel {
 	 * Creates new form KhachHang_JPanel
 	 */
 	private DefaultTableModel tableModel = new DefaultTableModel();
-	private KhachHang_bus bus = new KhachHang_bus();
+//	private KhachHang_bus bus = new KhachHang_bus();
+        private KhachHang_dao khachHang_dao ;
 
 	public KhachHang_JPanel() {
+            khachHang_dao = new KhachHang_dao();
 		initComponents();
 		setBounds(0, 0, 1186, 748);
 
@@ -90,7 +92,7 @@ public class KhachHang_JPanel extends javax.swing.JPanel {
 			table_KhachHang.getColumnModel().getColumn(6).setPreferredWidth(100); // Ngày tạo
 			table_KhachHang.getColumnModel().getColumn(7).setPreferredWidth(100); // Ngày cập nhật
 
-			ArrayList<KhachHangEntity> listKH = bus.findAll();
+			ArrayList<KhachHangEntity> listKH = khachHang_dao.findAll();
 			if (listKH != null) {
 				for (KhachHangEntity kh : listKH) {
 					tableModel.addRow(new Object[] { kh.getMaKH(), kh.getHoTen(), kh.getGioiTinh().toString(),
@@ -453,7 +455,7 @@ public class KhachHang_JPanel extends javax.swing.JPanel {
 				kh.setNgayTao(new java.util.Date());
 				kh.setNgayCapNhat(new java.util.Date());
 
-				if (bus.insert(kh)) {
+				if (khachHang_dao.insert(kh)) {
 					tableModel.addRow(new Object[]{
 						kh.getMaKH(), 
 						kh.getHoTen(), 
@@ -543,7 +545,7 @@ public class KhachHang_JPanel extends javax.swing.JPanel {
 				kh.setSoCCCD(txt_CCCD.getText());
 				kh.setNgayCapNhat(new java.util.Date());
 
-				if (bus.update(kh)) {
+				if (khachHang_dao.update(kh)) {
 					refresh();
 					JOptionPane.showMessageDialog(this, "Cập nhật thông tin khách hàng thành công!");
 				} else {
@@ -583,7 +585,7 @@ public class KhachHang_JPanel extends javax.swing.JPanel {
 			return;
 		}
 
-		KhachHangEntity kh = bus.timKiemTheoSDT(sdt);
+		KhachHangEntity kh = khachHang_dao.timKiemTheoSDT(sdt);
 		if (kh == null) {
 			JOptionPane.showMessageDialog(this, "Không tìm thấy khách hàng với số điện thoại này!");
 			return;

@@ -12,6 +12,7 @@ import java.net.URL;
 import javax.swing.ImageIcon;
 
 import entity.ToaTauEntity;
+import util.ToanCuc;
 
 /**
  *
@@ -20,11 +21,13 @@ import entity.ToaTauEntity;
 public class ThongTinToaPanel extends javax.swing.JPanel {
 
     private ToaTauEntity toa;
-    private int soToa;
+    private String soToa;
+    private DatVe_JFrame datVe_JFrame;
 
-    public ThongTinToaPanel(String anh, int soToa, ToaTauEntity toa) {
+    public ThongTinToaPanel(String anh, String soToa, ToaTauEntity toa, DatVe_JFrame datVe_JFrame) {
         this.soToa = soToa;
         this.toa = toa;
+        this.datVe_JFrame = datVe_JFrame;
 
         initComponents();
         URL urlBtnLamMoi = getClass().getResource("/pic/icon/" + anh);
@@ -35,42 +38,28 @@ public class ThongTinToaPanel extends javax.swing.JPanel {
         String tenToa = toa != null ? toa.getTenToa() : "0";
         jLabel_TenToa.setText(tenToa);
 
-        // Tạo hiệu ứng hover (optional)
         addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseEntered(MouseEvent e) {
-                batMauNut();
-            }
+            public void mouseClicked(MouseEvent e) {
+                // if background is blue, change it to white
 
-            @Override
-            public void mouseExited(MouseEvent e) {
-                resetMauNut();
-            }
-        });
+                if (toa == null) {
+                    return;
+                }
 
-        // Tạo hiệu ứng hover (optional)
-        jLabel1.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                batMauNut();
-            }
+                if (getBackground().equals(new Color(204, 204, 204))) {
+                    System.out.println("set blue toa:" + toa.getMaToa());
+                    setBackground(Color.BLUE);
+                    ToanCuc.setToaHienTai(toa);
 
-            @Override
-            public void mouseExited(MouseEvent e) {
-                resetMauNut();
+                    datVe_JFrame.loadGheVaoTable(Integer.parseInt(toa.getMaToa()));
 
+                } else {
+                    setBackground(new Color(204, 204, 204));
+                }
             }
         });
-    }
 
-    private void resetMauNut() {
-        setBackground(new Color(204, 204, 204));
-        jLabel1.setBackground(new Color(204, 204, 204));
-    }
-
-    private void batMauNut() {
-        setBackground(new Color(153, 153, 153));
-        jLabel1.setBackground(new Color(153, 153, 153));
     }
 
     /**

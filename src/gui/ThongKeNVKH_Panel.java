@@ -33,7 +33,7 @@ import util.ConvertDoubleToMoney;
 
 public class ThongKeNVKH_Panel extends javax.swing.JPanel {
 
-    private final ThongKe_bus tkbus;
+    private ThongKe_bus tkbus;
     private DefaultTableModel model;
     private BarRenderer renderer;
     private String sort = "desc";
@@ -177,26 +177,26 @@ public class ThongKeNVKH_Panel extends javax.swing.JPanel {
         String thang = String.valueOf(monthChooser.getMonth() + 1);
         String nam = String.valueOf(spin_nam.getValue());
         ArrayList<Object[]> ds = new ArrayList<>();
-        if (rdo_staticticByYear.isSelected()) { 
-            ds = tkbus.getListTop5NhanVienDoanhThuCaoNhat(" ", nam);
-        }
-        else ds = tkbus.getListTop5NhanVienDoanhThuCaoNhat(thang, nam);
-        for (Object[] tk : ds) {
-            model.addRow(tk);
-        }
+//        if (rdo_staticticByYear.isSelected()) { 
+//            ds = tkbus.getListTop5NhanVienDoanhThuCaoNhat(" ", nam);
+//        }
+//        else ds = tkbus.getListTop5NhanVienDoanhThuCaoNhat(thang, nam);
+//        for (Object[] tk : ds) {
+//            model.addRow(tk);
+//        }
     }
     
     public void DocDuLieuLenTableDuplication() {
         String thang = String.valueOf(monthChooser.getMonth() + 1);
         String nam = String.valueOf(spin_nam.getValue());
-        ArrayList<Object[]> ds = new ArrayList<>();
-        if (rdo_staticticByYear.isSelected()) { 
-            ds = tkbus.getListTop5KhachHangMuaHangNhieuNhat(" ", nam);
-        }
-        else ds = tkbus.getListTop5KhachHangMuaHangNhieuNhat(thang, nam);
-        for (Object[] tk : ds) {
-            model.addRow(tk);
-        }
+//        ArrayList<Object[]> ds = new ArrayList<>();
+//        if (rdo_staticticByYear.isSelected()) { 
+//            ds = tkbus.getListTop5KhachHangMuaHangNhieuNhat(" ", nam);
+//        }
+//        else ds = tkbus.getListTop5KhachHangMuaHangNhieuNhat(thang, nam);
+//        for (Object[] tk : ds) {
+//            model.addRow(tk);
+//        }
     }
 
     private void xuatExcelTable() {

@@ -24,7 +24,6 @@ public class HoaDon_JPanel extends javax.swing.JPanel {
     private HoaDon_dao hdDao;
     private DefaultTableModel model;
     private JPanel pnl_ChiTiet;
-//    private JTable tbl_ChiTiet;
     private DefaultTableModel modelChiTiet;
     private ChiTietHoaDon_dao cthdDao;
     private DecimalFormat df;
@@ -34,22 +33,22 @@ public class HoaDon_JPanel extends javax.swing.JPanel {
     public HoaDon_JPanel() {
         initComponents();
         dateNgayLap.setLocale(new Locale("vi", "VN"));
-        setBounds(0, 0, 1186, 748);
+        setBounds(0, 0, 1186, 748); 
 
-        setUpIcons();
-        setupChiTietPanel();
+//        setUpIcons();
+//        setupChiTietPanel();
 
-        hdDao = new HoaDon_dao();
-        cthdDao = new ChiTietHoaDon_dao();
+//        hdDao = new HoaDon_dao();
+//        cthdDao = new ChiTietHoaDon_dao();
         df = new DecimalFormat("#,###");
         sdf = new SimpleDateFormat("dd/MM/yyyy");
-        
+//        
         model = (DefaultTableModel) jTable1.getModel();
         modelChiTiet = new DefaultTableModel(new String [] {        }, 0);
 
 //        tbl_ChiTiet.setModel(modelChiTiet);
         
-        DocDuLieuTuSQLvaoTable();
+//        DocDuLieuTuSQLvaoTable();
         
 //        pnl_ChiTiet.setVisible(false);
     }
