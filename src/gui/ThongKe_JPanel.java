@@ -1,6 +1,7 @@
 package gui;
 
 import bus.ThongKe_bus;
+import dao.ThongKe_dao;
 import java.awt.*;
 import javax.swing.*;
 import java.util.Calendar;
@@ -14,14 +15,16 @@ import org.jfree.chart.plot.PlotOrientation;
 import java.text.DecimalFormat;
 
 public class ThongKe_JPanel extends javax.swing.JPanel {
-    private ThongKe_bus thongKeBus;
+//    private ThongKe_bus thongKeBus;
     private JComboBox<Integer> cbo_Nam;
     private DecimalFormat df = new DecimalFormat("#,###");
+    private ThongKe_dao thongKe_dao ;
     
     public ThongKe_JPanel() {
         initComponents();
+         thongKe_dao = new ThongKe_dao();
         setSize(1186, 748); 
-        thongKeBus = new ThongKe_bus();
+//        thongKeBus = new ThongKe_bus();
         setBounds(0, 0, 1186, 748);
         setVisible(true); 
         setupComponents();
@@ -125,7 +128,7 @@ public class ThongKe_JPanel extends javax.swing.JPanel {
     private ChartPanel createVeTheoTauChart() {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         String nam = cbo_Nam.getSelectedItem().toString();
-        ArrayList<Object[]> data = thongKeBus.thongKeVeTheoTau(nam);
+        ArrayList<Object[]> data = thongKe_dao.thongKeVeTheoTau(nam);
         for (Object[] row : data) {
             dataset.addValue((Number) row[2], "Vé", row[1].toString());
         }
@@ -145,7 +148,7 @@ public class ThongKe_JPanel extends javax.swing.JPanel {
     private ChartPanel createVeTheoNhanVienChart() {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         String nam = cbo_Nam.getSelectedItem().toString();
-        ArrayList<Object[]> data = thongKeBus.thongKeVeTheoNhanVien(nam);
+        ArrayList<Object[]> data = thongKe_dao.thongKeVeTheoNhanVien(nam);
         for (Object[] row : data) {
             dataset.addValue((Number) row[2], "Vé", row[1].toString());
         }
@@ -164,7 +167,7 @@ public class ThongKe_JPanel extends javax.swing.JPanel {
 
     private ChartPanel createNhanVienChart() {
         DefaultPieDataset dataset = new DefaultPieDataset();
-        ArrayList<Object[]> data = thongKeBus.thongKeNhanVien();
+        ArrayList<Object[]> data = thongKe_dao.thongKeNhanVien();
         for (Object[] row : data) {
             dataset.setValue(row[0].toString(), (Number) row[1]);
         }
@@ -182,7 +185,7 @@ public class ThongKe_JPanel extends javax.swing.JPanel {
         String[] columnNames = {"STT", "Mã NV", "Tên nhân viên", "Số vé đã bán"};
         String nam = cbo_Nam.getSelectedItem().toString();
         String thang = ""; // Có thể thêm combobox chọn tháng nếu cần
-        ArrayList<Object[]> data = thongKeBus.thongKeTop5NhanVien(thang, nam);
+        ArrayList<Object[]> data = thongKe_dao.thongKeTop5NhanVien(thang, nam);
         Object[][] tableData = new Object[data.size()][4];
         for (int i = 0; i < data.size(); i++) {
             Object[] row = data.get(i);
@@ -210,6 +213,6 @@ public class ThongKe_JPanel extends javax.swing.JPanel {
 
     private void initComponents() {
         // Phần code tự động sinh bởi NetBeans
-    }// </editor-fold>//GEN-END:initComponents
+    }// </editor-fold>                        
 
 }

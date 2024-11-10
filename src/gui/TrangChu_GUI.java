@@ -64,7 +64,7 @@ public class TrangChu_GUI extends javax.swing.JFrame {
 
         HoaDon_Panel = new HoaDon_JPanel();
         DoiTra_Panel = new TrangChu_JPanel();
-        ThongKe_Panel = new TrangChu_JPanel();
+        ThongKe_Panel = new ThongKe_JPanel();
         KhachHang_Panel = new KhachHang_JPanel();
         NhanVien_Panel = new NhanVien_JPanel();
         NhaSanXuat_Panel = new NhaSanXuat_JPanel();
@@ -738,7 +738,7 @@ public class TrangChu_GUI extends javax.swing.JFrame {
     private HoaDon_JPanel HoaDon_Panel;
     private TrangChu_JPanel DoiTra_Panel;
     private KhachHang_JPanel KhachHang_Panel;
-    private TrangChu_JPanel ThongKe_Panel;
+    private ThongKe_JPanel ThongKe_Panel;
     private NhanVien_JPanel NhanVien_Panel;
     private NhaSanXuat_JPanel NhaSanXuat_Panel;
     private LichTrinh_JPanel LichTrinh_Panel;

@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 import Interface.KhachHang_Interface;
 import util.ConvertStringToEnum;
 
-public class KhachHang_dao implements KhachHang_Interface {
+public class KhachHang_dao  {
     private Connection con;
 
     public KhachHang_dao() {
@@ -39,7 +39,6 @@ public class KhachHang_dao implements KhachHang_Interface {
         return rs;
     }
 
-    @Override
     public KhachHangEntity findOne(String id) {
         KhachHangEntity khachHang = null;
         PreparedStatement statement = null;
@@ -74,7 +73,6 @@ public class KhachHang_dao implements KhachHang_Interface {
         return khachHang;
     }
 
-    @Override
     public boolean update(KhachHangEntity newKH) {
         PreparedStatement statement = null;
         String sql = "UPDATE hanh_khach SET ten = ?, gioiTinh = ?, soDienThoai = ?, diaChi = ?, soCmnd = ?, ngayCapNhat = ? WHERE maHK = ?";
@@ -108,7 +106,6 @@ public class KhachHang_dao implements KhachHang_Interface {
         }
     }
 
-    @Override
     public boolean insert(KhachHangEntity KH) {
         PreparedStatement statement = null;
         String sql = "INSERT INTO hanh_khach(maHK, ten, gioiTinh, soDienThoai, diaChi, soCmnd, ngayTao, ngayCapNhat) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
@@ -157,7 +154,6 @@ public class KhachHang_dao implements KhachHang_Interface {
         }
     }
 
-    @Override
     public ArrayList<KhachHangEntity> findAll() {
         ArrayList<KhachHangEntity> listKH = new ArrayList<>();
 
@@ -188,7 +184,6 @@ public class KhachHang_dao implements KhachHang_Interface {
         return listKH;
     }
 
-    @Override
     public KhachHangEntity timKiemTheoSDT(String sdt) {
         KhachHangEntity khachHang = null;
         PreparedStatement statement = null;
@@ -222,7 +217,6 @@ public class KhachHang_dao implements KhachHang_Interface {
         return khachHang;
     }
 
-    @Override
     public KhachHangEntity getKhachHang(String soDienThoai) {
         KhachHangEntity kh = null;
         PreparedStatement statement = null;
