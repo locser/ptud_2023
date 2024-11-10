@@ -400,6 +400,9 @@ public class DatVe_JFrame extends JFrame {
                 JOptionPane.showMessageDialog(this, "Đặt vé thành công, bấm ok để thoát", "Thông báo",
                                 JOptionPane.INFORMATION_MESSAGE);
                 this.dispose();
+                // tắt màn hình đặt vé Jframe hiện tại
+
+                new TrangChu_GUI().setVisible(true);
 
         }
 
