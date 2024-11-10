@@ -1,38 +1,35 @@
 package gui;
 
-import dao.ThongKe_dao;
+import bus.ThongKe_bus;
 import java.awt.*;
 import javax.swing.*;
 import java.util.Calendar;
+import java.util.ArrayList;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.ChartFactory;
 import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.chart.plot.PlotOrientation;
 import java.text.DecimalFormat;
 
 public class ThongKe_JPanel extends javax.swing.JPanel {
-    private ThongKe_dao thongKeDao;
+    private ThongKe_bus thongKeBus;
     private JComboBox<Integer> cbo_Nam;
     private DecimalFormat df = new DecimalFormat("#,###");
-
+    
     public ThongKe_JPanel() {
-    	   initComponents();
-           setSize(1186, 748);  // Kích thước giống các panel khác
-    	    thongKeDao = new ThongKe_dao();
-    	    setBounds(0, 0, 1186, 748);
-    	    setVisible(true); 
-    	    setupComponents();
-    	    loadData();
-    	    
-    	    validate();
-    	    repaint();
+        initComponents();
+        setSize(1186, 748); 
+        thongKeBus = new ThongKe_bus();
+        setBounds(0, 0, 1186, 748);
+        setVisible(true); 
+        setupComponents();
+        loadData();
     }
 
     private void setupComponents() {
         setLayout(new BorderLayout(0, 0));
-        
-        // Panel tiêu đề với gradient background
         JPanel pnl_TieuDe = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -45,7 +42,7 @@ public class ThongKe_JPanel extends javax.swing.JPanel {
             }
         };
         pnl_TieuDe.setPreferredSize(new Dimension(1186, 60));
-        JLabel lbl_TieuDe = new JLabel("THỐNG KÊ DOANH THU VÀ NHÂN VIÊN");
+        JLabel lbl_TieuDe = new JLabel("THỐNG KÊ VÉ VÀ NHÂN VIÊN");
         lbl_TieuDe.setFont(new Font("Segoe UI", Font.BOLD, 24));
         lbl_TieuDe.setForeground(Color.WHITE);
         pnl_TieuDe.add(lbl_TieuDe);
@@ -68,6 +65,7 @@ public class ThongKe_JPanel extends javax.swing.JPanel {
         }
         cbo_Nam.setPreferredSize(new Dimension(100, 25));
         cbo_Nam.addActionListener(e -> loadData());
+        pnl_ChonNam.add(lbl_Nam);
         pnl_ChonNam.add(cbo_Nam);
 
         // Panel chính với card layout
@@ -78,9 +76,9 @@ public class ThongKe_JPanel extends javax.swing.JPanel {
         // Các panel con với style mới
         JPanel[] subPanels = new JPanel[4];
         String[] titles = {
-            "Thống kê vé đã bán",
-            "Thống kê doanh thu",
-            "Thống kê nhân viên",
+            "Thống kê vé theo tàu",
+            "Thống kê vé theo nhân viên",
+            "Thống kê trạng thái nhân viên",
             "Top 5 nhân viên xuất sắc"
         };
         
@@ -88,18 +86,15 @@ public class ThongKe_JPanel extends javax.swing.JPanel {
             subPanels[i] = createStyledPanel(titles[i]);
         }
         
-        // Thêm nội dung vào các panel
-        subPanels[0].add(createVeChart(), BorderLayout.CENTER);
-        subPanels[1].add(createDoanhThuChart(), BorderLayout.CENTER);
+        subPanels[0].add(createVeTheoTauChart(), BorderLayout.CENTER);
+        subPanels[1].add(createVeTheoNhanVienChart(), BorderLayout.CENTER);
         subPanels[2].add(createNhanVienChart(), BorderLayout.CENTER);
         subPanels[3].add(new JScrollPane(createTop5NVTable()), BorderLayout.CENTER);
         
-        // Thêm các panel vào panel chính
         for (JPanel panel : subPanels) {
             pnl_Main.add(panel);
         }
 
-        // Panel content chính
         JPanel pnl_Content = new JPanel(new BorderLayout());
         pnl_Content.setBackground(Color.WHITE);
         pnl_Content.add(pnl_ChonNam, BorderLayout.NORTH);
@@ -127,16 +122,17 @@ public class ThongKe_JPanel extends javax.swing.JPanel {
         return panel;
     }
 
-    private ChartPanel createVeChart() {
+    private ChartPanel createVeTheoTauChart() {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        // Thêm dữ liệu mẫu
-        dataset.addValue(120, "Vé", "T1");
-        dataset.addValue(150, "Vé", "T2");
-        // ... thêm dữ liệu các tháng khác
+        String nam = cbo_Nam.getSelectedItem().toString();
+        ArrayList<Object[]> data = thongKeBus.thongKeVeTheoTau(nam);
+        for (Object[] row : data) {
+            dataset.addValue((Number) row[2], "Vé", row[1].toString());
+        }
 
         JFreeChart chart = ChartFactory.createBarChart(
-            "Số vé đã bán theo tháng",
-            "Tháng",
+            "Số vé đã bán theo tàu",
+            "Tàu",
             "Số lượng",
             dataset,
             PlotOrientation.VERTICAL,
@@ -146,17 +142,18 @@ public class ThongKe_JPanel extends javax.swing.JPanel {
         return new ChartPanel(chart);
     }
 
-    private ChartPanel createDoanhThuChart() {
+    private ChartPanel createVeTheoNhanVienChart() {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        // Thêm dữ liệu mẫu
-        dataset.addValue(50000000, "Doanh thu", "T1");
-        dataset.addValue(75000000, "Doanh thu", "T2");
-        // ... thêm dữ liệu các tháng khác
+        String nam = cbo_Nam.getSelectedItem().toString();
+        ArrayList<Object[]> data = thongKeBus.thongKeVeTheoNhanVien(nam);
+        for (Object[] row : data) {
+            dataset.addValue((Number) row[2], "Vé", row[1].toString());
+        }
 
-        JFreeChart chart = ChartFactory.createLineChart(
-            "Doanh thu theo tháng",
-            "Tháng",
-            "Doanh thu (VNĐ)",
+        JFreeChart chart = ChartFactory.createBarChart(
+            "Số vé đã bán theo nhân viên",
+            "Nhân viên",
+            "Số lượng",
             dataset,
             PlotOrientation.VERTICAL,
             true, true, false
@@ -166,16 +163,15 @@ public class ThongKe_JPanel extends javax.swing.JPanel {
     }
 
     private ChartPanel createNhanVienChart() {
-        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        dataset.addValue(10, "Đang làm việc", "");
-        dataset.addValue(2, "Đã nghỉ việc", "");
+        DefaultPieDataset dataset = new DefaultPieDataset();
+        ArrayList<Object[]> data = thongKeBus.thongKeNhanVien();
+        for (Object[] row : data) {
+            dataset.setValue(row[0].toString(), (Number) row[1]);
+        }
 
-        JFreeChart chart = ChartFactory.createBarChart(
+        JFreeChart chart = ChartFactory.createPieChart(
             "Thống kê trạng thái nhân viên",
-            "",
-            "Số lượng",
             dataset,
-            PlotOrientation.VERTICAL,
             true, true, false
         );
 
@@ -183,26 +179,37 @@ public class ThongKe_JPanel extends javax.swing.JPanel {
     }
 
     private JTable createTop5NVTable() {
-        String[] columnNames = {"STT", "Mã NV", "Tên nhân viên", "Số vé đã bán", "Doanh thu"};
-        Object[][] data = {
-            {"1", "NV001", "Nguyễn Văn A", "50", "25,000,000"},
-            {"2", "NV002", "Trần Thị B", "45", "22,500,000"},
-            // ... thêm dữ liệu mẫu
-        };
+        String[] columnNames = {"STT", "Mã NV", "Tên nhân viên", "Số vé đã bán"};
+        String nam = cbo_Nam.getSelectedItem().toString();
+        String thang = ""; // Có thể thêm combobox chọn tháng nếu cần
+        ArrayList<Object[]> data = thongKeBus.thongKeTop5NhanVien(thang, nam);
+        Object[][] tableData = new Object[data.size()][4];
+        for (int i = 0; i < data.size(); i++) {
+            Object[] row = data.get(i);
+            tableData[i][0] = i + 1;
+            tableData[i][1] = row[0];
+            tableData[i][2] = row[1];
+            tableData[i][3] = row[2];
+        }
 
-        JTable table = new JTable(data, columnNames);
+        JTable table = new JTable(tableData, columnNames);
         table.setFillsViewportHeight(true);
         table.setEnabled(false);
         return table;
     }
 
     private void loadData() {
-        // TODO: Load dữ liệu thực từ database
-        // Cập nhật các biểu đồ và bảng với dữ liệu mới
+        // Cập nhật dữ liệu cho tất cả các biểu đồ và bảng
+        createVeTheoTauChart();
+        createVeTheoNhanVienChart();
+        createNhanVienChart();
+        createTop5NVTable();
+        revalidate();
+        repaint();
     }
 
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
         // Phần code tự động sinh bởi NetBeans
     }// </editor-fold>//GEN-END:initComponents
+
 }

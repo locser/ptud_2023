@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package bus;
 
 import dao.KhachHang_dao;
@@ -10,13 +6,13 @@ import java.util.ArrayList;
 import util.GenerateID;
 import Interface.KhachHang_Interface;
 
-/**
- *
- * @author Hoan
- */
 public class KhachHang_bus implements KhachHang_Interface {
-    KhachHang_dao khachHangDAO = new KhachHang_dao();
-    
+    private KhachHang_dao khachHangDAO;
+
+    public KhachHang_bus() {
+        khachHangDAO = new KhachHang_dao();
+    }
+
     @Override
     public KhachHangEntity findOne(String id) {
         return khachHangDAO.findOne(id);
@@ -29,7 +25,8 @@ public class KhachHang_bus implements KhachHang_Interface {
 
     @Override
     public boolean insert(KhachHangEntity insertKH) {
-//        insertKH.setMaKH(generateID.sinhMa(khachHangDAO.count(GenerateID.dateFormat()), "KH"));
+        String maKH = GenerateID.sinhMa("KH");
+        insertKH.setMaKH(maKH);
         return khachHangDAO.insert(insertKH);
     }
 
@@ -37,21 +34,14 @@ public class KhachHang_bus implements KhachHang_Interface {
     public ArrayList<KhachHangEntity> findAll() {
         return khachHangDAO.findAll();
     }
-//
-//    @Override
-//    public int count(String id) {
-//        return khachHangDAO.count(id);
-//    }
-    
+
     @Override
     public KhachHangEntity timKiemTheoSDT(String sdt) {
         return khachHangDAO.timKiemTheoSDT(sdt);
     }
 
-
     @Override
     public KhachHangEntity getKhachHang(String maKH) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return khachHangDAO.findOne(maKH);
     }
-    
 }

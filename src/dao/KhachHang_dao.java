@@ -91,7 +91,8 @@ public class KhachHang_dao implements KhachHang_Interface {
             statement.setDate(6, new java.sql.Date(newKH.getNgayCapNhat().getTime()));
             statement.setString(7, newKH.getMaKH());
 
-            return statement.executeUpdate() > 0;
+            int rowsAffected = statement.executeUpdate();
+            return rowsAffected > 0;
 
         } catch (SQLException e) {
             e.printStackTrace();
