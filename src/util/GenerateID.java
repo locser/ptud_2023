@@ -14,20 +14,24 @@ import java.util.Date;
 public class GenerateID {
     private static String lastDate = "";
     private static int counter;
-    
+
     public GenerateID() {
-        
+
     }
-    
+
     public static String dateFormat() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyy");
         String datePart = dateFormat.format(new Date());
         return datePart;
     }
+
     public static String sinhMa(String ten) {
-       Date dateNow = new Date();
-       SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyyHHmmss");
+        Date dateNow = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyyHHmmss");
         String maPhatSinh = dateFormat.format(dateNow);
-       return ten + maPhatSinh;
+        // + random number 0- 1000
+        int random = (int) (Math.random() * 1000);
+
+        return ten + maPhatSinh + random;
     }
 }

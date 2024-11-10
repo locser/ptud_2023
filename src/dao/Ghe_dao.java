@@ -21,14 +21,14 @@ public class Ghe_dao {
         try {
             Connection con = ConnectDB.getConnection();
             String sql = "SELECT maGhe, ten, loai, trangThai, ngayTao, ngayCapNhat, maToa, gia " +
-                         "FROM banve.dbo.ghe WHERE maToa = ?";
+                    "FROM banve.dbo.ghe WHERE maToa = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, maToa);
             ResultSet rs = ps.executeQuery();
-            
+
             while (rs.next()) {
                 int maGhe = rs.getInt("maGhe");
-                int loai = (rs.getInt("loai")) ;
+                int loai = (rs.getInt("loai"));
                 int trangThai = rs.getInt("trangThai");
                 Date ngayTao = rs.getDate("ngayTao");
                 Date ngayCapNhat = rs.getDate("ngayCapNhat");
@@ -36,12 +36,52 @@ public class Ghe_dao {
                 int gia = rs.getInt("gia");
 
                 ToaTauEntity toa = new ToaTauEntity(maToa);
-                
 
-                GheEntity ghe = new GheEntity(maGhe,ten, loai, trangThai, ngayTao, ngayCapNhat, toa);
+                GheEntity ghe = new GheEntity(maGhe, ten, loai, trangThai, ngayTao, ngayCapNhat, toa);
                 ghe.setGia(gia);
                 dsGhe.add(ghe);
             }
+            rs.close();
+            ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(Ghe_dao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return dsGhe;
+    }
+
+    public ArrayList<GheEntity> getAllGheVaTrangThaiHienTai(String maToa, int maHT) {
+        ArrayList<GheEntity> dsGhe = new ArrayList<>();
+        try {
+            Connection con = ConnectDB.getConnection();
+            String sql = "SELECT ghe.maGhe, ghe.ten, ghe.loai, ghe.trangThai, ghe.ngayTao, ghe.ngayCapNhat, ghe.maToa, ghe.gia, "
+                    +
+                    "CASE WHEN ve.maGhe IS NOT NULL THEN 1 ELSE 0 END AS isBooked " + // New column to indicate booking
+                                                                                      // status
+                    "FROM banve.dbo.ghe " +
+                    "LEFT JOIN banve.dbo.ve ON ghe.maGhe = ve.maGhe AND ve.maHT = ? AND ve.maToa = ? where ghe.maToa = ? order by ghe.maGhe, ghe.ngayTao asc";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, maHT);
+            ps.setString(2, maToa);
+            ps.setString(3, maToa);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int maGhe = rs.getInt("maGhe");
+                String ten = rs.getString("ten");
+                int loai = rs.getInt("loai");
+                int trangThai = rs.getInt("trangThai");
+                Date ngayTao = rs.getDate("ngayTao");
+                Date ngayCapNhat = rs.getDate("ngayCapNhat");
+                int gia = rs.getInt("gia");
+                int isBooked = rs.getInt("isBooked"); // Check booking status
+
+                ToaTauEntity toa = new ToaTauEntity(maToa);
+                GheEntity ghe = new GheEntity(maGhe, ten, loai, trangThai, ngayTao, ngayCapNhat, toa);
+                ghe.setGia(gia);
+                ghe.setTrangThaiHienTai(isBooked); // Assuming you have a setBooked method in GheEntity
+                dsGhe.add(ghe);
+            }
+            // Close resources
             rs.close();
             ps.close();
         } catch (SQLException ex) {
@@ -60,7 +100,7 @@ public class Ghe_dao {
             ps.setInt(1, maGhe);
             ps.setInt(2, maToa);
             ResultSet rs = ps.executeQuery();
-            
+
             if (rs.next()) {
                 loaiGhe = rs.getInt("loai");
             }
@@ -78,12 +118,12 @@ public class Ghe_dao {
         try {
             Connection con = ConnectDB.getConnection();
             String sql = "INSERT INTO banve.dbo.ghe (ten, loai, trangThai, ngayTao, ngayCapNhat, maToa, gia) " +
-                         "VALUES (?, ?, ?, getdate(), getdate(), ?, ?)";
+                    "VALUES (?, ?, ?, getdate(), getdate(), ?, ?)";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, ghe.getTen());
             ps.setInt(2, ghe.getLoai());
             ps.setInt(3, ghe.getTrangThai());
-            ps.setInt(4, Integer.parseInt(ghe.getToa().getMaToa()) );
+            ps.setInt(4, Integer.parseInt(ghe.getToa().getMaToa()));
             ps.setInt(5, ghe.getGia());
 
             int rowsAffected = ps.executeUpdate();
@@ -103,8 +143,8 @@ public class Ghe_dao {
         try {
             Connection con = ConnectDB.getConnection();
             String sql = "UPDATE banve.dbo.ghe " +
-                         "SET ten = ?, loai = ?, trangThai = ?, ngayCapNhat = getdate() " +
-                         "WHERE maGhe = ? AND maToa = ?";
+                    "SET ten = ?, loai = ?, trangThai = ?, ngayCapNhat = getdate() " +
+                    "WHERE maGhe = ? AND maToa = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, ghe.getTen());
             ps.setInt(2, ghe.getLoai());
@@ -172,7 +212,7 @@ public class Ghe_dao {
         try {
             Connection con = ConnectDB.getConnection();
             String sql = "UPDATE banve.dbo.ghe SET trangThai = (CASE WHEN trangThai = 0 THEN 1 ELSE 0 END) " +
-                         "WHERE maGhe = ? AND maToa = ?";
+                    "WHERE maGhe = ? AND maToa = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, maGhe);
             ps.setInt(2, maToa);
@@ -188,31 +228,29 @@ public class Ghe_dao {
         return result;
     }
 
-        // check số lượng toa theo mã tau
-        public int laySoLuongGheTheoMaToa(String maToa) {
-            int soLuong = 0;
-            try {
-                Connection con = ConnectDB.getConnection();
-                PreparedStatement ps = null;
-                String sql = "SELECT COUNT(*) as soLuong FROM banve.dbo.toa_tau WHERE maToa = ?";
-                ps = con.prepareStatement(sql);
-                ps.setString(1, maToa);
-                ResultSet rs = ps.executeQuery();
-    
-                if (rs.next()) {
-                    soLuong = rs.getInt("soLuong");
-                    System.out.println("soLuong " + soLuong);
-                }
-    
-                ps.close();
-                rs.close();
-            } catch (Exception ex) {
-               
-                Logger.getLogger(Toa_dao.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            return soLuong;
-        }
-    
-}
+    // check số lượng toa theo mã tau
+    public int laySoLuongGheTheoMaToa(String maToa) {
+        int soLuong = 0;
+        try {
+            Connection con = ConnectDB.getConnection();
+            PreparedStatement ps = null;
+            String sql = "SELECT COUNT(*) as soLuong FROM banve.dbo.toa_tau WHERE maToa = ?";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, maToa);
+            ResultSet rs = ps.executeQuery();
 
-   
+            if (rs.next()) {
+                soLuong = rs.getInt("soLuong");
+                System.out.println("soLuong " + soLuong);
+            }
+
+            ps.close();
+            rs.close();
+        } catch (Exception ex) {
+
+            Logger.getLogger(Toa_dao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return soLuong;
+    }
+
+}

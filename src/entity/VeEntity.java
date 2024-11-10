@@ -10,20 +10,53 @@ public class VeEntity {
     private double gia;
     private Date ngayTao;
     private Date ngayCapNhat;
-    private TauEntity maTau;
-    private ToaTauEntity maToa;
-    private GheEntity maGhe;
+    private TauEntity tau;
+    private ToaTauEntity toa;
+    private GheEntity ghe;
+    private LichTrinhEntity lichTrinh;
 
-    public VeEntity(String maVe, int loai, int trangThai, double gia, Date ngayTao, Date ngayCapNhat, TauEntity maTau, ToaTauEntity maToa, GheEntity maGhe) {
+    private KhachHangEntity khachHang;
+
+    private int soGhe;
+
+    public int getSoGhe() {
+        return soGhe;
+    }
+
+    public void setSoGhe(int soGhe) {
+        this.soGhe = soGhe;
+    }
+
+    public LichTrinhEntity getLichTrinh() {
+        return lichTrinh;
+    }
+
+    public void setLichTrinh(LichTrinhEntity lichTrinh) {
+        this.lichTrinh = lichTrinh;
+    }
+
+    public void setKhachHang(KhachHangEntity khachHang) {
+        this.khachHang = khachHang;
+    }
+
+    public KhachHangEntity getKhachHang() {
+        return this.khachHang;
+    }
+
+    public VeEntity() {
+    }
+
+    public VeEntity(String maVe, int loai, int trangThai, double gia, Date ngayTao, Date ngayCapNhat, TauEntity maTau,
+            ToaTauEntity maToa, GheEntity maGhe) {
         this.maVe = maVe;
         this.loai = loai;
         this.trangThai = trangThai;
         this.gia = gia;
         this.ngayTao = ngayTao;
         this.ngayCapNhat = ngayCapNhat;
-        this.maTau = maTau;
-        this.maToa = maToa;
-        this.maGhe = maGhe;
+        this.tau = maTau;
+        this.toa = maToa;
+        this.ghe = maGhe;
     }
 
     public String getMaVe() {
@@ -74,28 +107,28 @@ public class VeEntity {
         this.ngayCapNhat = ngayCapNhat;
     }
 
-    public TauEntity getMaTau() {
-        return maTau;
+    public TauEntity getTau() {
+        return tau;
     }
 
-    public void setMaTau(TauEntity maTau) {
-        this.maTau = maTau;
+    public void setTau(TauEntity maTau) {
+        this.tau = maTau;
     }
 
-    public ToaTauEntity getMaToa() {
-        return maToa;
+    public ToaTauEntity getToa() {
+        return toa;
     }
 
-    public void setMaToa(ToaTauEntity maToa) {
-        this.maToa = maToa;
+    public void setToa(ToaTauEntity maToa) {
+        this.toa = maToa;
     }
 
-    public GheEntity getMaGhe() {
-        return maGhe;
+    public GheEntity getGhe() {
+        return ghe;
     }
 
-    public void setMaGhe(GheEntity maGhe) {
-        this.maGhe = maGhe;
+    public void setGhe(GheEntity maGhe) {
+        this.ghe = maGhe;
     }
 
     @Override
@@ -107,27 +140,24 @@ public class VeEntity {
                 ", gia=" + gia +
                 ", ngayTao=" + ngayTao +
                 ", ngayCapNhat=" + ngayCapNhat +
-                ", maTau='" + maTau + '\'' +
-                ", maToa='" + maToa + '\'' +
-                ", maGhe='" + maGhe + '\'' +
                 '}';
     }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(maVe);
-	}
+    @Override
+    public int hashCode() {
+        return Objects.hash(maVe);
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		VeEntity other = (VeEntity) obj;
-		return Objects.equals(maVe, other.maVe);
-	}
-    
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        VeEntity other = (VeEntity) obj;
+        return Objects.equals(maVe, other.maVe);
+    }
+
 }

@@ -22,14 +22,14 @@ import java.sql.Date;
  *
  * @author Admin
  */
-public class DoiTra_dao implements DoiTra_Interface{
-    
+public class DoiTra_dao implements DoiTra_Interface {
+
     private ChiTietDoiTra_dao ctdt_dao = new ChiTietDoiTra_dao();
-    
+
     public DoiTra_dao() {
-        
+
     }
-    
+
     @Override
     public boolean taoDoiTra(DoiTraEntity dt, ArrayList<ChiTietDoiTraEntity> ctdtList) {
         try {
@@ -55,13 +55,13 @@ public class DoiTra_dao implements DoiTra_Interface{
             statement.setDouble(6, dt.getTongTien());
 
             int ketQua = statement.executeUpdate();
-            if(ketQua < 1) {
+            if (ketQua < 1) {
                 return false;
             }
-            
+
             ChiTietHoaDon_dao cthd_dao = new ChiTietHoaDon_dao();
             for (ChiTietDoiTraEntity ctdt : ctdtList) {
-                if(!ctdt_dao.themChiTietDoiTra(ctdt)) {
+                if (!ctdt_dao.themChiTietDoiTra(ctdt)) {
                     return false;
                 }
             }
@@ -73,7 +73,6 @@ public class DoiTra_dao implements DoiTra_Interface{
         } finally {
             try {
                 statement.close();
-                ConnectDB.getInstance().disconnect();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -87,7 +86,7 @@ public class DoiTra_dao implements DoiTra_Interface{
         } catch (Exception ex) {
             Logger.getLogger(DoiTra_dao.class.getName()).log(Level.SEVERE, null, ex);
         }
-            
+
         Connection con = ConnectDB.getConnection();
         PreparedStatement statement = null;
         try {
@@ -96,21 +95,21 @@ public class DoiTra_dao implements DoiTra_Interface{
             statement = con.prepareStatement(sql);
 
             ResultSet rs = statement.executeQuery();
-            
+
             ArrayList<DoiTraEntity> dtList = new ArrayList<>();
-            while(rs.next()) {
+            while (rs.next()) {
                 String maDT = rs.getString("maDT");
                 String maHD = rs.getString("maHD");
-//                HoaDonEntity hd = new HoaDonEntity(maHD);
+                // HoaDonEntity hd = new HoaDonEntity(maHD);
                 String maNV = rs.getString("maNV");
                 NhanVienEntity nv = new NhanVienEntity(maNV);
                 Date thoiGian = rs.getDate("thoiGianDoiTra");
                 String hinhThuc = rs.getString("hinhThucDoiTra");
                 double tongTien = rs.getDouble("tongTien");
-                
-                
-//                DoiTraEntity dt = new DoiTraEntity(maDT, hd, nv, toEnum.HinhThucDTToEnum(hinhThuc), thoiGian, tongTien);
-//                dtList.add(dt);
+
+                // DoiTraEntity dt = new DoiTraEntity(maDT, hd, nv,
+                // toEnum.HinhThucDTToEnum(hinhThuc), thoiGian, tongTien);
+                // dtList.add(dt);
             }
 
             return dtList;
@@ -120,13 +119,12 @@ public class DoiTra_dao implements DoiTra_Interface{
         } finally {
             try {
                 statement.close();
-                ConnectDB.getInstance().disconnect();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
     }
-    
+
     @Override
     public DoiTraEntity getDoiTraTheoMa(String ma) {
         try {
@@ -146,39 +144,39 @@ public class DoiTra_dao implements DoiTra_Interface{
             statement.setString(1, ma);
 
             ResultSet rs = statement.executeQuery();
-            
+
             DoiTraEntity dt = null;
-            if(rs.next()) {
+            if (rs.next()) {
                 String maDT = rs.getString("maDT");
                 String maHD = rs.getString("maHD");
-//                HoaDonEntity hd = new HoaDonEntity(maHD);
-                
+                // HoaDonEntity hd = new HoaDonEntity(maHD);
+
                 String maKH = rs.getString("maKH");
-//                KhachHangEntity kh = new KhachHangEntity();
-                
+                // KhachHangEntity kh = new KhachHangEntity();
+
                 String maNV = rs.getString("maNV");
                 NhanVienEntity nv = new NhanVienEntity(maNV);
                 Date thoiGian = rs.getDate("thoiGianDoiTra");
                 String hinhThuc = rs.getString("hinhThucDoiTra");
                 double tongTien = rs.getDouble("tongTien");
-//                if(maKH != null) {
-//                    kh.setMaKH(maKH);
-//                    String sql_kh = "Select hoTen, soDienThoai from KhachHang where maKH=?";
-//                    statement = con.prepareStatement(sql_kh);
-//                    statement.setString(1, maKH);
-//                    
-//                    rs = statement.executeQuery();
-//                    if(rs.next()) {
-//                        
-//                        kh.setHoTen(rs.getString("hoTen"));
-//                        kh.setSoDienThoai(rs.getString("soDienThoai"));
-//                    }
-//                    
-//                }
-//                hd.setKhachHang(kh);
-                
-                
-//                dt = new DoiTraEntity(maDT, hd, nv, toEnum.HinhThucDTToEnum(hinhThuc), thoiGian, tongTien);
+                // if(maKH != null) {
+                // kh.setMaKH(maKH);
+                // String sql_kh = "Select hoTen, soDienThoai from KhachHang where maKH=?";
+                // statement = con.prepareStatement(sql_kh);
+                // statement.setString(1, maKH);
+                //
+                // rs = statement.executeQuery();
+                // if(rs.next()) {
+                //
+                // kh.setHoTen(rs.getString("hoTen"));
+                // kh.setSoDienThoai(rs.getString("soDienThoai"));
+                // }
+                //
+                // }
+                // hd.setKhachHang(kh);
+
+                // dt = new DoiTraEntity(maDT, hd, nv, toEnum.HinhThucDTToEnum(hinhThuc),
+                // thoiGian, tongTien);
             }
 
             return dt;
@@ -188,13 +186,12 @@ public class DoiTra_dao implements DoiTra_Interface{
         } finally {
             try {
                 statement.close();
-                ConnectDB.getInstance().disconnect();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
     }
-    
+
     @Override
     public ArrayList<DoiTraEntity> getDoiTraTheoNgayLap(Date ngayLap) {
         try {
@@ -202,7 +199,7 @@ public class DoiTra_dao implements DoiTra_Interface{
         } catch (Exception ex) {
             Logger.getLogger(DoiTra_dao.class.getName()).log(Level.SEVERE, null, ex);
         }
-            
+
         Connection con = ConnectDB.getConnection();
         PreparedStatement statement = null;
         try {
@@ -212,22 +209,22 @@ public class DoiTra_dao implements DoiTra_Interface{
             statement.setDate(1, ngayLap);
 
             ResultSet rs = statement.executeQuery();
-            
+
             ArrayList<DoiTraEntity> dtList = new ArrayList<DoiTraEntity>();
-            while(rs.next()) {
+            while (rs.next()) {
                 String maDT = rs.getString("maDT");
                 String maHD = rs.getString("maHD");
-//                HoaDonEntity hd = new HoaDonEntity(maHD);
+                // HoaDonEntity hd = new HoaDonEntity(maHD);
                 String maNV = rs.getString("maNV");
                 NhanVienEntity nv = new NhanVienEntity(maNV);
                 Date thoiGian = rs.getDate("thoiGianDoiTra");
                 String hinhThuc = rs.getString("hinhThucDoiTra");
                 double tongTien = rs.getDouble("tongTien");
-                
-                
-//                DoiTraEntity dt = new DoiTraEntity(maDT, hd, nv, toEnum.HinhThucDTToEnum(hinhThuc), thoiGian, tongTien);
-                
-//                dtList.add(dt);
+
+                // DoiTraEntity dt = new DoiTraEntity(maDT, hd, nv,
+                // toEnum.HinhThucDTToEnum(hinhThuc), thoiGian, tongTien);
+
+                // dtList.add(dt);
             }
 
             return dtList;
@@ -237,13 +234,12 @@ public class DoiTra_dao implements DoiTra_Interface{
         } finally {
             try {
                 statement.close();
-                ConnectDB.getInstance().disconnect();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
     }
-    
+
     @Override
     public DoiTraEntity getDoiTraTheoDieuKien(String ma, Date ngayLap) {
         try {
@@ -264,20 +260,20 @@ public class DoiTra_dao implements DoiTra_Interface{
             statement.setString(2, ma);
 
             ResultSet rs = statement.executeQuery();
-            
+
             DoiTraEntity dt = null;
-            if(rs.next()) {
+            if (rs.next()) {
                 String maDT = rs.getString("maDT");
                 String maHD = rs.getString("maHD");
-//                HoaDonEntity hd = new HoaDonEntity(maHD);
+                // HoaDonEntity hd = new HoaDonEntity(maHD);
                 String maNV = rs.getString("maNV");
                 NhanVienEntity nv = new NhanVienEntity(maNV);
                 Date thoiGian = rs.getDate("thoiGianDoiTra");
                 String hinhThuc = rs.getString("hinhThucDoiTra");
                 double tongTien = rs.getDouble("tongTien");
-                
-                
-//                dt = new DoiTraEntity(maDT, hd, nv, toEnum.HinhThucDTToEnum(hinhThuc), thoiGian, tongTien);
+
+                // dt = new DoiTraEntity(maDT, hd, nv, toEnum.HinhThucDTToEnum(hinhThuc),
+                // thoiGian, tongTien);
             }
 
             return dt;
@@ -287,7 +283,6 @@ public class DoiTra_dao implements DoiTra_Interface{
         } finally {
             try {
                 statement.close();
-                ConnectDB.getInstance().disconnect();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -296,27 +291,28 @@ public class DoiTra_dao implements DoiTra_Interface{
 
     @Override
     public int getTongSoLuongSPDoiTra(String maHD, String maSP) {
-         try {
+        try {
             ConnectDB.getInstance().connect();
         } catch (Exception ex) {
             Logger.getLogger(DoiTra_dao.class.getName()).log(Level.SEVERE, null, ex);
         }
-            
+
         Connection con = ConnectDB.getConnection();
         PreparedStatement statement = null;
         try {
 
-            String sql = "select tongSoLuong=sum(ctdt.soLuong) from DoiTra as dt inner join ChiTietDoiTra as ctdt on dt.maDT=ctdt.maDT " +
-            "where dt.maHD=? and dt.hinhThucDoiTra=N'Hoàn trả' and ctdt.maSP=? " +
-            "group by ctdt.maSP";
+            String sql = "select tongSoLuong=sum(ctdt.soLuong) from DoiTra as dt inner join ChiTietDoiTra as ctdt on dt.maDT=ctdt.maDT "
+                    +
+                    "where dt.maHD=? and dt.hinhThucDoiTra=N'Hoàn trả' and ctdt.maSP=? " +
+                    "group by ctdt.maSP";
             statement = con.prepareStatement(sql);
             statement.setString(1, maHD);
             statement.setString(2, maSP);
 
             ResultSet rs = statement.executeQuery();
-            
+
             int tongSoLuong = 0;
-            if(rs.next()) {
+            if (rs.next()) {
                 tongSoLuong = rs.getInt("tongSoLuong");
             }
 
@@ -327,7 +323,6 @@ public class DoiTra_dao implements DoiTra_Interface{
         } finally {
             try {
                 statement.close();
-                ConnectDB.getInstance().disconnect();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -336,13 +331,13 @@ public class DoiTra_dao implements DoiTra_Interface{
 
     @Override
     public boolean kiemTraThoiHanDoiTra(String maHD) {
-         try {
+        try {
             ConnectDB.getInstance().connect();
         } catch (SQLException ex) {
             Logger.getLogger(DoiTra_dao.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception e) {
-             throw new RuntimeException(e);
-         }
+            throw new RuntimeException(e);
+        }
 
         Connection con = ConnectDB.getConnection();
         PreparedStatement statement = null;
@@ -354,10 +349,10 @@ public class DoiTra_dao implements DoiTra_Interface{
             statement.setString(1, maHD);
 
             ResultSet rs = statement.executeQuery();
-            
+
             boolean flag = false;
-            if(rs.next()) {
-                if(rs.getInt("thoiHan") == 1) {
+            if (rs.next()) {
+                if (rs.getInt("thoiHan") == 1) {
                     flag = true;
                 }
             }
@@ -369,7 +364,6 @@ public class DoiTra_dao implements DoiTra_Interface{
         } finally {
             try {
                 statement.close();
-                ConnectDB.getInstance().disconnect();
             } catch (SQLException e) {
                 e.printStackTrace();
             }

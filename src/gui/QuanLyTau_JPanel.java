@@ -1,30 +1,47 @@
 package gui;
 
-import java.awt.*;
-import javax.swing.*;
-import dao.Ga_dao;
-import dao.Tau_dao;
-import entity.*;
-import java.io.File;
-import java.util.*;
-import javax.swing.table.DefaultTableModel;
+import java.awt.Component;
+import java.awt.Desktop;
+import java.awt.Font;
+import java.awt.Image;
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import dao.Ga_dao;
+import dao.Tau_dao;
+import entity.GaTauEntity;
+import entity.NhanVienEntity;
+import entity.TauEntity;
+import entity.TauEnum;
 import util.GenerateID;
 import util.ToanCuc;
 
@@ -40,24 +57,25 @@ public class QuanLyTau_JPanel extends javax.swing.JPanel {
 
     private String maTauHienTai = "";
     private TauEntity tauHienTai = null;
-    
-//    private DefaultTableModel model;
+
+    // private DefaultTableModel model;
 
     /**
      * Creates new form SanPham_JPanel
      */
     public QuanLyTau_JPanel() {
         initComponents();
-        //Khởi tạo
-        // model = new DefaultTableModel(); 
-        model = new DefaultTableModel(new String [] {
-            "Mã", "Tên", "Loại tàu", "Ga đi", "Ga đến", "Trạng thái", "Số toa", "Đơn giá", "Nhân viên", "Ngày tạo", "Ngày cập nhật"
+        // Khởi tạo
+        // model = new DefaultTableModel();
+        model = new DefaultTableModel(new String[] {
+                "Mã", "Tên", "Loại tàu", "Ga đi", "Ga đến", "Trạng thái", "Số toa", "Đơn giá", "Nhân viên", "Ngày tạo",
+                "Ngày cập nhật"
         }, 0);
 
         tau_dao = new Tau_dao();
         ga_dao = new Ga_dao();
-        
-        //----------
+
+        // ----------
         setBounds(0, 0, 1186, 748);
         URL urlBtnTimKiem = getClass().getResource("/pic/icon/buttonTimKiem.png");
         ImageIcon img_btnTimKiem = new ImageIcon(urlBtnTimKiem);
@@ -83,7 +101,6 @@ public class QuanLyTau_JPanel extends javax.swing.JPanel {
         img_btnCapNhat = new ImageIcon(scaled_btnCapNhat);
         btn_CapNhat.setIcon(img_btnCapNhat);
 
-
         URL urlBtnNhapExcel = getClass().getResource("/pic/icon/buttonNhapExcel.png");
         ImageIcon img_btnNhapExcel = new ImageIcon(urlBtnNhapExcel);
         Image scaled_btnNhapExcel = img_btnNhapExcel.getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH);
@@ -96,10 +113,9 @@ public class QuanLyTau_JPanel extends javax.swing.JPanel {
         img_btnXuatExcel = new ImageIcon(scaled_btnXuatExcel);
         btn_XuatExcel.setIcon(img_btnXuatExcel);
 
-
         URL urlBtnQuanLyGa = getClass().getResource("/pic/icon/quan-ly-toa2.png");
-         Image scaled_btn = new ImageIcon(urlBtnQuanLyGa).getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH);
-         ImageIcon img = new ImageIcon(scaled_btn);
+        Image scaled_btn = new ImageIcon(urlBtnQuanLyGa).getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH);
+        ImageIcon img = new ImageIcon(scaled_btn);
         btn_QuanLyToa.setIcon(img);
 
         URL urlBtnQuanLyGa1 = getClass().getResource("/pic/icon/seat-icon-vector.jpg");
@@ -107,9 +123,9 @@ public class QuanLyTau_JPanel extends javax.swing.JPanel {
         ImageIcon img1 = new ImageIcon(scaled_btn2);
         btn_QuanLyGhe.setIcon(img1);
 
-       URL  urlBtnQuanLyGa2 = getClass().getResource("/pic/icon/quan-ly-ga.png");
-       Image scaled_btn3 = new ImageIcon(urlBtnQuanLyGa2).getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH);
-       ImageIcon img2 = new ImageIcon(scaled_btn3);
+        URL urlBtnQuanLyGa2 = getClass().getResource("/pic/icon/quan-ly-ga.png");
+        Image scaled_btn3 = new ImageIcon(urlBtnQuanLyGa2).getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH);
+        ImageIcon img2 = new ImageIcon(scaled_btn3);
         btn_QuanLyGa.setIcon(img2);
 
         btn_QuanLyToa.setEnabled(false);
@@ -120,7 +136,6 @@ public class QuanLyTau_JPanel extends javax.swing.JPanel {
         ArrayList<GaTauEntity> dsGaTau = ga_dao.getAllGaTau();
         duaDuLieuVaoComboBox(cbo_GaDi, dsGaTau, "TenGa");
         duaDuLieuVaoComboBox(cbo_GaDen, dsGaTau, "TenGa");
-
     }
 
     /**
@@ -129,7 +144,8 @@ public class QuanLyTau_JPanel extends javax.swing.JPanel {
      * regenerated by the Form Editor.
      */
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -169,16 +185,15 @@ public class QuanLyTau_JPanel extends javax.swing.JPanel {
         lbl_TieuDe = new javax.swing.JLabel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
+                new Object[][] {
+                        { null, null, null, null },
+                        { null, null, null, null },
+                        { null, null, null, null },
+                        { null, null, null, null }
+                },
+                new String[] {
+                        "Title 1", "Title 2", "Title 3", "Title 4"
+                }));
         jScrollPane2.setViewportView(jTable1);
 
         setBackground(new java.awt.Color(187, 205, 197));
@@ -186,7 +201,10 @@ public class QuanLyTau_JPanel extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(1186, 748));
 
         panel_ThongTin.setBackground(new java.awt.Color(187, 205, 197));
-        panel_ThongTin.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Thông tin Tàu", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 12))); // NOI18N
+        panel_ThongTin.setBorder(javax.swing.BorderFactory.createTitledBorder(
+                javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Thông tin Tàu",
+                javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION,
+                new java.awt.Font("Times New Roman", 0, 12))); // NOI18N
         panel_ThongTin.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lbl_MaSanPham.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
@@ -304,7 +322,10 @@ public class QuanLyTau_JPanel extends javax.swing.JPanel {
         panel_ThongTin.add(btn_QuanLyToa, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 70, 180, 30));
 
         panel_ThaoTac.setBackground(new java.awt.Color(187, 205, 197));
-        panel_ThaoTac.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Các thao tác", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 12))); // NOI18N
+        panel_ThaoTac.setBorder(javax.swing.BorderFactory.createTitledBorder(
+                javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Các thao tác",
+                javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION,
+                new java.awt.Font("Times New Roman", 0, 12))); // NOI18N
         panel_ThaoTac.setPreferredSize(new java.awt.Dimension(932, 60));
 
         lbl_MaSanPham_Search.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
@@ -388,77 +409,95 @@ public class QuanLyTau_JPanel extends javax.swing.JPanel {
         javax.swing.GroupLayout panel_ThaoTacLayout = new javax.swing.GroupLayout(panel_ThaoTac);
         panel_ThaoTac.setLayout(panel_ThaoTacLayout);
         panel_ThaoTacLayout.setHorizontalGroup(
-            panel_ThaoTacLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_ThaoTacLayout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addComponent(lbl_MaSanPham_Search)
-                .addGap(18, 18, 18)
-                .addComponent(txt_MaTau_Search, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addComponent(btn_TimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_LamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_Them, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_CapNhat, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_NhapExcel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_XuatExcel)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+                panel_ThaoTacLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(panel_ThaoTacLayout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(lbl_MaSanPham_Search)
+                                .addGap(18, 18, 18)
+                                .addComponent(txt_MaTau_Search, javax.swing.GroupLayout.PREFERRED_SIZE, 140,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(29, 29, 29)
+                                .addComponent(btn_TimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 120,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btn_LamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 120,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btn_Them, javax.swing.GroupLayout.PREFERRED_SIZE, 96,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btn_CapNhat, javax.swing.GroupLayout.PREFERRED_SIZE, 120,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btn_NhapExcel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btn_XuatExcel)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
         panel_ThaoTacLayout.setVerticalGroup(
-            panel_ThaoTacLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_ThaoTacLayout.createSequentialGroup()
-                .addGap(3, 3, 3)
-                .addGroup(panel_ThaoTacLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panel_ThaoTacLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btn_NhapExcel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btn_XuatExcel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btn_CapNhat, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btn_Them, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btn_LamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btn_TimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panel_ThaoTacLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lbl_MaSanPham_Search)
-                        .addComponent(txt_MaTau_Search, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(8, 8, 8))
-        );
+                panel_ThaoTacLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(panel_ThaoTacLayout.createSequentialGroup()
+                                .addGap(3, 3, 3)
+                                .addGroup(panel_ThaoTacLayout
+                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(panel_ThaoTacLayout
+                                                .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .addComponent(btn_NhapExcel, javax.swing.GroupLayout.PREFERRED_SIZE, 30,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(btn_XuatExcel, javax.swing.GroupLayout.PREFERRED_SIZE, 30,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(btn_CapNhat, javax.swing.GroupLayout.PREFERRED_SIZE, 30,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(btn_Them, javax.swing.GroupLayout.PREFERRED_SIZE, 30,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(btn_LamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 30,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(btn_TimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 30,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(panel_ThaoTacLayout
+                                                .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .addComponent(lbl_MaSanPham_Search)
+                                                .addComponent(txt_MaTau_Search, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(8, 8, 8)));
 
         panel_DanhSachSanPham.setBackground(new java.awt.Color(187, 205, 197));
-        panel_DanhSachSanPham.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Bảng danh sách tàu", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 12))); // NOI18N
+        panel_DanhSachSanPham.setBorder(javax.swing.BorderFactory.createTitledBorder(
+                javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Bảng danh sách tàu",
+                javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION,
+                new java.awt.Font("Times New Roman", 0, 12))); // NOI18N
         panel_DanhSachSanPham.setPreferredSize(new java.awt.Dimension(1008, 317));
 
-        JTableHeader tableHeader=table_DanhSachTau.getTableHeader();
+        JTableHeader tableHeader = table_DanhSachTau.getTableHeader();
         tableHeader.setFont(new Font("Times New Roman", Font.BOLD, 13));
         table_DanhSachTau.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         table_DanhSachTau.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null}
-            },
-            new String [] {
-                "Mã", "Tên", "Loại tàu", "Ga đi", "Ga đến", "Trạng thái", "Số toa", "Đơn giá", "Nhân viên", "Ngày tạo", "Ngày cập nhật"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false
+                new Object[][] {
+                        { null, null, null, null, null, null, null, null, null, null, null },
+                        { null, null, null, null, null, null, null, null, null, null, null }
+                },
+                new String[] {
+                        "Mã", "Tên", "Loại tàu", "Ga đi", "Ga đến", "Trạng thái", "Số toa", "Đơn giá", "Nhân viên",
+                        "Ngày tạo", "Ngày cập nhật"
+                }) {
+            boolean[] canEdit = new boolean[] {
+                    false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+                return canEdit[columnIndex];
             }
         });
         table_DanhSachTau.setColumnSelectionAllowed(true);
-        //table_DanhSachTau.getColumnModel().getColumn(0).setPreferredWidth(100);
-        //table_DanhSachTau.getColumnModel().getColumn(1).setPreferredWidth(200);
-        //table_DanhSachTau.getColumnModel().getColumn(2).setCellRenderer(new CenterRenderer());
-        //table_DanhSachTau.getColumnModel().getColumn(3).setCellRenderer(new CenterRenderer());
-        //table_DanhSachTau.getColumnModel().getColumn(11).setMinWidth(0);
-        //table_DanhSachTau.getColumnModel().getColumn(11).setMaxWidth(0);
-        //table_DanhSachTau.getColumnModel().getColumn(11).setWidth(0);
-        //table_DanhSachTau.getColumnModel().getColumn(11).setPreferredWidth(0);
+        // table_DanhSachTau.getColumnModel().getColumn(0).setPreferredWidth(100);
+        // table_DanhSachTau.getColumnModel().getColumn(1).setPreferredWidth(200);
+        // table_DanhSachTau.getColumnModel().getColumn(2).setCellRenderer(new
+        // CenterRenderer());
+        // table_DanhSachTau.getColumnModel().getColumn(3).setCellRenderer(new
+        // CenterRenderer());
+        // table_DanhSachTau.getColumnModel().getColumn(11).setMinWidth(0);
+        // table_DanhSachTau.getColumnModel().getColumn(11).setMaxWidth(0);
+        // table_DanhSachTau.getColumnModel().getColumn(11).setWidth(0);
+        // table_DanhSachTau.getColumnModel().getColumn(11).setPreferredWidth(0);
         table_DanhSachTau.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 table_DanhSachTauMouseClicked(evt);
@@ -469,18 +508,20 @@ public class QuanLyTau_JPanel extends javax.swing.JPanel {
         javax.swing.GroupLayout panel_DanhSachSanPhamLayout = new javax.swing.GroupLayout(panel_DanhSachSanPham);
         panel_DanhSachSanPham.setLayout(panel_DanhSachSanPhamLayout);
         panel_DanhSachSanPhamLayout.setHorizontalGroup(
-            panel_DanhSachSanPhamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_DanhSachSanPhamLayout.createSequentialGroup()
-                .addContainerGap(15, Short.MAX_VALUE)
-                .addComponent(scroll_TableSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, 1137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14))
-        );
+                panel_DanhSachSanPhamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
+                                panel_DanhSachSanPhamLayout.createSequentialGroup()
+                                        .addContainerGap(15, Short.MAX_VALUE)
+                                        .addComponent(scroll_TableSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, 1137,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(14, 14, 14)));
         panel_DanhSachSanPhamLayout.setVerticalGroup(
-            panel_DanhSachSanPhamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_DanhSachSanPhamLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(scroll_TableSanPham, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE))
-        );
+                panel_DanhSachSanPhamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
+                                panel_DanhSachSanPhamLayout.createSequentialGroup()
+                                        .addContainerGap()
+                                        .addComponent(scroll_TableSanPham, javax.swing.GroupLayout.DEFAULT_SIZE, 380,
+                                                Short.MAX_VALUE)));
 
         lbl_TieuDe.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         lbl_TieuDe.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -489,51 +530,58 @@ public class QuanLyTau_JPanel extends javax.swing.JPanel {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lbl_TieuDe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(5, 5, 5)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panel_ThaoTac, javax.swing.GroupLayout.DEFAULT_SIZE, 1176, Short.MAX_VALUE)
-                    .addComponent(panel_DanhSachSanPham, javax.swing.GroupLayout.DEFAULT_SIZE, 1176, Short.MAX_VALUE)
-                    .addComponent(panel_ThongTin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(5, 5, 5))
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(lbl_TieuDe, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(5, 5, 5)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(panel_ThaoTac, javax.swing.GroupLayout.DEFAULT_SIZE, 1176,
+                                                Short.MAX_VALUE)
+                                        .addComponent(panel_DanhSachSanPham, javax.swing.GroupLayout.DEFAULT_SIZE, 1176,
+                                                Short.MAX_VALUE)
+                                        .addComponent(panel_ThongTin, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(5, 5, 5)));
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lbl_TieuDe, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panel_ThongTin, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(panel_ThaoTac, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panel_DanhSachSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(lbl_TieuDe, javax.swing.GroupLayout.PREFERRED_SIZE, 36,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(panel_ThongTin, javax.swing.GroupLayout.PREFERRED_SIZE, 211,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(panel_ThaoTac, javax.swing.GroupLayout.PREFERRED_SIZE, 63,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(panel_DanhSachSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, 408,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap()));
     }// </editor-fold>//GEN-END:initComponents
 
-    //Hàm load dữ liệu từ db lên table
+    // Hàm load dữ liệu từ db lên table
     private void loadDuLieuTuDataLenTable() {
 
         ArrayList<TauEntity> dsTau = tau_dao.getAllTau();
-//        DecimalFormat decimalFormat = new DecimalFormat();
-System.out.println( "loadDuLieuTuDataLenTable"+ dsTau.toString());
+        // DecimalFormat decimalFormat = new DecimalFormat();
+        System.out.println("loadDuLieuTuDataLenTable" + dsTau.toString());
 
         model.setRowCount(0);
         for (TauEntity tau : dsTau) {
 
-            String loaiTau = TauEnum.LoaiTau.convertLoaiTauToString(tau.getLoai())  ;
-            String trangThai = TauEnum.TinhTrangTau.convertTinhTrangTauToString(tau.getTrangThai())  ;
+            String loaiTau = TauEnum.LoaiTau.convertLoaiTauToString(tau.getLoai());
+            String trangThai = TauEnum.TinhTrangTau.convertTinhTrangTauToString(tau.getTrangThai());
 
-            model.addRow(new Object[]{
+            model.addRow(new Object[] {
                     tau.getMaTau(),
                     tau.getTenTau(),
                     loaiTau,
                     tau.getGaDi().getTenGa(),
                     tau.getGaDen().getTenGa(),
-                    trangThai ,
+                    trangThai,
                     tau.getSoToa(),
                     0,
                     tau.getNhanVien().getTen(),
@@ -543,7 +591,7 @@ System.out.println( "loadDuLieuTuDataLenTable"+ dsTau.toString());
         }
 
         table_DanhSachTau.setModel(model);
-        return; 
+        return;
     }
 
     private ImageIcon ResizeImageIcon(String duongDanAnh) throws IOException {
@@ -551,17 +599,18 @@ System.out.println( "loadDuLieuTuDataLenTable"+ dsTau.toString());
         if (url == null) {
             throw new IOException("Resource not found: " + duongDanAnh);
         }
-//        Image img = ImageIO.read(url);
-//        Image scaledImg = img.getScaledInstance(lbl_AnhSanPham.getWidth(), lbl_AnhSanPham.getHeight(), Image.SCALE_SMOOTH);
-//        return new ImageIcon(scaledImg);
+        // Image img = ImageIO.read(url);
+        // Image scaledImg = img.getScaledInstance(lbl_AnhSanPham.getWidth(),
+        // lbl_AnhSanPham.getHeight(), Image.SCALE_SMOOTH);
+        // return new ImageIcon(scaledImg);
         return null;
     }
 
-    private void btn_ThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ThemActionPerformed
+    private void btn_ThemActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btn_ThemActionPerformed
         themTau();
-    }//GEN-LAST:event_btn_ThemActionPerformed
+    }// GEN-LAST:event_btn_ThemActionPerformed
 
-    //Hàm thêm tàu
+    // Hàm thêm tàu
     private void themTau() {
         try {
             if (validateTau()) {
@@ -569,9 +618,9 @@ System.out.println( "loadDuLieuTuDataLenTable"+ dsTau.toString());
                 String ten = txt_TenTau.getText();
                 int loai = cbo_LoaiTau.getSelectedIndex();
                 System.out.println("loai" + loai);
-                int soToa  = Integer.parseInt(txt_SoToa.getText());
+                int soToa = Integer.parseInt(txt_SoToa.getText());
 
-                if(!(soToa >  0) ) {
+                if (!(soToa > 0)) {
                     JOptionPane.showMessageDialog(null, "Vui lòng chọn ảnh");
                 }
 
@@ -579,13 +628,13 @@ System.out.println( "loadDuLieuTuDataLenTable"+ dsTau.toString());
                 String tenGaDi = (String) cbo_GaDi.getSelectedItem();
                 String tenGaDen = (String) cbo_GaDen.getSelectedItem();
 
-                    // Kiểm tra nếu ga đi hoặc ga đến không được chọn
+                // Kiểm tra nếu ga đi hoặc ga đến không được chọn
                 if (tenGaDi == null || tenGaDen == null) {
                     JOptionPane.showMessageDialog(null, "Vui lòng chọn cả ga đi và ga đến");
                     return; // Kết thúc phương thức nếu không hợp lệ
                 }
 
-                if(tenGaDen == tenGaDi) {
+                if (tenGaDen == tenGaDi) {
                     JOptionPane.showMessageDialog(null, "Ga đi và ga đến không được trùng nhau");
                     return; // Kết thúc phương thức nếu không hợp lệ
                 }
@@ -599,7 +648,7 @@ System.out.println( "loadDuLieuTuDataLenTable"+ dsTau.toString());
 
                 int trangThai = cbo_TinhTrang.getSelectedIndex();
                 NhanVienEntity nhanVien = new NhanVienEntity(ToanCuc.getMa());
-                double donGia =  0;//Double.parseDouble(txt_DonGia.getText());
+                double donGia = 0;// Double.parseDouble(txt_DonGia.getText());
 
                 TauEntity tau = new TauEntity(maTau, ten, gaDi, gaDen, soToa, loai, trangThai, nhanVien);
                 boolean kiemTra = tau_dao.themTau(tau);
@@ -614,7 +663,7 @@ System.out.println( "loadDuLieuTuDataLenTable"+ dsTau.toString());
 
             }
 
-        }catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e);
             e.printStackTrace();
         }
@@ -623,7 +672,7 @@ System.out.println( "loadDuLieuTuDataLenTable"+ dsTau.toString());
     private Object[] generateRowData(TauEntity tau) {
         String loaiTau = TauEnum.LoaiTau.convertLoaiTauToString(tau.getLoai());
         String trangThaiString = TauEnum.TinhTrangTau.convertTinhTrangTauToString(tau.getTrangThai());
-        return new Object[]{
+        return new Object[] {
                 tau.getMaTau(),
                 tau.getTenTau(),
                 loaiTau,
@@ -655,18 +704,19 @@ System.out.println( "loadDuLieuTuDataLenTable"+ dsTau.toString());
         txt_SoToa.setEnabled(true);
 
         maTauHienTai = model.getValueAt(row, 0).toString();
-        tauHienTai =  new TauEntity( model.getValueAt(row, 0).toString(),  model.getValueAt(row, 1).toString(),  Integer.parseInt(model.getValueAt(row, 6).toString()) );
+        tauHienTai = new TauEntity(model.getValueAt(row, 0).toString(), model.getValueAt(row, 1).toString(),
+                Integer.parseInt(model.getValueAt(row, 6).toString()));
         btn_QuanLyToa.setEnabled(true);
         btn_QuanLyGhe.setEnabled(true);
     }
 
-    private void btn_TimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_TimKiemActionPerformed
+    private void btn_TimKiemActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btn_TimKiemActionPerformed
         String dieuKien = txt_MaTau_Search.getText().trim();
         timKiemTau(dieuKien);
 
-    }//GEN-LAST:event_btn_TimKiemActionPerformed
+    }// GEN-LAST:event_btn_TimKiemActionPerformed
 
-    //Hàm tìm kiếm tàu
+    // Hàm tìm kiếm tàu
     private void timKiemTau(String dieuKien) {
         String timKiem = txt_MaTau_Search.getText().trim();
         if (timKiem.isBlank()) {
@@ -674,7 +724,7 @@ System.out.println( "loadDuLieuTuDataLenTable"+ dsTau.toString());
         } else {
             model.setRowCount(0);
             ArrayList<TauEntity> dsTau = tau_dao.getAllTau();
-//            DecimalFormat decimalFormat = new DecimalFormat();
+            // DecimalFormat decimalFormat = new DecimalFormat();
             boolean kt = false;
 
             for (TauEntity tau : dsTau) {
@@ -691,11 +741,11 @@ System.out.println( "loadDuLieuTuDataLenTable"+ dsTau.toString());
         }
     }
 
-    private void btn_LamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LamMoiActionPerformed
+    private void btn_LamMoiActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btn_LamMoiActionPerformed
         lamMoi();
-    }//GEN-LAST:event_btn_LamMoiActionPerformed
+    }// GEN-LAST:event_btn_LamMoiActionPerformed
 
-    //Hàm làm mới tau
+    // Hàm làm mới tau
     public void lamMoi() {
 
         ArrayList<GaTauEntity> dsGaTau = ga_dao.getAllGaTau();
@@ -713,22 +763,22 @@ System.out.println( "loadDuLieuTuDataLenTable"+ dsTau.toString());
         cbo_TinhTrang.setSelectedItem("Đang sử dụng");
         txt_MaTau_Search.setText("");
 
-         model.setRowCount(0);   
+        model.setRowCount(0);
 
         btn_Them.setEnabled(true);
         txt_SoToa.setEditable(true);
         // ArrayList<TauEntity> dsTau = tau_dao.getAllTau();
         // for (TauEntity tau : dsTau) {
-        //     model.addRow(generateRowData(tau));
+        // model.addRow(generateRowData(tau));
         // }
         loadDuLieuTuDataLenTable();
     }
 
-    private void btn_CapNhatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_CapNhatActionPerformed
+    private void btn_CapNhatActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btn_CapNhatActionPerformed
         capNhatSanPham();
-    }//GEN-LAST:event_btn_CapNhatActionPerformed
+    }// GEN-LAST:event_btn_CapNhatActionPerformed
 
-    //Hàm cập nhật tàu
+    // Hàm cập nhật tàu
     private void capNhatSanPham() {
         int row = table_DanhSachTau.getSelectedRow();
         if (row == -1) {
@@ -736,7 +786,10 @@ System.out.println( "loadDuLieuTuDataLenTable"+ dsTau.toString());
         } else {
             if (table_DanhSachTau.getSelectedRowCount() == 1) {
                 if (validateTau()) {
-                    if (JOptionPane.showConfirmDialog(null, "Bạn có chắc chắc cập nhật tàu có mã " + table_DanhSachTau.getValueAt(row, 0) + " này không?", "Cảnh báo cập nhật", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                    if (JOptionPane.showConfirmDialog(null,
+                            "Bạn có chắc chắc cập nhật tàu có mã " + table_DanhSachTau.getValueAt(row, 0)
+                                    + " này không?",
+                            "Cảnh báo cập nhật", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                         String maTau = txt_MaTau.getText();
                         String ten = txt_TenTau.getText();
 
@@ -748,22 +801,22 @@ System.out.println( "loadDuLieuTuDataLenTable"+ dsTau.toString());
                         if (cbo_TinhTrang.getSelectedItem().equals("Đang sử dụng")) {
                             tinhTrang = 1;
                         } else if (cbo_TinhTrang.getSelectedItem().equals("Tạm ngưng")) {
-                            tinhTrang = 0;                        
+                            tinhTrang = 0;
                         }
 
                         int soToa = Integer.parseInt(txt_SoToa.getText());
 
-                                        // Lấy giá trị ga đi và ga đến
+                        // Lấy giá trị ga đi và ga đến
                         String tenGaDi = (String) cbo_GaDi.getSelectedItem();
                         String tenGaDen = (String) cbo_GaDen.getSelectedItem();
 
-                            // Kiểm tra nếu ga đi hoặc ga đến không được chọn
+                        // Kiểm tra nếu ga đi hoặc ga đến không được chọn
                         if (tenGaDi == null || tenGaDen == null) {
                             JOptionPane.showMessageDialog(null, "Vui lòng chọn cả ga đi và ga đến");
                             return; // Kết thúc phương thức nếu không hợp lệ
                         }
 
-                                        // check maGa
+                        // check maGa
                         String maGaDi = ga_dao.layMaGaTheoTen(tenGaDi);
                         String maGaDen = ga_dao.layMaGaTheoTen(tenGaDen);
 
@@ -774,28 +827,27 @@ System.out.println( "loadDuLieuTuDataLenTable"+ dsTau.toString());
                         NhanVienEntity nhanVien = new NhanVienEntity(ToanCuc.getMa());
                         // double donGia = Double.parseDouble(txt_DonGia.getText());
 
-
                         TauEntity tau = new TauEntity(maTau, ten, gaDi, gaDen, soToa, loai, trangThai, nhanVien);
 
-                       boolean kq = tau_dao.capNhatTau(tau);
-                       if (kq) {
-                           JOptionPane.showMessageDialog(null, "Cập nhật thành công");
-                           lamMoi();
-                       } else {
-                           JOptionPane.showMessageDialog(null, "Cập nhật không thành công");
-                       }
+                        boolean kq = tau_dao.capNhatTau(tau);
+                        if (kq) {
+                            JOptionPane.showMessageDialog(null, "Cập nhật thành công");
+                            lamMoi();
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Cập nhật không thành công");
+                        }
                     }
                 }
             }
         }
     }
 
-    private void btn_XuatExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_XuatExcelActionPerformed
+    private void btn_XuatExcelActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btn_XuatExcelActionPerformed
         xuatExcel();
-//          xuatExcelTable();
-    }//GEN-LAST:event_btn_XuatExcelActionPerformed
+        // xuatExcelTable();
+    }// GEN-LAST:event_btn_XuatExcelActionPerformed
 
-    //Hàm xuất excel từ db
+    // Hàm xuất excel từ db
     private void xuatExcel() {
         try {
             JFileChooser fileChooser = new JFileChooser("C:\\Users\\MY PC\\OneDrive\\Máy tính");
@@ -836,40 +888,44 @@ System.out.println( "loadDuLieuTuDataLenTable"+ dsTau.toString());
                 cell.setCellValue("Ảnh");
                 cell = row.createCell(11, CellType.STRING);
                 cell.setCellValue("Khuyến mãi");
-//                ArrayList<SanPhamEntity> listItem = sp_bus.getAllSanPham();
-//                for (int i = 0; i < listItem.size(); i++) {
-//                    SanPhamEntity sp = listItem.get(i);
-//                    String tenChatLieu = chatLieu_bus.layTenChatLieuTheoMa(sp.getChatLieu().getMaChatLieu());
-//                    String tenThuongHieu = thuongHieu_bus.layTenThuongHieuTheoMa(sp.getThuongHieu().getMaThuongHieu());
-//                    String tenDanhMuc = danhMucSanPham_bus.layTenDanhMucTheoMa(sp.getDanhMucSanPham().getMaDanhMuc());
-//                    String tenCTKM = ctkm_bus.layTenKhuyenMaiTheoMa(sp.getChuongTrinhKhuyenMai().getMaCTKM());
-//                    row = sheet.createRow(1 + i);
-//                    row.createCell(0).setCellValue(sp.getMaSP());
-//                    row.createCell(1).setCellValue(sp.getTenSP());
-//                    row.createCell(2).setCellValue(sp.getKichThuoc().toString());
-//                    row.createCell(3).setCellValue(sp.getMauSac().toString());
-//                    row.createCell(4).setCellValue(sp.getDonGia());
-//                    row.createCell(5).setCellValue(sp.getTinhTrang().toString());
-//                    row.createCell(6).setCellValue(sp.getSoLuongTonKho());
-//                    row.createCell(7).setCellValue(tenChatLieu);
-//                    row.createCell(8).setCellValue(tenThuongHieu);
-//                    row.createCell(9).setCellValue(tenDanhMuc);
-//                    row.createCell(10).setCellValue(sp.getImgUrl());
-//                    row.createCell(11).setCellValue(tenCTKM);
-//                }
-//                File f = new File(filePath);
-//                try (FileOutputStream fos = new FileOutputStream(f)) {
-//                    workbook.write(fos);
-//                    JOptionPane.showMessageDialog(null, "Xuất file thành công");
-//                    openExcelFile(f);
-//                }
+                // ArrayList<SanPhamEntity> listItem = sp_bus.getAllSanPham();
+                // for (int i = 0; i < listItem.size(); i++) {
+                // SanPhamEntity sp = listItem.get(i);
+                // String tenChatLieu =
+                // chatLieu_bus.layTenChatLieuTheoMa(sp.getChatLieu().getMaChatLieu());
+                // String tenThuongHieu =
+                // thuongHieu_bus.layTenThuongHieuTheoMa(sp.getThuongHieu().getMaThuongHieu());
+                // String tenDanhMuc =
+                // danhMucSanPham_bus.layTenDanhMucTheoMa(sp.getDanhMucSanPham().getMaDanhMuc());
+                // String tenCTKM =
+                // ctkm_bus.layTenKhuyenMaiTheoMa(sp.getChuongTrinhKhuyenMai().getMaCTKM());
+                // row = sheet.createRow(1 + i);
+                // row.createCell(0).setCellValue(sp.getMaSP());
+                // row.createCell(1).setCellValue(sp.getTenSP());
+                // row.createCell(2).setCellValue(sp.getKichThuoc().toString());
+                // row.createCell(3).setCellValue(sp.getMauSac().toString());
+                // row.createCell(4).setCellValue(sp.getDonGia());
+                // row.createCell(5).setCellValue(sp.getTinhTrang().toString());
+                // row.createCell(6).setCellValue(sp.getSoLuongTonKho());
+                // row.createCell(7).setCellValue(tenChatLieu);
+                // row.createCell(8).setCellValue(tenThuongHieu);
+                // row.createCell(9).setCellValue(tenDanhMuc);
+                // row.createCell(10).setCellValue(sp.getImgUrl());
+                // row.createCell(11).setCellValue(tenCTKM);
+                // }
+                // File f = new File(filePath);
+                // try (FileOutputStream fos = new FileOutputStream(f)) {
+                // workbook.write(fos);
+                // JOptionPane.showMessageDialog(null, "Xuất file thành công");
+                // openExcelFile(f);
+                // }
             }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
-    //Hàm xuất excel từ table
+    // Hàm xuất excel từ table
     private void xuatExcelTable() {
         try {
             JFileChooser fileChooser = new JFileChooser("C:\\Users\\MY PC\\OneDrive\\Máy tính");
@@ -901,7 +957,7 @@ System.out.println( "loadDuLieuTuDataLenTable"+ dsTau.toString());
                 try (FileOutputStream fos = new FileOutputStream(f)) {
                     wb.write(fos);
                     JOptionPane.showMessageDialog(null, "Xuất file thành công");
-//                    System.out.println(f);
+                    // System.out.println(f);
                     openExcelFile(f);
 
                 }
@@ -912,7 +968,7 @@ System.out.println( "loadDuLieuTuDataLenTable"+ dsTau.toString());
         }
     }
 
-    //Hàm tự dộng mở file excel sau khi xuất
+    // Hàm tự dộng mở file excel sau khi xuất
     private static void openExcelFile(File file) throws IOException {
         Desktop desktop = Desktop.getDesktop();
         if (desktop.isSupported(Desktop.Action.OPEN)) {
@@ -922,13 +978,12 @@ System.out.println( "loadDuLieuTuDataLenTable"+ dsTau.toString());
         }
     }
 
-
-    private void btn_NhapExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_NhapExcelActionPerformed
+    private void btn_NhapExcelActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btn_NhapExcelActionPerformed
         // TODO add your handling code here:
         nhapExcel();
-    }//GEN-LAST:event_btn_NhapExcelActionPerformed
+    }// GEN-LAST:event_btn_NhapExcelActionPerformed
 
-    //Hàm nhập file excel
+    // Hàm nhập file excel
     private void nhapExcel() {
         File excelFile;
         FileInputStream excelFIS = null;
@@ -943,67 +998,69 @@ System.out.println( "loadDuLieuTuDataLenTable"+ dsTau.toString());
         if (excelChooser == JFileChooser.APPROVE_OPTION) {
             Set<Object> maSanPhamSet = new HashSet<>();
             try {
-//                excelFile = excelFileChooser.getSelectedFile();
-//                excelFIS = new FileInputStream(excelFile);
-//                excelBIS = new BufferedInputStream(excelFIS);
-//                excelImportToJTable = new XSSFWorkbook(excelBIS);
-//                XSSFSheet excelSheet = excelImportToJTable.getSheetAt(0);
-//                for (int row = 1; row <= excelSheet.getLastRowNum(); row++) {
-//                    XSSFRow excelRow = excelSheet.getRow(row);
-//                    XSSFCell excelMaSP = excelRow.getCell(0);
-//                    // Kiểm tra xem mã tàu đã tồn tại trong tập hợp chưa
-//                    String maSanPham = excelMaSP.getStringCellValue().trim();
-//                    int existingRow = -1;
-//                    // Kiểm tra xem mã tàu nhập đã tồn tại trong bảng chưa
-//                    for (int i = 0; i < model.getRowCount(); i++) {
-//                        if (maSanPham.equals(model.getValueAt(i, 0).toString())) {
-//                            existingRow = i;
-//                            break;
-//                        }
-//                    }
-//                    XSSFCell excelTenSP = excelRow.getCell(1);
-//                    XSSFCell excelKichThuoc = excelRow.getCell(2);
-//                    XSSFCell excelMauSac = excelRow.getCell(3);
-//                    XSSFCell excelDonGia = excelRow.getCell(4);
-//                    XSSFCell excelTinhTrang = excelRow.getCell(5);
-//                    XSSFCell excelSoLuongTon = excelRow.getCell(6);
-//                    XSSFCell excelChatLieu = excelRow.getCell(7);
-//                    XSSFCell excelThuongHieu = excelRow.getCell(8);
-//                    XSSFCell excelDanhMuc = excelRow.getCell(9);
-//                    XSSFCell excelAnh = excelRow.getCell(10);
-//                    String duongDanAnh = excelAnh.getStringCellValue();
-//                    XSSFCell excelKhuyenMai = excelRow.getCell(11);
-//                    String khuyenMai = "";
-//                    if (excelKhuyenMai != null) {
-//                        khuyenMai = excelKhuyenMai.getStringCellValue().trim();
-//                    } else {
-//                        khuyenMai = "Không giảm giá";
-//                    }
-//                    int soLuongTonKho = (int) excelSoLuongTon.getNumericCellValue();
-//                    double donGia = excelDonGia.getNumericCellValue();
-//                    DecimalFormat decimalFormat = new DecimalFormat();
-//                    String formattedDonGia = decimalFormat.format(donGia) + " VNĐ";
-//                    String tinhTrang = excelTinhTrang.getStringCellValue().trim();
-//                    if (soLuongTonKho == 0 && "Đang bán".equals(tinhTrang)) {
-//                        tinhTrang = "Hết hàng";
-//                    }
-//                    if (existingRow != -1) {
-//                        model.setValueAt(excelTenSP.getStringCellValue(), existingRow, 1);
-//                        model.setValueAt(excelKichThuoc.getStringCellValue(), existingRow, 2);
-//                        model.setValueAt(excelMauSac, existingRow, 3);
-//                        model.setValueAt(formattedDonGia, existingRow, 4);
-//                        model.setValueAt(tinhTrang, existingRow, 5);
-//                        model.setValueAt(soLuongTonKho, existingRow, 6);
-//                        model.setValueAt(excelChatLieu, existingRow, 7);
-//                        model.setValueAt(excelThuongHieu, existingRow, 8);
-//                        model.setValueAt(excelDanhMuc, existingRow, 9);
-//                        model.setValueAt(khuyenMai, existingRow, 10);
-//                        model.setValueAt(duongDanAnh, existingRow, 11);
-//                    } else {
-//                        maSanPhamSet.add(maSanPham);
-//                        model.addRow(new Object[]{maSanPham, excelTenSP, excelKichThuoc, excelMauSac, formattedDonGia, tinhTrang, soLuongTonKho, excelChatLieu, excelThuongHieu, excelDanhMuc, khuyenMai, duongDanAnh});
-//                    }
-//                }
+                // excelFile = excelFileChooser.getSelectedFile();
+                // excelFIS = new FileInputStream(excelFile);
+                // excelBIS = new BufferedInputStream(excelFIS);
+                // excelImportToJTable = new XSSFWorkbook(excelBIS);
+                // XSSFSheet excelSheet = excelImportToJTable.getSheetAt(0);
+                // for (int row = 1; row <= excelSheet.getLastRowNum(); row++) {
+                // XSSFRow excelRow = excelSheet.getRow(row);
+                // XSSFCell excelMaSP = excelRow.getCell(0);
+                // // Kiểm tra xem mã tàu đã tồn tại trong tập hợp chưa
+                // String maSanPham = excelMaSP.getStringCellValue().trim();
+                // int existingRow = -1;
+                // // Kiểm tra xem mã tàu nhập đã tồn tại trong bảng chưa
+                // for (int i = 0; i < model.getRowCount(); i++) {
+                // if (maSanPham.equals(model.getValueAt(i, 0).toString())) {
+                // existingRow = i;
+                // break;
+                // }
+                // }
+                // XSSFCell excelTenSP = excelRow.getCell(1);
+                // XSSFCell excelKichThuoc = excelRow.getCell(2);
+                // XSSFCell excelMauSac = excelRow.getCell(3);
+                // XSSFCell excelDonGia = excelRow.getCell(4);
+                // XSSFCell excelTinhTrang = excelRow.getCell(5);
+                // XSSFCell excelSoLuongTon = excelRow.getCell(6);
+                // XSSFCell excelChatLieu = excelRow.getCell(7);
+                // XSSFCell excelThuongHieu = excelRow.getCell(8);
+                // XSSFCell excelDanhMuc = excelRow.getCell(9);
+                // XSSFCell excelAnh = excelRow.getCell(10);
+                // String duongDanAnh = excelAnh.getStringCellValue();
+                // XSSFCell excelKhuyenMai = excelRow.getCell(11);
+                // String khuyenMai = "";
+                // if (excelKhuyenMai != null) {
+                // khuyenMai = excelKhuyenMai.getStringCellValue().trim();
+                // } else {
+                // khuyenMai = "Không giảm giá";
+                // }
+                // int soLuongTonKho = (int) excelSoLuongTon.getNumericCellValue();
+                // double donGia = excelDonGia.getNumericCellValue();
+                // DecimalFormat decimalFormat = new DecimalFormat();
+                // String formattedDonGia = decimalFormat.format(donGia) + " VNĐ";
+                // String tinhTrang = excelTinhTrang.getStringCellValue().trim();
+                // if (soLuongTonKho == 0 && "Đang bán".equals(tinhTrang)) {
+                // tinhTrang = "Hết hàng";
+                // }
+                // if (existingRow != -1) {
+                // model.setValueAt(excelTenSP.getStringCellValue(), existingRow, 1);
+                // model.setValueAt(excelKichThuoc.getStringCellValue(), existingRow, 2);
+                // model.setValueAt(excelMauSac, existingRow, 3);
+                // model.setValueAt(formattedDonGia, existingRow, 4);
+                // model.setValueAt(tinhTrang, existingRow, 5);
+                // model.setValueAt(soLuongTonKho, existingRow, 6);
+                // model.setValueAt(excelChatLieu, existingRow, 7);
+                // model.setValueAt(excelThuongHieu, existingRow, 8);
+                // model.setValueAt(excelDanhMuc, existingRow, 9);
+                // model.setValueAt(khuyenMai, existingRow, 10);
+                // model.setValueAt(duongDanAnh, existingRow, 11);
+                // } else {
+                // maSanPhamSet.add(maSanPham);
+                // model.addRow(new Object[]{maSanPham, excelTenSP, excelKichThuoc, excelMauSac,
+                // formattedDonGia, tinhTrang, soLuongTonKho, excelChatLieu, excelThuongHieu,
+                // excelDanhMuc, khuyenMai, duongDanAnh});
+                // }
+                // }
                 JOptionPane.showMessageDialog(null, "Nhập thành công");
             } catch (Exception iOException) {
                 JOptionPane.showMessageDialog(null, iOException.getMessage());
@@ -1025,53 +1082,57 @@ System.out.println( "loadDuLieuTuDataLenTable"+ dsTau.toString());
         }
     }
 
-    private void cbo_TinhTrangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbo_TinhTrangActionPerformed
+    private void cbo_TinhTrangActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_cbo_TinhTrangActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cbo_TinhTrangActionPerformed
+    }// GEN-LAST:event_cbo_TinhTrangActionPerformed
 
-    private void btn_QuanLyGheActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_QuanLyGheActionPerformed
-        if(maTauHienTai.isEmpty()){
+    private void btn_QuanLyGheActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btn_QuanLyGheActionPerformed
+        if (maTauHienTai.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Vui lòng chọn tàu trước khi quản lý ghế");
             return;
-        }else  {
-            new QuanLyGhe_JPanel1(tauHienTai).setVisible(getFocusTraversalKeysEnabled()); 
-            
-        }    }//GEN-LAST:event_btn_QuanLyGheActionPerformed
+        } else {
+            new QuanLyGhe_JPanel1(tauHienTai).setVisible(getFocusTraversalKeysEnabled());
 
-    private void btn_QuanLyToaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_QuanLyToaActionPerformed
-        
-        if(maTauHienTai.isEmpty()){
+        }
+    }// GEN-LAST:event_btn_QuanLyGheActionPerformed
+
+    private void btn_QuanLyToaActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btn_QuanLyToaActionPerformed
+
+        if (maTauHienTai.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Vui lòng chọn tàu trước khi quản lý toa");
             return;
-        }else  {
-            new QuanLyToa_JPanel(tauHienTai).setVisible(getFocusTraversalKeysEnabled()); 
-            
-        }
-    }//GEN-LAST:event_btn_QuanLyToaActionPerformed
+        } else {
+            new QuanLyToa_JPanel(tauHienTai).setVisible(getFocusTraversalKeysEnabled());
 
-    private void btn_QuanLyGaActionPerformed(java.awt.event.ActionEvent evt) {                                             
-        new QuanLyGa_JPanel().setVisible(getFocusTraversalKeysEnabled()); // This line instantiates the new frame and shows it
+        }
+    }// GEN-LAST:event_btn_QuanLyToaActionPerformed
+
+    private void btn_QuanLyGaActionPerformed(java.awt.event.ActionEvent evt) {
+        new QuanLyGa_JPanel().setVisible(getFocusTraversalKeysEnabled()); // This line instantiates the new frame and
+                                                                          // shows it
 
     }
-    
-    //Hàm kiểm tra tàu có chứa tiêu chí tìm kiếm không
+
+    // Hàm kiểm tra tàu có chứa tiêu chí tìm kiếm không
     private boolean matchesSearchTerm(TauEntity tau, String search) {
         String lowercaseSearch = search.toLowerCase(); // Chuyển chuỗi tìm kiếm về chữ thường
 
         if (tau.getMaTau().toLowerCase().contains(lowercaseSearch)
                 || tau.getTenTau().toLowerCase().contains(lowercaseSearch)
-                // || (tau.getKichThuoc() != null && tau.getKichThuoc().toString().toLowerCase().contains(lowercaseSearch))
-                // || Double.toString(tau.getDonGia()).toLowerCase().contains(lowercaseSearch)
-                // || tau.getTinhTrang().toString().toLowerCase().contains(lowercaseSearch)
-                // || Integer.toString(tau.getSoLuongTonKho()).toLowerCase().contains(lowercaseSearch)
-                ) {
+        // || (tau.getKichThuoc() != null &&
+        // tau.getKichThuoc().toString().toLowerCase().contains(lowercaseSearch))
+        // || Double.toString(tau.getDonGia()).toLowerCase().contains(lowercaseSearch)
+        // || tau.getTinhTrang().toString().toLowerCase().contains(lowercaseSearch)
+        // ||
+        // Integer.toString(tau.getSoLuongTonKho()).toLowerCase().contains(lowercaseSearch)
+        ) {
             return true;
         }
 
         return false;
     }
 
-    //Hàm đưa dữ liệu vào combobox
+    // Hàm đưa dữ liệu vào combobox
     private void duaDuLieuVaoComboBox(JComboBox comboBox, ArrayList<?> data, String thuocTinh) {
         DefaultComboBoxModel<Object> model = new DefaultComboBoxModel<>();
         for (Object item : data) {
@@ -1085,7 +1146,7 @@ System.out.println( "loadDuLieuTuDataLenTable"+ dsTau.toString());
         comboBox.setModel(model);
     }
 
-    //Hàm kiểm tra mã tàu đã có trong table hay chưa
+    // Hàm kiểm tra mã tàu đã có trong table hay chưa
     private boolean kiemTraMaSanPhamTontaiTrongTable(DefaultTableModel model, String maSanPham) {
         for (int row = 0; row < model.getRowCount(); row++) {
             if (model.getValueAt(row, 0).equals(maSanPham)) {
@@ -1095,19 +1156,23 @@ System.out.println( "loadDuLieuTuDataLenTable"+ dsTau.toString());
         return false;
     }
 
-    //Hàm kiểm tra ảnh null 
-//    private void kiemTraAnhNull(int row) {
-//        String img = sp_bus.getAllSanPham().get(row).getImgUrl();
-//        ImageIcon imageIcon;
-//        if (img != null) {
-//            imageIcon = new ImageIcon(new ImageIcon(img).getImage().getScaledInstance(lbl_AnhSanPham.getWidth(), lbl_AnhSanPham.getHeight(), Image.SCALE_SMOOTH));
-//        } else {
-//            ImageIcon anhMacDinh = new ImageIcon("src//pic//icon//labelAnh.png");
-//            imageIcon = new ImageIcon(anhMacDinh.getImage().getScaledInstance(lbl_AnhSanPham.getWidth(), lbl_AnhSanPham.getHeight(), Image.SCALE_SMOOTH));
-//        }
-//        lbl_AnhSanPham.setIcon(imageIcon);
-//    }
-    //Hàm kiểm tra regex
+    // Hàm kiểm tra ảnh null
+    // private void kiemTraAnhNull(int row) {
+    // String img = sp_bus.getAllSanPham().get(row).getImgUrl();
+    // ImageIcon imageIcon;
+    // if (img != null) {
+    // imageIcon = new ImageIcon(new
+    // ImageIcon(img).getImage().getScaledInstance(lbl_AnhSanPham.getWidth(),
+    // lbl_AnhSanPham.getHeight(), Image.SCALE_SMOOTH));
+    // } else {
+    // ImageIcon anhMacDinh = new ImageIcon("src//pic//icon//labelAnh.png");
+    // imageIcon = new
+    // ImageIcon(anhMacDinh.getImage().getScaledInstance(lbl_AnhSanPham.getWidth(),
+    // lbl_AnhSanPham.getHeight(), Image.SCALE_SMOOTH));
+    // }
+    // lbl_AnhSanPham.setIcon(imageIcon);
+    // }
+    // Hàm kiểm tra regex
     private boolean validateTau() {
         String ten = txt_TenTau.getText().trim();
         String donGia = txt_DonGia.getText().trim();
@@ -1122,10 +1187,11 @@ System.out.println( "loadDuLieuTuDataLenTable"+ dsTau.toString());
             return false;
         }
         // if (!donGia.matches("^[1-9]\\d*")) {
-        //     JOptionPane.showMessageDialog(null, "Gía vé phải lớn hơn 0, không được nhập chữ");
-        //     txt_DonGia.requestFocus();
-        //     txt_DonGia.selectAll();
-        //     return false;
+        // JOptionPane.showMessageDialog(null, "Gía vé phải lớn hơn 0, không được nhập
+        // chữ");
+        // txt_DonGia.requestFocus();
+        // txt_DonGia.selectAll();
+        // return false;
         // }
         int soToa = Integer.parseInt(txt_SoToa.getText().trim());
 
@@ -1179,10 +1245,11 @@ System.out.println( "loadDuLieuTuDataLenTable"+ dsTau.toString());
     // End of variables declaration//GEN-END:variables
 }
 
-//Căn giữa cột trong table
+// Căn giữa cột trong table
 class CenterRenderer extends DefaultTableCellRenderer {
 
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+            int row, int column) {
         Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
         ((JLabel) c).setHorizontalAlignment(SwingConstants.CENTER);
         return c;

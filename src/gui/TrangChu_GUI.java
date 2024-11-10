@@ -67,7 +67,7 @@ public class TrangChu_GUI extends javax.swing.JFrame {
         ThongKe_Panel = new TrangChu_JPanel();
         KhachHang_Panel = new KhachHang_JPanel();
         NhanVien_Panel = new NhanVien_JPanel();
-//        NhaSanXuat_Panel = new NhaSanXuat_JPanel();
+        NhaSanXuat_Panel = new NhaSanXuat_JPanel();
         LichTrinh_Panel = new LichTrinh_JPanel();
 
         URL image_home = TrangChu_GUI.class.getResource("/pic/icon/home.png");   
