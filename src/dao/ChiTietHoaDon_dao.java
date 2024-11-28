@@ -2,6 +2,9 @@ package dao;
 
 import connectDB.ConnectDB;
 import entity.ChiTietHoaDonEntity;
+import entity.KhachHangEntity;
+import entity.TauEntity;
+import entity.ToaTauEntity;
 import entity.VeEntity;
 import java.util.ArrayList;
 import java.sql.*;
@@ -13,9 +16,14 @@ public class ChiTietHoaDon_dao {
 
     public ArrayList<ChiTietHoaDonEntity> getallCTHD() {
         ArrayList<ChiTietHoaDonEntity> dscthd = new ArrayList<>();
-        try (Connection con = ConnectDB.getConnection();
-                Statement stmt = con.createStatement();
-                ResultSet rs = stmt.executeQuery("SELECT * FROM ChiTietHoaDon")) {
+        try {
+            // Connection con = ConnectDB.getConnection();
+            // Statement stmt = con.prepareStatement("SELECT maCTHD, ngayTao, ngayCapNhat,
+            // maHK, maDH, maVe\n" + //
+            // "FROM chi_tiet_don_hang where maDH = ?;");
+            // stmt.setString(1, maDH);
+
+            // ResultSet rs = stmt.executeQuery();
 
             // while (rs.next()) {
             // VeEntity ve = new VeEntity(rs.getString("maSP"), rs.getInt("loai"),
@@ -32,6 +40,59 @@ public class ChiTietHoaDon_dao {
             // giaBan, thanhTien);
             // dscthd.add(cthd);
             // }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return dscthd;
+    }
+
+    public ArrayList<ChiTietHoaDonEntity> getallCTHDVoiMaHD(String maDH) {
+        ArrayList<ChiTietHoaDonEntity> dscthd = new ArrayList<>();
+        try {
+            Connection con = ConnectDB.getConnection();
+            PreparedStatement stmt = con.prepareStatement(
+                    "SELECT tau.ten as tenTau, toa_tau.ten as tenToa, ctdh.maCTHD, ctdh.ngayTao, ctdh.ngayCapNhat, ctdh.maHK, ctdh.maDH, ctdh.maVe, hk.ten, hk.tuoi, ve.gia, ve.soGhe   FROM chi_tiet_don_hang ctdh left join hanh_khach hk  on hk.maHK = ctdh.maHK  LEFT join ve  on ve.maVe  = ctdh.maVe left join tau  on tau.maTau = ve.maTau  left join toa_tau on ve.maToa = toa_tau.maToa where ctdh.maDH = ?;");
+            stmt.setString(1, maDH);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+
+                VeEntity ve = new VeEntity();
+                ChiTietHoaDonEntity cthd = new ChiTietHoaDonEntity();
+                cthd.setGiaBan(rs.getDouble("gia"));
+                cthd.setMaCTDH(rs.getString("maCTHD"));
+                cthd.setNgayTao(rs.getDate("ngayTao"));
+                cthd.setNgayCapNhat(rs.getDate("ngayCapNhat"));
+
+                ve.setMaVe(rs.getString("maVe"));
+                ve.setGia(rs.getDouble("gia"));
+                ve.setSoGhe(rs.getInt("soGhe"));
+
+                TauEntity tau = new TauEntity();
+                // tau.setMaTau(rs.getString("maTau"));
+                tau.setTenTau(rs.getString("tenTau"));
+
+                ve.setTau(tau);
+
+                ToaTauEntity toa = new ToaTauEntity();
+                toa.setTenToa(rs.getString("tenToa"));
+
+                ve.setToa(toa);
+
+                cthd.setVe(ve);
+
+                KhachHangEntity hk = new KhachHangEntity();
+                hk.setMaKH(rs.getString("maHK"));
+                hk.setHoTen(rs.getString("ten"));
+                hk.setTuoi(rs.getInt("tuoi"));
+
+                System.out.println(hk);
+
+                cthd.setKhachHang(hk);
+
+                dscthd.add(cthd);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -101,12 +162,13 @@ public class ChiTietHoaDon_dao {
     public boolean themChiTietHoaDon(ChiTietHoaDonEntity cthd) {
         String sql = "INSERT INTO chi_tiet_don_hang\n" + //
                 "( ngayTao, ngayCapNhat, maHK, maDH, maVe)\n" + //
-                "VALUES(getdate(), getdate(), ?, ?, ?);";
+                " VALUES(getdate(), getdate(), ?, ?, ?);";
 
-        try (Connection con = ConnectDB.getConnection();
-                PreparedStatement stmt = con.prepareStatement(sql)) {
+        try {
+            Connection con = ConnectDB.getConnection();
+            PreparedStatement stmt = con.prepareStatement(sql);
 
-             stmt.setString(1, cthd.getKhachHang().getMaKH());
+            stmt.setString(1, cthd.getKhachHang().getMaKH());
             stmt.setString(2, cthd.getHoaDon().getMaHD());
             stmt.setString(3, cthd.getVe().getMaVe());
 

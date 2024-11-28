@@ -1,5 +1,6 @@
 package entity;
 
+import java.sql.Date;
 import java.util.Objects;
 
 public class ChiTietHoaDonEntity {
@@ -12,6 +13,24 @@ public class ChiTietHoaDonEntity {
     private double giaBan;
     private double thanhTien;
     private KhachHangEntity khachHang;
+    private Date ngayTao;
+    private Date ngayCapNhat;
+
+    public Date getNgayTao() {
+        return ngayTao;
+    }
+
+    public void setNgayTao(Date ngayTao) {
+        this.ngayTao = ngayTao;
+    }
+
+    public Date getNgayCapNhat() {
+        return ngayCapNhat;
+    }
+
+    public void setNgayCapNhat(Date ngayCapNhat) {
+        this.ngayCapNhat = ngayCapNhat;
+    }
 
     public KhachHangEntity getKhachHang() {
         return khachHang;

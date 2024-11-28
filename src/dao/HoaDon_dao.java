@@ -2,9 +2,13 @@
 package dao;
 
 import entity.HoaDonEntity;
+import entity.KhachHangEntity;
+import entity.TauEnum;
+
 import java.util.ArrayList;
 import connectDB.ConnectDB;
 import entity.ChiTietHoaDonEntity;
+import entity.NhanVienEntity;
 import java.sql.Date;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -14,48 +18,112 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class HoaDon_dao implements Interface.HoaDon_Interface {
+public class HoaDon_dao {
 
     public HoaDon_dao() {
 
     }
 
-    @Override
     public ArrayList<HoaDonEntity> getallHoaDon() {
-        ArrayList<HoaDonEntity> dshd = new ArrayList<HoaDonEntity>();
+        ArrayList<HoaDonEntity> dshd = new ArrayList<>();
         try {
-            ConnectDB.getInstance().connect();
             Connection con = ConnectDB.getConnection();
-            String sql = "Select * from don_hang";
+            if (con == null) {
+                ConnectDB.connect();
+                con = ConnectDB.getConnection();
+            }
+
+            String sql = "SELECT " +
+                    "    dh.maDH, " +
+                    "    dh.tongTien, " +
+                    "    dh.gia, " +
+                    "    dh.trangThai, " +
+                    "    dh.ngayTao, " +
+                    "    dh.ngayCapNhat, " +
+                    "    dh.maHK, " +
+                    "    nv.maNV, " +
+                    "    nv.ten AS tenNV, " + // Tên nhân viên
+                    "    kh.maHK, " +
+                    "    kh.ten AS tenHK, " + // Tên khách hàng
+                    "    kh.soDienThoai " +
+                    "FROM " +
+                    "    don_hang dh " +
+                    "JOIN " +
+                    "    nhan_vien nv ON dh.maNV = nv.maNV " +
+                    "JOIN " +
+                    "    hanh_khach kh ON dh.maHK = kh.maHK " + // Kết hợp bảng khách hàng
+                    "WHERE " +
+                    "    dh.trangThai = 1 order by dh.ngayTao DESC;"; // Lọc hóa đơn có trạng thái là 1
+
             Statement statement = con.createStatement();
             ResultSet rs = statement.executeQuery(sql);
             while (rs.next()) {
-                String maHD = rs.getString("maHD");
-                // KhachHangEntity maKH = new KhachHangEntity(rs.getString("maKH"));
+                String maDH = rs.getString("maDH"); // Sửa tên cột cho đúng
+                String maKH = rs.getString("maHK"); // Lấy mã khách hàng
                 double tongTien = rs.getDouble("tongTien");
-                int phuongThucThanhToan = rs.getInt("phuongThucThanhToan");
-                String trangThai = rs.getString("trangThai");
+                double gia = rs.getDouble("gia"); // Lấy giá
+                int trangThai = rs.getInt("trangThai");
                 Date ngayTao = rs.getDate("ngayTao");
-                Date NgayCapNhat = rs.getDate("NgayCapNhat");
+                Date ngayCapNhat = rs.getDate("ngayCapNhat"); // Sửa tên cột cho đúng
+                String phuongThucThanhToan = "Tiền mặt";
 
-                // HoaDonEntity hd = new HoaDonEntity(maHD, maKH, tongTien, phuongThucThanhToan,
-                // toEnum.trangThaiHoaDontoEnum(trangThai),ngayTao,NgayCapNhat);
-                // dshd.add(hd);
+                String tenKH = rs.getString("tenHK");
+
+                // Khởi tạo đối tượng HoaDonEntity với các tham số cần thiết
+                KhachHangEntity khachHang = new KhachHangEntity(maKH); // Tạo đối tượng khách hàng
+                khachHang.setHoTen(tenKH);
+                khachHang.setSoDienThoai(rs.getString("soDienThoai"));
+                HoaDonEntity hd = new HoaDonEntity(maDH, khachHang, tongTien, gia,
+                        trangThai, ngayTao, ngayCapNhat);
+                hd.setPhuongThucThanhToan(phuongThucThanhToan);
+                //
+                // // Thêm đối tượng vào danh sách
+                dshd.add(hd);
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
         return dshd;
-
     }
 
-    @Override
+    public HoaDonEntity getHoaDonTheoMaHD(String maHD) {
+        HoaDonEntity hd = null;
+        try {
+            Connection con = ConnectDB.getConnection();
+            PreparedStatement stmt = con.prepareCall(
+                    "SELECT  dh.maDH, dh.tongTien, dh.gia, dh.trangThai, dh.ngayTao, dh.ngayCapNhat, dh.maHK, nv.maNV, nv.ten AS tenNV,  kh.maHK, kh.soDienThoai,  kh.ten AS tenHK FROM  don_hang dh JOIN     nhan_vien nv ON dh.maNV = nv.maNV JOIN hanh_khach kh ON dh.maHK = kh.maHK WHERE  dh.trangThai = 1 and dh.maDH = ?  order by dh.ngayTao DESC;");
+            stmt.setString(1, maHD);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                String mahd = rs.getString("maDH");
+                String makh = rs.getString("maHK");
+                KhachHangEntity kh = new KhachHangEntity(makh);
+                kh.setHoTen(rs.getString("tenHK"));
+                kh.setSoDienThoai(rs.getString("soDienThoai"));
+                double tongTien = rs.getDouble("tongTien");
+                int trangThai = rs.getInt("trangThai");
+                Date ngayTao = rs.getDate("ngayTao");
+                Date ngayCapNhat = rs.getDate("NgayCapNhat");
+
+                NhanVienEntity nv = new NhanVienEntity();
+                nv.setMaNV(rs.getString("maNV"));
+                nv.setTen(rs.getString("tenNV"));
+
+                hd = new HoaDonEntity(mahd, kh, tongTien, trangThai, ngayTao, ngayCapNhat);
+                hd.setNhanVien(nv);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return hd;
+    }
+
     public double getTotalMoney(String maHD) {
         double total = 0;
         String sql = "select tongTien from HoaDon where maHD = ? ";
         try {
-            ConnectDB.getInstance().connect();
             Connection con = ConnectDB.getConnection();
             PreparedStatement sta = null;
             sta = con.prepareStatement(sql);
@@ -70,7 +138,6 @@ public class HoaDon_dao implements Interface.HoaDon_Interface {
         return total;
     }
 
-    @Override
     public boolean themHoaDon(HoaDonEntity hoaDon, ArrayList<ChiTietHoaDonEntity> danhSachCTHD) {
         PreparedStatement statement = null;
         try {
@@ -160,7 +227,6 @@ public class HoaDon_dao implements Interface.HoaDon_Interface {
         }
     }
 
-    @Override
     public boolean luuTamHoaDon(HoaDonEntity hoaDon, ArrayList<ChiTietHoaDonEntity> danhSachCTHD) {
         PreparedStatement statement = null;
         try {
@@ -202,7 +268,6 @@ public class HoaDon_dao implements Interface.HoaDon_Interface {
         }
     }
 
-    @Override
     public boolean capNhatHoaDonLuuTam(HoaDonEntity hoaDon, ArrayList<ChiTietHoaDonEntity> danhSachCTHD) {
         PreparedStatement statement = null;
         try {
@@ -252,7 +317,6 @@ public class HoaDon_dao implements Interface.HoaDon_Interface {
         }
     }
 
-    @Override
     public boolean themHoaDonLuuTam(HoaDonEntity hoaDon, ArrayList<ChiTietHoaDonEntity> danhSachCTHD) {
         PreparedStatement statement = null;
         try {
@@ -300,7 +364,6 @@ public class HoaDon_dao implements Interface.HoaDon_Interface {
         }
     }
 
-    @Override
     public ArrayList<HoaDonEntity> timKiemHoaDonChuaThanhToan(String sdt) {
         try {
             ConnectDB.getInstance().connect();
@@ -357,7 +420,6 @@ public class HoaDon_dao implements Interface.HoaDon_Interface {
         }
     }
 
-    @Override
     public HoaDonEntity timKiemHoaDonTheoMa(String maHD) {
         try {
             ConnectDB.getInstance().connect();
@@ -417,7 +479,6 @@ public class HoaDon_dao implements Interface.HoaDon_Interface {
         }
     }
 
-    @Override
     public int getSoLuongTonTheoMa(String maSP) {
         try {
             ConnectDB.getInstance().connect();
@@ -453,7 +514,6 @@ public class HoaDon_dao implements Interface.HoaDon_Interface {
         }
     }
 
-    @Override
     public ArrayList<HoaDonEntity> getAllHDChuaThanhToan() {
         try {
             ConnectDB.getInstance().connect();
@@ -514,37 +574,6 @@ public class HoaDon_dao implements Interface.HoaDon_Interface {
         }
     }
 
-    @Override
-    public HoaDonEntity getHoaDonTheoMaHD(String maHD) {
-        HoaDonEntity hd = null;
-        try {
-            ConnectDB.getInstance().connect();
-            Connection con = ConnectDB.getConnection();
-            PreparedStatement stmt = con.prepareCall("select * from HoaDon where maHD = ?");
-            stmt.setString(1, maHD);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                String mahd = rs.getString("maHD");
-                String makh = rs.getString("maKH");
-                // KhachHangEntity kh = new KhachHangEntity(makh);
-                double tongTien = rs.getDouble("tongTien");
-                int phuongThucThanhToan = rs.getInt("phuongThucThanhToan");
-                String trangThai = rs.getString("trangThai");
-                Date ngayTao = rs.getDate("ngayTao");
-                Date ngayCapNhat = rs.getDate("NgayCapNhat");
-
-                // hd = new HoaDonEntity(mahd, kh, tongTien, phuongThucThanhToan,
-                // toEnum.TinhTrangHDToEnum(trangThai), ngayTao, ngayCapNhat);
-
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return hd;
-    }
-
-    @Override
     public ArrayList<HoaDonEntity> getHoaDonTheoNgayLap(Date ngayLap) {
         ArrayList<HoaDonEntity> dshd = new ArrayList<HoaDonEntity>();
         try {
@@ -574,7 +603,6 @@ public class HoaDon_dao implements Interface.HoaDon_Interface {
         return dshd;
     }
 
-    @Override
     public ArrayList<HoaDonEntity> getHoaDonTheoMaHDvaNgayLap(String maHD, java.util.Date ngayLap) {
         try {
             ConnectDB.getInstance().connect();
@@ -635,7 +663,6 @@ public class HoaDon_dao implements Interface.HoaDon_Interface {
         }
     }
 
-    @Override
     public boolean xoaHoaDon(String maHD) {
         try {
             ConnectDB.getInstance().connect();

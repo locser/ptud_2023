@@ -850,7 +850,7 @@ public class QuanLyTau_JPanel extends javax.swing.JPanel {
     // Hàm xuất excel từ db
     private void xuatExcel() {
         try {
-            JFileChooser fileChooser = new JFileChooser("C:\\Users\\MY PC\\OneDrive\\Máy tính");
+            JFileChooser fileChooser = new JFileChooser("C:\\download");
             fileChooser.setDialogTitle("Chọn nơi lưu file");
             int chon = fileChooser.showSaveDialog(null);
             if (chon == JFileChooser.APPROVE_OPTION) {
@@ -869,56 +869,59 @@ public class QuanLyTau_JPanel extends javax.swing.JPanel {
                 cell = row.createCell(1, CellType.STRING);
                 cell.setCellValue("Tên tàu");
                 cell = row.createCell(2, CellType.STRING);
-                cell.setCellValue("Kích thước");
+                cell.setCellValue("Loại tàu");
                 cell = row.createCell(3, CellType.STRING);
-                cell.setCellValue("Màu sắc");
+                cell.setCellValue("Ga đi");
                 cell = row.createCell(4, CellType.STRING);
-                cell.setCellValue("Đơn giá");
+                cell.setCellValue("Ga đến");
                 cell = row.createCell(5, CellType.STRING);
-                cell.setCellValue("Tình trạng");
+                cell.setCellValue("Trạng thái");
                 cell = row.createCell(6, CellType.STRING);
-                cell.setCellValue("Số lượng tồn kho");
+                cell.setCellValue("Số toa");
                 cell = row.createCell(7, CellType.STRING);
-                cell.setCellValue("Chất liệu");
+                cell.setCellValue("Đơn giá");
                 cell = row.createCell(8, CellType.STRING);
-                cell.setCellValue("Thương hiệu");
+                cell.setCellValue("Nhân viên");
                 cell = row.createCell(9, CellType.STRING);
-                cell.setCellValue("Danh mục");
+                cell.setCellValue("Ngày tạo");
                 cell = row.createCell(10, CellType.STRING);
-                cell.setCellValue("Ảnh");
+                cell.setCellValue("Ngày cập nhật");
                 cell = row.createCell(11, CellType.STRING);
                 cell.setCellValue("Khuyến mãi");
-                // ArrayList<SanPhamEntity> listItem = sp_bus.getAllSanPham();
-                // for (int i = 0; i < listItem.size(); i++) {
-                // SanPhamEntity sp = listItem.get(i);
-                // String tenChatLieu =
-                // chatLieu_bus.layTenChatLieuTheoMa(sp.getChatLieu().getMaChatLieu());
-                // String tenThuongHieu =
-                // thuongHieu_bus.layTenThuongHieuTheoMa(sp.getThuongHieu().getMaThuongHieu());
-                // String tenDanhMuc =
-                // danhMucSanPham_bus.layTenDanhMucTheoMa(sp.getDanhMucSanPham().getMaDanhMuc());
-                // String tenCTKM =
-                // ctkm_bus.layTenKhuyenMaiTheoMa(sp.getChuongTrinhKhuyenMai().getMaCTKM());
-                // row = sheet.createRow(1 + i);
-                // row.createCell(0).setCellValue(sp.getMaSP());
-                // row.createCell(1).setCellValue(sp.getTenSP());
-                // row.createCell(2).setCellValue(sp.getKichThuoc().toString());
-                // row.createCell(3).setCellValue(sp.getMauSac().toString());
-                // row.createCell(4).setCellValue(sp.getDonGia());
-                // row.createCell(5).setCellValue(sp.getTinhTrang().toString());
-                // row.createCell(6).setCellValue(sp.getSoLuongTonKho());
-                // row.createCell(7).setCellValue(tenChatLieu);
-                // row.createCell(8).setCellValue(tenThuongHieu);
-                // row.createCell(9).setCellValue(tenDanhMuc);
-                // row.createCell(10).setCellValue(sp.getImgUrl());
-                // row.createCell(11).setCellValue(tenCTKM);
-                // }
-                // File f = new File(filePath);
-                // try (FileOutputStream fos = new FileOutputStream(f)) {
-                // workbook.write(fos);
-                // JOptionPane.showMessageDialog(null, "Xuất file thành công");
-                // openExcelFile(f);
-                // }
+                                cell = row.createCell(11, CellType.STRING);
+                cell.setCellValue("Mã ga đi");
+                                cell = row.createCell(11, CellType.STRING);
+                cell.setCellValue("Mã ga đến");
+                                cell = row.createCell(11, CellType.STRING);
+                cell.setCellValue("Mã nhân viên");
+                ArrayList<TauEntity> listItem = tau_dao.getAllSanPham();
+                for (int i = 0; i < listItem.size(); i++) {
+                    TauEntity tau = listItem.get(i);
+                    
+                    row = sheet.createRow(1 + i);
+
+                    row.createCell(0).setCellValue(tau.getMatau());
+                    row.createCell(1).setCellValue(tau.getTentau());
+                    row.createCell(2).setCellValue(TauEnum.LoaiTau.convertLoaiTauToString(tau.getLoai()));
+                    row.createCell(3).setCellValue(tau.getGaDi().getTenGa());
+                    row.createCell(4).setCellValue(tau.getGaDen().getTenGa());
+                    row.createCell(5).setCellValue(String trangThai = TauEnum.TinhTrangTau.convertTinhTrangTauToString(tau.getTrangThai()));
+                    row.createCell(6).setCellValue(tau.getSoToa());
+                    row.createCell(7).setCellValue(0);
+                    row.createCell(8).setCellValue(tau.getNhanVien().getTen());
+                    row.createCell(9).setCellValue(tau.getNgayTao());
+                    row.createCell(10).setCellValue(tau.getNgayTao());
+                    row.createCell(11).setCellValue("CTKM"); // TODO: 
+                    row.createCell(11).setCellValue(tau.getGaDi().getMaGa()); 
+                    row.createCell(11).setCellValue(tau.getGaDen().getMaGa()); 
+                    row.createCell(11).setCellValue(tau.getNhanVien().getMaNV); 
+                }
+                File f = new File(filePath);
+                try (FileOutputStream fos = new FileOutputStream(f)) {
+                workbook.write(fos);
+                JOptionPane.showMessageDialog(null, "Xuất file thành công");
+                openExcelFile(f);
+                }
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -989,7 +992,7 @@ public class QuanLyTau_JPanel extends javax.swing.JPanel {
         FileInputStream excelFIS = null;
         BufferedInputStream excelBIS = null;
         XSSFWorkbook excelImportToJTable = null;
-        String defaultCurrentDirectoryPath = "C:\\Users\\MY PC\\OneDrive\\Máy tính";
+        String defaultCurrentDirectoryPath = "C:\\download";
         JFileChooser excelFileChooser = new JFileChooser(defaultCurrentDirectoryPath);
         excelFileChooser.setDialogTitle("Chọn file excel");
         FileNameExtensionFilter fnef = new FileNameExtensionFilter("EXCEL FILES", "xls", "xlsx", "xlsm");
