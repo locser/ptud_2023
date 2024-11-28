@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 import Interface.KhachHang_Interface;
 import util.ConvertStringToEnum;
 
-public class KhachHang_dao  {
+public class KhachHang_dao {
     private Connection con;
 
     public KhachHang_dao() {
@@ -132,19 +132,28 @@ public class KhachHang_dao  {
     public boolean themKH(KhachHangEntity KH) {
         System.out.println("HK THEM HK" + KH);
         PreparedStatement statement = null;
-        String sql = "INSERT INTO hanh_khach(maHK, ten, soDienThoai, soCmnd) VALUES(?, ?, ?, ?)";
+        String sql = "INSERT INTO hanh_khach(maHK, ten, soDienThoai, soCmnd, tuoi) VALUES(?, ?, ?, ? , ?)";
 
         try {
             statement = con.prepareStatement(sql);
             statement.setString(1, KH.getMaKH());
             statement.setString(2, KH.getHoTen());
             String soDienThoai = KH.getSoDienThoai();
+
             if (soDienThoai != null) {
                 statement.setString(3, soDienThoai);
             } else {
                 statement.setString(3, ""); // Or handle the null case as desired
             }
             statement.setString(4, KH.getSoCCCD());
+
+            int tuoi = KH.getTuoi();
+
+            if (tuoi > 0) {
+                statement.setInt(5, tuoi);
+            } else {
+                statement.setInt(5, 0); // Or handle the null case as desired
+            }
 
             return statement.executeUpdate() > 0;
 

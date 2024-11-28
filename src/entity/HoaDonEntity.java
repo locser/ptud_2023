@@ -24,6 +24,24 @@ public class HoaDonEntity {
         this.ngayCapNhat = ngayCapNhat;
     }
 
+    public HoaDonEntity(String maDH, KhachHangEntity khachHang, double tongTien, double gia, int trangThai, java.sql.Date ngayTao, java.sql.Date ngayCapNhat) {
+        this.maHD = maDH;
+        this.maKH = khachHang;
+        this.tongTien = tongTien;
+        this.trangThai = trangThai;
+        this.ngayTao = ngayTao;
+        this.ngayCapNhat = ngayCapNhat;
+        }
+
+    public HoaDonEntity(String mahd, KhachHangEntity kh, double tongTien, int trangThai, java.sql.Date ngayTao, java.sql.Date ngayCapNhat) {
+                this.maHD = mahd;
+            this.maKH = kh;
+            this.tongTien = tongTien;
+            this.trangThai = trangThai;
+            this.ngayTao = ngayTao;
+            this.ngayCapNhat = ngayCapNhat;
+    }
+
     public void setNhanVien(NhanVienEntity nhanVien) {
         this.nhanVien = nhanVien;
     }

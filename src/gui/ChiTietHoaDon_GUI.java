@@ -5,7 +5,10 @@ import bus.ChiTietHoaDon_bus;
 import bus.HoaDon_bus;
 import bus.KhachHang_bus;
 import connectDB.ConnectDB;
+import dao.ChiTietHoaDon_dao;
 import entity.ChiTietHoaDonEntity;
+import entity.HoaDonEntity;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.NumberFormat;
@@ -14,143 +17,128 @@ import java.util.Locale;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import util.HoaDon_toancuc;
+import util.ToanCuc;
 
 /**
  *
  * @author 84335
  */
 public class ChiTietHoaDon_GUI extends javax.swing.JFrame {
-    
-     public static void main(String args[]) {
-    
+
+    public static void main(String args[]) {
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             private ChiTietHoaDon_GUI frame;
+
             public void run() {
                 try {
                     frame = new ChiTietHoaDon_GUI();
-//                     frame.setUndecorated(true);
+                    // frame.setUndecorated(true);
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                
+
             }
         });
     }
-    private final ChiTietHoaDon_bus cthdbus;
+
+    // private final ChiTietHoaDon_bus cthdbus;
+    private ChiTietHoaDon_dao cthd_dao;
     private DefaultTableModel model;
     private HoaDon_JPanel HDPanel;
     private KhachHang_bus khbus;
     private HoaDon_bus hdbus;
-       // Định dạng số tiền sang VND
-        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+    // Định dạng số tiền sang VND
+    NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
 
     /**
      * Creates new form ChiTietHoaDon_GUI
      */
+    private HoaDonEntity hd;
+
     public ChiTietHoaDon_GUI() {
-           try {
-            ConnectDB.getInstance().connect();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
         initComponents();
         setLocationRelativeTo(null);
-        cthdbus = new ChiTietHoaDon_bus();
-        HoaDon_toancuc hdtc = new HoaDon_toancuc();
-       if(hdtc == null) JOptionPane.showMessageDialog(null, "HoaDon ToanCuc rỗng !");
-       else {
-           System.out.println(" MÃ hoá đơn" + hdtc.getMaHD());
-        lbl_MaHoaDon.setText(hdtc.getMaHD());
-//        lbl_MaKhachHang.setText(hdtc.getMaKH());
+        cthd_dao = new ChiTietHoaDon_dao();
+        hd = ToanCuc.getHoaDon();
+
+        System.out.println(" MÃ hoá đơn" + hd);
+        lbl_MaHoaDon.setText(hd.getMaHD());
+        lbl_MaKhachHang.setText(hd.getMaKH().getHoTen());
         // Lấy thôn tin khách hàng
-        khbus = new KhachHang_bus();
-//         KhachHangEntity kh  = new KhachHangEntity();
-//         if(!hdtc.getMaKH().equals("")) {
-//             kh = khbus.getKHTheoMa(hdtc.getMaKH());
-//              lbl_MaKhachHang.setText(kh.getHoTen());
-//                lbl_SDT.setText(kh.getSoDienThoai());
-//         }
 
-        lbl_MaNhanVien.setText(hdtc.getMaNV());
-        lbl_NgayLapHoaDon.setText(hdtc.getNgayLap());
+        lbl_MaNhanVien.setText(hd.getNhanVien().getMaNV());
+        lbl_NgayLapHoaDon.setText(hd.getNgayTao().toString());
 
-       }
-       
-    lbl_IConExit.addMouseListener(new MouseAdapter(){
+        lbl_SDT.setText(hd.getMaKH().getSoDienThoai());
+
+        lbl_IConExit.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e){
+            public void mouseClicked(MouseEvent e) {
                 System.exit(0);
             }
         });
-        
-          DocDuLieuSQLvaoTable();
+
+        DocDuLieuSQLvaoTable(hd.getMaHD());
 
     }
 
-    private void DocDuLieuSQLvaoTable() {
-    ArrayList<ChiTietHoaDonEntity> listCTHD = cthdbus.getallCTHD();
-    int sl = 0;
+    private void DocDuLieuSQLvaoTable(String maHD) {
+        ArrayList<ChiTietHoaDonEntity> listCTHD = cthd_dao.getallCTHDVoiMaHD(maHD);
+        int sl = 0;
         try {
-            
-//            String maHD = lbl_MaHoaDon.getText();
-//            ArrayList<SanPhamEntity> allSP = new ArrayList<>(); // Danh sách tất cả sản phẩm
-//             allSP = cthdbus.getSanPhamTheoMaHD(maHD);
-//              String giagoc  = "";
-//            for(SanPhamEntity sp: allSP){
-//                listCTHD = cthdbus.getCTHDTheoMaHDvaMaSP(maHD, sp.getMaSP());
-//                for(ChiTietHoaDonEntity ct: listCTHD){
-//                    System.out.println(sl);
-//                    
-//                    if(sp.getChuongTrinhKhuyenMai().getMaCTKM()!= null){
-//                        ChuongTrinhKhuyenMaiEntity ctkm = kmbus.getKMTheoma(sp.getChuongTrinhKhuyenMai().getMaCTKM());
-//                         giagoc = "<html><strike>"+ct.getGiaGoc()+"</strike><sub>"+"-"+ctkm.getGiamGia()+"%"+"</sub></html>" ;
-//                    }
-//                    else {
-//                        giagoc = ct.getGiaGoc() +"";
-//                    }
-//                addRows(new Object[]{sp.getMaSP(),sp.getTenSP(),sp.getKichThuoc(),sp.getMauSac(),ct.getSoLuong(),giagoc ,ct.getGiaBan(),ct.getThanhTien()});
-//                }
-//            }
-//           lblTongTien.setText(TongTien(5));
-           lbl_TienThanhToan.setText(TongTien(7));
+
+            for (ChiTietHoaDonEntity ct : listCTHD) {
+                System.out.println(sl);
+
+                addRows(new Object[] { ct.getMaCTDH(), ct.getKhachHang().getHoTen(), ct.getKhachHang().getTuoi(),
+                        ct.getVe().getTau().getTenTau(),
+                        "Toa: " + ct.getVe().getToa().getTenToa() + " - Ghế: " + ct.getVe().getSoGhe(),
+                        ct.getVe().getGia(), ct.getVe().getGia() });
+            }
+            lbl_TienThanhToan.setText(hd.getTongTien() + " VNĐ");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Vui lòng chọn hoá đơn cần xem !");
             e.printStackTrace();
         }
-   
 
-}
+    }
 
-       public void addRows (Object[] row){
+    public void addRows(Object[] row) {
         model = (DefaultTableModel) table.getModel();
         model.addRow(row);
-   } 
-    public boolean getHD(String maHD,String maKH,String maNV,String ngayLap ){
+        table.setModel(model);
+    }
+
+    public boolean getHD(String maHD, String maKH, String maNV, String ngayLap) {
 
         return false;
     }
-    public String TongTien(int col){
-        double tt =0;
+
+    public String TongTien(int col) {
+        double tt = 0;
         try {
             int row = table.getRowCount();
-            for (int i = 0; i < row ; i++) {
+            for (int i = 0; i < row; i++) {
                 tt += Double.parseDouble(table.getValueAt(i, col).toString());
             }
-//            lblTongTien.setText(tt+" đ");
-        String giamKMHD = lbl_KhuyenMaiHD.getText().replace("%", "");
-        double stg = tt * (Double.parseDouble(giamKMHD))/100;
+            // lblTongTien.setText(tt+" đ");
+            String giamKMHD = lbl_KhuyenMaiHD.getText().replace("%", "");
+            double stg = tt * (Double.parseDouble(giamKMHD)) / 100;
 
-          
-        tt = tt - stg;
+            tt = tt - stg;
         } catch (Exception e) {
             e.printStackTrace();
         }
         return currencyFormatter.format(tt) + "";
     }
-       
+
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
@@ -235,19 +223,18 @@ public class ChiTietHoaDon_GUI extends javax.swing.JFrame {
         jPanel2.add(lbl_NgayLapHoaDon, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 110, 110, 30));
 
         table.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+                new Object[][] {
 
-            },
-            new String [] {
-                "Mã Sản Phẩm", "Tên Sản Phẩm", "Kích Thước", "Màu Sắc", "Số Lượng", "Giá Gốc", "Giá bán", "Thành tiền"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
+                },
+                new String[] {
+                        "Mã CTHD", "Tên HK", "Tuổi", "Tên tàu", "Vị trí", "Giá", "Thành tiền"
+                }) {
+            boolean[] canEdit = new boolean[] {
+                    false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+                return canEdit[columnIndex];
             }
         });
         table.setRowHeight(30);
@@ -297,32 +284,29 @@ public class ChiTietHoaDon_GUI extends javax.swing.JFrame {
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 798, Short.MAX_VALUE)
-        );
+                jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 798, Short.MAX_VALUE));
         jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 18, Short.MAX_VALUE)
-        );
+                jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 18, Short.MAX_VALUE));
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 700, 800, 20));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void lbl_IConExitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_IConExitMouseClicked
+    private void lbl_IConExitMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lbl_IConExitMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_lbl_IConExitMouseClicked
+    }// GEN-LAST:event_lbl_IConExitMouseClicked
 
-    private void btn_XacNhanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_XacNhanMouseClicked
+    private void btn_XacNhanMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_btn_XacNhanMouseClicked
         // TODO add your handling code here:
         this.setVisible(false);
-    }//GEN-LAST:event_btn_XacNhanMouseClicked
+    }// GEN-LAST:event_btn_XacNhanMouseClicked
 
     /**
      * @param args the command line arguments
      */
-   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_XacNhan;

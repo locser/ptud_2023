@@ -41,11 +41,11 @@ public class Tau_dao {
                     "    nv.ten AS tenNhanVien\n" +
                     "FROM \n" +
                     "    banve.dbo.tau tau\n" +
-                    "JOIN \n" +
+                    "LEFT JOIN \n" +
                     "    banve.dbo.ga gaDi ON tau.gaDi = gaDi.maGa\n" +
-                    "JOIN \n" +
+                    "LEFT JOIN \n" +
                     "    banve.dbo.ga gaDen ON tau.gaDen = gaDen.maGa\n" +
-                    "JOIN \n" +
+                    "LEFT JOIN \n" +
                     "    banve.dbo.nhan_vien nv ON tau.maNV = nv.maNV \n"
                     + " order by tau.ngayTao desc;";
             PreparedStatement ps = con.prepareStatement(sql);
@@ -86,47 +86,63 @@ public class Tau_dao {
         return dsTau;
     }
 
-    public ArrayList<TauEntity> getAllTauDatVe(String dsMaTau) {
+    public ArrayList<TauEntity> getAllTauDatVe(String dsMaTau, String hanhTrinhString) {
         System.out.println("dassssssss" + dsMaTau);
         ArrayList<TauEntity> dsTau = new ArrayList<TauEntity>();
         try {
             Connection con = ConnectDB.getConnection();
-            String sql = "SELECT \n" +
-                    "    t.maTau,\n" +
-                    "    t.ten,\n" +
-                    "    t.gaDi,\n" +
-                    "    t.gaDen,\n" +
-                    "    t.soToa,\n" +
-                    "    t.loai,\n" +
-                    "    t.trangThai,\n" +
-                    "    t.ngayTao,\n" +
-                    "    t.ngayCapNhat,\n" +
-                    "    t.maNV,\n" +
-                    "    COUNT(g.maGhe) AS TongSoGhe,\n" +
-                    "    SUM(CASE WHEN g.trangThai = 1 THEN 1 ELSE 0 END) AS GheDaDat,\n" +
-                    "    SUM(CASE WHEN g.trangThai = 0 THEN 1 ELSE 0 END) AS GheTrong\n" +
-                    "FROM \n" +
-                    "    banve.dbo.tau t\n" +
-                    "LEFT JOIN \n" +
-                    "    banve.dbo.toa_tau tt ON t.maTau = tt.maTau\n" +
-                    "LEFT JOIN \n" +
-                    "    banve.dbo.ghe g ON tt.maToa = g.maToa \n" +
-                    "WHERE \n" +
-                    "    t.maTau IN (" + dsMaTau + ")" + // -- replace with your actual train IDs\n" +
-                    "GROUP BY \n" +
-                    "    t.maTau,\n" +
-                    "    t.ten,\n" +
-                    "    t.gaDi,\n" +
-                    "    t.gaDen,\n" +
-                    "    t.soToa,\n" +
-                    "    t.loai,\n" +
-                    "    t.trangThai,\n" +
-                    "    t.ngayTao,\n" +
-                    "    t.ngayCapNhat,\n" +
-                    "    t.maNV;";
-            
+            String sql = "SELECT \r\n" + //
+                    "    ht.maHT,\r\n" + //
+                    "    ht.gioDi,\r\n" + //
+                    "    ht.ngayDi,\r\n" + //
+                    "    ht.gioDen,\r\n" + //
+                    "    ht.ngayDen,\r\n" + //
+                    "    ht.loai,\r\n" + //
+                    "    ht.trangThai,\r\n" + //
+                    "    ht.ngayTao,\r\n" + //
+                    "    ht.ngayCapNhat,\r\n" + //
+                    "    t.maTau,\r\n" + //
+                    "    t.ten,\r\n" + //
+                    "    t.gaDi,\r\n" + //
+                    "    t.gaDen,\r\n" + //
+                    "    t.soToa,\r\n" + //
+                    "    t.loai AS loaiTau,\r\n" + //
+                    "    COUNT(g.maGhe) AS TongSoGhe,\r\n" + //
+                    "    SUM(CASE WHEN v.maVe IS NOT NULL THEN 1 ELSE 0 END) AS GheDaDat, -- Ghế đã đặt\r\n" + //
+                    "    SUM(CASE WHEN v.maVe IS NULL THEN 1 ELSE 0 END) AS GheTrong -- Ghế trống\r\n" + //
+                    "FROM \r\n" + //
+                    "    banve.dbo.hanh_trinh ht\r\n" + //
+                    "LEFT JOIN \r\n" + //
+                    "    banve.dbo.tau t ON ht.maTau = t.maTau\r\n" + //
+                    "LEFT JOIN \r\n" + //
+                    "    banve.dbo.toa_tau tt ON t.maTau = tt.maTau\r\n" + //
+                    "LEFT JOIN \r\n" + //
+                    "    banve.dbo.ghe g ON tt.maToa = g.maToa \r\n" + //
+                    "LEFT JOIN \r\n" + //
+                    "    banve.dbo.ve v ON g.maGhe = v.maGhe AND ht.maHT  = v.maHT\r\n" + //
+                    " where t.maTau IN (" + dsMaTau + ") AND ht.maHT IN (" + hanhTrinhString + ")\r\n" + //
+                    "GROUP BY \r\n" + //
+                    "    ht.maHT,\r\n" + //
+                    "    ht.gioDi,\r\n" + //
+                    "    ht.ngayDi,\r\n" + //
+                    "    ht.gioDen,\r\n" + //
+                    "    ht.ngayDen,\r\n" + //
+                    "    ht.loai,\r\n" + //
+                    "    ht.trangThai,\r\n" + //
+                    "    ht.ngayTao,\r\n" + //
+                    "    ht.ngayCapNhat,\r\n" + //
+                    "    t.maTau,\r\n" + //
+                    "    t.ten,\r\n" + //
+                    "    t.gaDi,\r\n" + //
+                    "    t.gaDen,\r\n" + //
+                    "    t.soToa,\r\n" + //
+                    "    t.loai;\r\n" + //
+                    "";
+
+            System.out.println(sql + dsMaTau + hanhTrinhString);
+
             PreparedStatement ps = con.prepareStatement(sql);
-            
+
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -137,7 +153,6 @@ public class Tau_dao {
                 int trangThai = rs.getInt("trangThai");
                 Date ngayTao = rs.getDate("ngayTao");
                 Date ngayCapNhat = rs.getDate("ngayCapNhat");
-                String maNV = rs.getString("maNV");
                 String maGaDi = rs.getString("gaDi");
                 String maGaDen = rs.getString("gaDen");
 
@@ -146,9 +161,9 @@ public class Tau_dao {
                 int TongSoGhe = rs.getInt("TongSoGhe");
 
                 GaTauEntity gaDi = new GaTauEntity(maGaDi);
-                GaTauEntity gaDen = new GaTauEntity(maGaDen );
+                GaTauEntity gaDen = new GaTauEntity(maGaDen);
 
-                NhanVienEntity nhanVien = new NhanVienEntity(maNV);
+                NhanVienEntity nhanVien = new NhanVienEntity();
 
                 // Tạo đối tượng TauEntity với thông tin từ ResultSet
 

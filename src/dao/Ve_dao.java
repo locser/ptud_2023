@@ -24,7 +24,7 @@ public class Ve_dao {
         PreparedStatement statement = null;
         try {
             Connection con = ConnectDB.getConnection();
-
+            System.out.println("kahcHAng" + ve.getKhachHang());
             khachHang_dao.themKH(ve.getKhachHang());
 
             String sql = "INSERT INTO ve\n" + //

@@ -16,7 +16,7 @@ public class ConnectDB {
 		return instance;
 	}
 
-        public void connect() throws Exception {
+        public static void connect() throws Exception {
 
 		try {
 

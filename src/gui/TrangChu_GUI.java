@@ -1,5 +1,6 @@
 package gui;
 
+import connectDB.ConnectDB;
 import java.awt.Color;
 import java.awt.ComponentOrientation;
 import java.awt.Desktop;
@@ -27,9 +28,15 @@ import util.ToanCuc;
 
 public class TrangChu_GUI extends javax.swing.JFrame {
         
-    public TrangChu_GUI() {
+    public TrangChu_GUI() throws Exception {
+        
+        ConnectDB.connect();
+        ConnectDB.getConnection();
+        ToanCuc.setMa("NV1000001");
+        ToanCuc.setTen("Pham Loc");
 
         initComponents();
+        
         jlb_name.setText(ToanCuc.getTen());
         lbl_ChucVu.setText(EntityEnum.ConvertEnumChucVuToString(ToanCuc.getLoai()));
         

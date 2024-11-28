@@ -12,24 +12,23 @@ import connectDB.ConnectDB;
 import entity.GaTauEntity;
 
 public class Ga_dao {
-    
+
     public ArrayList<GaTauEntity> getAllGaTau() {
-        ArrayList<GaTauEntity> dsGaTau=new ArrayList<GaTauEntity>();
+        ArrayList<GaTauEntity> dsGaTau = new ArrayList<GaTauEntity>();
         try {
-            ConnectDB.getInstance().connect();
-            Connection con=ConnectDB.getConnection();
-            PreparedStatement ps=null;
-            String sql="SELECT maGa, ten, trangThai FROM banve.dbo.ga order by maGa desc;";
-            ps=con.prepareStatement(sql);
-            ResultSet rs=ps.executeQuery();
+            Connection con = ConnectDB.getConnection();
+            PreparedStatement ps = null;
+            String sql = "SELECT maGa, ten, trangThai FROM banve.dbo.ga order by maGa desc;";
+            ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                String maGa=rs.getString("maGa");
-                String ten=rs.getString("ten");
-                int trangThai=rs.getInt("trangThai");
+                String maGa = rs.getString("maGa");
+                String ten = rs.getString("ten");
+                int trangThai = rs.getInt("trangThai");
 
                 // NhanVienEntity nhanVien = new NhanVienEntity(maNV);
 
-                GaTauEntity gaTau =new GaTauEntity(maGa, ten, trangThai);
+                GaTauEntity gaTau = new GaTauEntity(maGa, ten, trangThai);
                 dsGaTau.add(gaTau);
             }
         } catch (SQLException ex) {
@@ -40,7 +39,6 @@ public class Ga_dao {
         return dsGaTau;
     }
 
-    
     public String layTenGaTheoMa(String maGa) {
         String tenGa = null;
         try {
@@ -66,7 +64,6 @@ public class Ga_dao {
         return tenGa;
     }
 
-    
     public String layMaGaTheoTen(String tenGa) {
         String maGa = null;
         try {
@@ -94,18 +91,18 @@ public class Ga_dao {
     }
 
     // thêm ga
-    public boolean themGa( GaTauEntity gaTau) {
+    public boolean themGa(GaTauEntity gaTau) {
         boolean result = false;
         try {
             ConnectDB.getInstance().connect();
             Connection con = ConnectDB.getConnection();
             PreparedStatement ps = null;
             String sql = "INSERT INTO banve.dbo.ga\n" + //
-                                "(maGa, ten, maNV, trangThai)\n" + //
-                                "VALUES(?, ?, ?,  1);";
+                    "(maGa, ten, maNV, trangThai)\n" + //
+                    "VALUES(?, ?, ?,  1);";
             ps = con.prepareStatement(sql);
 
-            ps.setString(1,gaTau.getMaGa());
+            ps.setString(1, gaTau.getMaGa());
             ps.setString(2, gaTau.getTenGa());
             ps.setString(3, gaTau.getNhanVien().getMaNV());
 
@@ -130,8 +127,8 @@ public class Ga_dao {
             Connection con = ConnectDB.getConnection();
             PreparedStatement ps = null;
             String sql = "UPDATE banve.dbo.ga\n" + //
-                "SET ten = ?, maNV = ?, trangThai = ?\n" + //
-                "WHERE maGa = ?";
+                    "SET ten = ?, maNV = ?, trangThai = ?\n" + //
+                    "WHERE maGa = ?";
             ps = con.prepareStatement(sql);
             ps.setString(1, gaTau.getTenGa());
             ps.setString(2, gaTau.getNhanVien().getMaNV());
@@ -171,7 +168,7 @@ public class Ga_dao {
             ps.close();
             rs.close();
         } catch (Exception ex) {
-           
+
             Logger.getLogger(Ga_dao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return result;
@@ -198,12 +195,11 @@ public class Ga_dao {
             ps.close();
             rs.close();
         } catch (Exception ex) {
-           
+
             Logger.getLogger(Ga_dao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return result;
     }
-
 
     public boolean doiTrangThaiGa(GaTauEntity ga) {
         boolean result = false;
@@ -211,24 +207,23 @@ public class Ga_dao {
             ConnectDB.getInstance().connect();
             Connection con = ConnectDB.getConnection();
             PreparedStatement ps = null;
-            String sql = "UPDATE banve.dbo.ga\n" + 
-                 " SET trangThai = ? WHERE maGa = ?";
-                con.prepareStatement(sql);
+            String sql = "UPDATE banve.dbo.ga\n" +
+                    " SET trangThai = ? WHERE maGa = ?";
+            con.prepareStatement(sql);
 
-                ps = con.prepareStatement(sql);
-                ps.setInt(1, ga.getTrangThai() == 1 ? 0 : 1);
-                ps.setString(2, ga.getMaGa());
-                
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, ga.getTrangThai() == 1 ? 0 : 1);
+            ps.setString(2, ga.getMaGa());
 
-                int rowsAffected = ps.executeUpdate();
-                if (rowsAffected > 0) {
-                    result = true;
-                }
-                ps.close();
-            } catch (Exception ex) {
-           
-                Logger.getLogger(Ga_dao.class.getName()).log(Level.SEVERE, null, ex);
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected > 0) {
+                result = true;
             }
-            return result;
+            ps.close();
+        } catch (Exception ex) {
+
+            Logger.getLogger(Ga_dao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
     }
 }

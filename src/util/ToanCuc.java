@@ -4,6 +4,7 @@ package util;
 import javax.swing.JPanel;
 
 import entity.GheEntity;
+import entity.HoaDonEntity;
 import entity.LichTrinhEntity;
 import entity.ToaTauEntity;
 import entity.VeEntity;
@@ -12,8 +13,8 @@ import java.util.ArrayList;
 import javax.swing.JLabel;
 
 public class ToanCuc {
-    private static String ma = "123";
-    private static String ten = "123";
+            private static String ma = "NV1000001";
+    private static String ten = "Pham Loc";
     private static int loai = 0;
     private static String soDienThoai = "";
 
@@ -26,6 +27,16 @@ public class ToanCuc {
     private static LichTrinhEntity lichTrinh = null;
 
     private static double tongTien = 0;
+
+    private static HoaDonEntity hoaDon = null;
+
+    public static HoaDonEntity getHoaDon() {
+        return hoaDon;
+    }
+
+    public static void setHoaDon(HoaDonEntity hoaDon) {
+        ToanCuc.hoaDon = hoaDon;
+    }
 
     public static double getTongTien() {
         return tongTien;

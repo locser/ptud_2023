@@ -98,23 +98,33 @@ public class ChiTietDoiTra_GUI extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Mã", "Tên sản phẩm", "Kích thước", "Màu sắc", "Số lượng", "Giá bán", "Thành tiền"
+                "Mã vé", "Tên thông tin vé", "Lịch trình", "Thời gian", "Số lượng", "Giá bán", "Thành tiền"
             }
         ) {
             Class[] types = new Class [] {
                 java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Double.class, java.lang.Double.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, true, true, true, true, true, true
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
         });
         jScrollPane1.setViewportView(table_DoiTra);
         if (table_DoiTra.getColumnModel().getColumnCount() > 0) {
-            table_DoiTra.getColumnModel().getColumn(1).setPreferredWidth(200);
-            table_DoiTra.getColumnModel().getColumn(2).setPreferredWidth(20);
+            table_DoiTra.getColumnModel().getColumn(0).setPreferredWidth(30);
+            table_DoiTra.getColumnModel().getColumn(1).setPreferredWidth(130);
+            table_DoiTra.getColumnModel().getColumn(2).setPreferredWidth(50);
             table_DoiTra.getColumnModel().getColumn(3).setPreferredWidth(50);
             table_DoiTra.getColumnModel().getColumn(4).setPreferredWidth(20);
+            table_DoiTra.getColumnModel().getColumn(5).setPreferredWidth(30);
+            table_DoiTra.getColumnModel().getColumn(6).setPreferredWidth(30);
         }
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, 811, 280));
@@ -157,7 +167,7 @@ public class ChiTietDoiTra_GUI extends javax.swing.JFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
-        jLabel4.setText("Tên khách hàng");
+        jLabel4.setText("Tên hành khách ");
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
         jLabel2.setText("Mã đổi trả");
@@ -183,7 +193,7 @@ public class ChiTietDoiTra_GUI extends javax.swing.JFrame {
         jLabel8.setText("Số điện thoại");
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jLabel1.setText("THÔNG TIN CHI TIẾT ĐỔI TRẢ");
+        jLabel1.setText("THÔNG TIN CHI TIẾT ĐỔI TRẢ VÉ");
 
         jButton1.setBackground(new java.awt.Color(0, 51, 51));
         jButton1.setFont(new java.awt.Font("Times New Roman", 1, 15)); // NOI18N
@@ -230,7 +240,7 @@ public class ChiTietDoiTra_GUI extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(370, 370, 370)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
